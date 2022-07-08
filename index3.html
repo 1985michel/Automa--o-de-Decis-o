@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Automação de Decisão</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: inherit;
+        }
+
+        html {
+            font-size: 62.5%;
+            box-sizing: border-box;
+        }
+
+        main {
+            height: 65vh;
+            color: #eee;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+        }
+
+        body {
+            height: 100vh;
+            display: flex;
+            align-items: flex-start;
+            background: linear-gradient(to top left, #221F22, #2D2A2E);
+
+        }
+
+
+        h1,
+        h2 {
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        p {
+            font-size: large;
+            font-family: 'Courier New', Courier, monospace;
+            text-align: justify;
+        }
+
+        .btn {
+            border: none;
+            background-color: #eee;
+            color: #222;
+
+            padding: 2rem 3rem;
+            cursor: pointer;
+        }
+
+        .between {
+            font-size: 1.4rem;
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+        }
+
+        .again {
+            position: absolute;
+            top: 2rem;
+            left: 2rem;
+        }
+
+        .corpo {
+            margin-left: 25%;
+            margin-right: 30%;
+        }
+
+        .left {
+            width: 52rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: dodgerblue;
+        }
+
+        .right {
+            width: 52rem;
+            font-size: 2rem;
+            background-color: gray;
+        }
+    </style>
+
+
+    <script defer src="script.js"></script>
+</head>
+
+<body>
+
+    <div class="corpo">
+
+        <header>
+            <h1>Projeto: Automação de Decisão</h1>
+            <h2 class="titulo-etapa between">Etapa 01 / XX</h2>
+
+            <button class="btn again">Again!</button>
+
+        </header>
+
+        <main>
+            <section class="left">
+
+
+                <div class="etapa-1">
+
+                    <label for="nome">Nome:</label><br>
+                    <input type="text" id="nome" name="nome" value=""><br>
+                    <label for="data-de-nascimento">Data de Nascimento:</label><br>
+                    <input type="text" id="data-de-nascimento" name="data-de-nascicmento" value=""><br>
+
+                    <input type="radio" id="homem" name="sexo" value="homem">
+                    <label for="Homem">Homem</label><br>
+                    <input type="radio" id="mulher" name="sexo" value="mulher">
+                    <label for="female">Mulher</label><br>
+                    <button class="btn gravar">Gravar</button>
+
+                </div>
+
+            </section>
+
+            <section class="right">
+                <p>Apenas um texto para ocupar espaço</p>
+
+            </section>
+        </main>
+
+
+
+
+
+    </div>
+
+
+</body>
+
+</html>

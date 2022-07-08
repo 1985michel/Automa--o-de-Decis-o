@@ -1,0 +1,1087 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html>
+<html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml" xmlns:menu="http://previdencia.org.br/menu">
+
+<head>
+    <meta content="text/html; charset=ISO-8859-1" http-equiv="content-type" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script type="text/javascript">
+        var secondsBeforeExpire = 1200,  // variável utilizada no monitor da sessão (cnis_custom)
+            isAtendimentoEmAndamento = false; // variável utilizada no monitoramento do atendimento (tema.dtpinss)
+    </script>
+    <link type="text/css" rel="stylesheet"
+        href="https://cnis.inss.gov.br/cnis/faces/javax.faces.resource/primefaces.css?ln=primefaces" />
+    <script type="text/javascript"
+        src="https://cnis.inss.gov.br/cnis/faces/javax.faces.resource/jquery/jquery.js?ln=primefaces"></script>
+    <script type="text/javascript"
+        src="https://cnis.inss.gov.br/cnis/faces/javax.faces.resource/jquery/jquery-plugins.js?ln=primefaces"></script>
+    <script type="text/javascript"
+        src="https://cnis.inss.gov.br/cnis/faces/javax.faces.resource/primefaces.js?ln=primefaces"></script>
+    <link type="text/css" rel="stylesheet"
+        href="https://cnis.inss.gov.br/cnis/faces/javax.faces.resource/css/portal.pack.min.css" />
+    <script type="text/javascript"
+        src="https://cnis.inss.gov.br/cnis/faces/javax.faces.resource/javascript/portal.pack.min.js"></script>
+    <link type="text/css" rel="stylesheet"
+        href="https://cnis.inss.gov.br/cnis/faces/javax.faces.resource/static_custom/mdm.css" />
+    <script type="text/javascript"
+        src="https://cnis.inss.gov.br/cnis/faces/javax.faces.resource/primefaces-extensions.js?ln=primefaces-extensions&amp;v=2.0.0"></script>
+    <link type="text/css" rel="stylesheet"
+        href="https://cnis.inss.gov.br/cnis/faces/javax.faces.resource/blockui/blockui.css?ln=primefaces-extensions&amp;v=2.0.0" />
+    <script type="text/javascript"
+        src="https://cnis.inss.gov.br/cnis/faces/javax.faces.resource/blockui/blockui.js?ln=primefaces-extensions&amp;v=2.0.0"></script>
+    <link type="text/css" rel="stylesheet"
+        href="https://cnis.inss.gov.br/cnis/faces/javax.faces.resource/tooltip/tooltip.css?ln=primefaces-extensions&amp;v=2.0.0" />
+    <script type="text/javascript"
+        src="https://cnis.inss.gov.br/cnis/faces/javax.faces.resource/tooltip/tooltip.js?ln=primefaces-extensions&amp;v=2.0.0"></script>
+    <title>
+        CNIS - Cadastro Nacional de Informações Sociais -
+        Identificação de Pessoa Física
+    </title>
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="pragma" content="no-cache" />
+    <meta http-equiv="expires" content="-1" />
+    <link rel="shortcut icon" href="https://cnis.inss.gov.br/cnis/resources/images/favicon.ico" />
+    <link rel="apple-touch-icon" href="https://cnis.inss.gov.br/cnis/resources/images/apple-touch-icon.png" />
+    <!--[if lt IE 9]><script src="/cnis/resources/javascript/html5.js"></script><![endif]-->
+</head>
+
+<body>
+
+    <div class="navbar navbar-default navbar-topo navbar-fixed-top" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span
+                        class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-status" href="#" alt="CNIS" title="Cadastro Nacional de Informações Sociais">
+                    <span class="logo-sistema">CNIS</span>
+                </a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+
+                    <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <span class="ico-user"></span>010.631.191-38 <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu userProfile" role="menu">
+                            <li>
+                                <h3>Michel Fernandes Ribeiro
+                                </h3>
+                            </li>
+                            <li>
+                                <h4>
+                                    <small>Cargo</small>
+                                </h4>
+                                <h5>SERVIDOR
+                                </h5>
+                            </li>
+                            <li>
+                                <h4>
+                                    <small>Abrangência / UO</small>
+                                </h4>
+                                <h5>23001240
+                                </h5>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <form id="MenuTopoSair" name="MenuTopoSair" method="post"
+                            action="https://cnis.inss.gov.br/cnis/faces/pages/pfcnis/consultaPessoaFisicaComum/consultarPFDadosCadastrais2.xhtml"
+                            enctype="application/x-www-form-urlencoded">
+                            <input type="hidden" name="MenuTopoSair" value="MenuTopoSair" />
+                            <a id="MenuTopoSair:itemMenuSair" href="#"
+                                class="ui-commandlink ui-widget btn btn-danger navbar-btn logout"
+                                onclick="if (!finalizar(event)) return false;;PrimeFaces.addSubmitParam('MenuTopoSair',{'MenuTopoSair:itemMenuSair':'MenuTopoSair:itemMenuSair'}).submit('MenuTopoSair');return false;">
+                                <span class="ico-door-out"></span> Sair
+                            </a>
+                            <script id="MenuTopoSair:confirmaDeletarDadosTabelasVinculo_s"
+                                type="text/javascript">$(function () { PrimeFaces.cw("ConfirmDialog", "dialogoConfirmaFinalizarAtendimentoTopoPainelCidadaowv", { id: "MenuTopoSair:confirmaDeletarDadosTabelasVinculo", widgetVar: "dialogoConfirmaFinalizarAtendimentoTopoPainelCidadaowv", closeOnEscape: true }); });</script>
+                            <div id="MenuTopoSair:confirmaDeletarDadosTabelasVinculo"
+                                class="ui-confirm-dialog ui-dialog ui-widget ui-widget-content ui-overlay-hidden ui-corner-all ui-shadow">
+                                <div class="ui-dialog-titlebar ui-widget-header ui-helper-clearfix ui-corner-top"><span
+                                        class="ui-dialog-title">Atenção</span><a href="#"
+                                        class="ui-dialog-titlebar-icon ui-dialog-titlebar-close ui-corner-all"><span
+                                            class="ui-icon ui-icon-closethick"></span></a></div>
+                                <div class="ui-dialog-content ui-widget-content"><span
+                                        class="ui-icon ui-icon-alert ui-confirm-dialog-severity"></span><span
+                                        class="ui-confirm-dialog-message">Existem requerimentos não finalizados. Deseja
+                                        finalizar o atendimento?</span></div>
+                                <div class="ui-dialog-buttonpane ui-dialog-footer ui-widget-content ui-helper-clearfix">
+                                    <button id="MenuTopoSair:botaoConfirmaFinalizarAtendimentoPainelCidadao"
+                                        name="MenuTopoSair:botaoConfirmaFinalizarAtendimentoPainelCidadao"
+                                        class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"
+                                        onclick="" type="submit"><span class="ui-button-text ui-c">Sim</span></button>
+                                    <script id="MenuTopoSair:botaoConfirmaFinalizarAtendimentoPainelCidadao_s"
+                                        type="text/javascript">PrimeFaces.cw("CommandButton", "widgetBotaoConfirmaFinalizarAtendimentoPainelCidadao", { id: "MenuTopoSair:botaoConfirmaFinalizarAtendimentoPainelCidadao", widgetVar: "widgetBotaoConfirmaFinalizarAtendimentoPainelCidadao" });</script>
+                                    <button id="MenuTopoSair:botaoNaoConfirmaFinalizarAtendimentoPainelCidadao"
+                                        name="MenuTopoSair:botaoNaoConfirmaFinalizarAtendimentoPainelCidadao"
+                                        class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"
+                                        onclick="PF('dialogoConfirmaFinalizarAtendimentoTopoPainelCidadaowv').hide();"
+                                        type="button"><span class="ui-button-text ui-c">Não</span></button>
+                                    <script id="MenuTopoSair:botaoNaoConfirmaFinalizarAtendimentoPainelCidadao_s"
+                                        type="text/javascript">PrimeFaces.cw("CommandButton", "widget_MenuTopoSair_botaoNaoConfirmaFinalizarAtendimentoPainelCidadao", { id: "MenuTopoSair:botaoNaoConfirmaFinalizarAtendimentoPainelCidadao", widgetVar: "widget_MenuTopoSair_botaoNaoConfirmaFinalizarAtendimentoPainelCidadao" });</script>
+                                </div>
+                            </div><input type="hidden" name="javax.faces.ViewState" id="javax.faces.ViewState"
+                                value="-1958632712552502682:3496624504967069676" autocomplete="off" />
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="navbar navbar-fixed-top navbar-menu">
+        <form id="formMenu" name="formMenu" method="post"
+            action="https://cnis.inss.gov.br/cnis/faces/pages/pfcnis/consultaPessoaFisicaComum/consultarPFDadosCadastrais2.xhtml"
+            class="hidden-print" enctype="application/x-www-form-urlencoded">
+            <input type="hidden" name="formMenu" value="formMenu" />
+
+            <nav id="navegacao" role="navigation">
+                <ul id="main-menu" class="sm sm-datainss" role="menubar">
+                    <li class="current" role="menuitem">
+                        <script type="text/javascript"
+                            src="https://cnis.inss.gov.br/cnis/faces/javax.faces.resource/jsf.js?ln=javax.faces"></script>
+                        <a id="formMenu:identificarFiliadoPainelCidadao" href="#"
+                            onclick="mojarra.jsfcljs(document.getElementById('formMenu'),{'formMenu:identificarFiliadoPainelCidadao':'formMenu:identificarFiliadoPainelCidadao'},'');return false">Painel</a>
+                    </li>
+                    <li role="menuitem" aria-haspopup="true">
+                        <a href="#" id="itemMenuConsultasDoSistema">Consulta</a>
+                        <ul>
+                            <li aria-haspopup="true">
+                                <a href="#" id="itemMenuPessoaFisica">Pessoa Física</a>
+                                <ul>
+                                    <li><a id="formMenu:dadosCadastraisPF" href="#"
+                                            onclick="mojarra.jsfcljs(document.getElementById('formMenu'),{'formMenu:dadosCadastraisPF':'formMenu:dadosCadastraisPF'},'');return false">Dados
+                                            Cadastrais</a>
+                                    </li>
+                                    <li><a id="formMenu:itemMenuElos" href="#"
+                                            onclick="mojarra.jsfcljs(document.getElementById('formMenu'),{'formMenu:itemMenuElos':'formMenu:itemMenuElos'},'');return false">Elos</a>
+                                    </li>
+                                    <li><a id="formMenu:itemMenuRemuneradosPrevidencia" href="#"
+                                            onclick="mojarra.jsfcljs(document.getElementById('formMenu'),{'formMenu:itemMenuRemuneradosPrevidencia':'formMenu:itemMenuRemuneradosPrevidencia'},'');return false">Renumerados
+                                            Previdência</a>
+                                    </li>
+                                    <li><a id="formMenu:itemMenuRemuneradosPIS" href="#"
+                                            onclick="mojarra.jsfcljs(document.getElementById('formMenu'),{'formMenu:itemMenuRemuneradosPIS':'formMenu:itemMenuRemuneradosPIS'},'');return false">Renumerados
+                                            PIS</a>
+                                    </li>
+                                    <li><a id="formMenu:historicoAtualizacaoPF" href="#"
+                                            onclick="mojarra.jsfcljs(document.getElementById('formMenu'),{'formMenu:historicoAtualizacaoPF':'formMenu:historicoAtualizacaoPF'},'');return false">Histórico
+                                            de atualização Portal CNIS</a>
+                                    </li>
+                                    <li><a id="formMenu:itemMenuDadosHistoricosDeCIAntigo" href="#"
+                                            onclick="mojarra.jsfcljs(document.getElementById('formMenu'),{'formMenu:itemMenuDadosHistoricosDeCIAntigo':'formMenu:itemMenuDadosHistoricosDeCIAntigo'},'');return false">Dados
+                                            Históricos de CI antigo</a>
+                                    </li>
+                                    <li><a id="formMenu:itemMenuRelacionamentos" href="#"
+                                            onclick="mojarra.jsfcljs(document.getElementById('formMenu'),{'formMenu:itemMenuRelacionamentos':'formMenu:itemMenuRelacionamentos'},'');return false">Relacionamentos</a>
+                                    </li>
+                                    <li><a id="formMenu:itemMenuHistoricoDeAtualizacaoSistemaCADPF" href="#"
+                                            onclick="mojarra.jsfcljs(document.getElementById('formMenu'),{'formMenu:itemMenuHistoricoDeAtualizacaoSistemaCADPF':'formMenu:itemMenuHistoricoDeAtualizacaoSistemaCADPF'},'');return false">Histórico
+                                            de atualização Sistema CADPF</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li><a id="formMenu:identificarFiliadoConsultaExtrato" href="#"
+                                    onclick="mojarra.jsfcljs(document.getElementById('formMenu'),{'formMenu:identificarFiliadoConsultaExtrato':'formMenu:identificarFiliadoConsultaExtrato'},'');return false">Extrato
+                                    para SIBE</a>
+                            </li>
+                            <li><a id="formMenu:identificarFiliadoConsultaExtratoCidadao" href="#"
+                                    onclick="mojarra.jsfcljs(document.getElementById('formMenu'),{'formMenu:identificarFiliadoConsultaExtratoCidadao':'formMenu:identificarFiliadoConsultaExtratoCidadao'},'');return false">Extrato
+                                    CNIS Cidadão para PRISMA/SABI</a>
+                            </li>
+                            <li><a id="formMenu:consultarEmpregador" href="#"
+                                    onclick="mojarra.jsfcljs(document.getElementById('formMenu'),{'formMenu:consultarEmpregador':'formMenu:consultarEmpregador'},'');return false">Pessoa
+                                    Jurídica/Equiparado</a>
+                            </li>
+                            <li><a id="formMenu:identificarFiliadoConsultaMicroficha" href="#"
+                                    onclick="mojarra.jsfcljs(document.getElementById('formMenu'),{'formMenu:identificarFiliadoConsultaMicroficha':'formMenu:identificarFiliadoConsultaMicroficha'},'');return false">Microficha</a>
+                            </li>
+                            <li><a id="formMenu:consultarMoeda" href="#"
+                                    onclick="mojarra.jsfcljs(document.getElementById('formMenu'),{'formMenu:consultarMoeda':'formMenu:consultarMoeda'},'');return false">Moeda</a>
+                            </li>
+                            <li><a id="formMenu:identificarFiliadoConsultaAtividade" href="#"
+                                    onclick="mojarra.jsfcljs(document.getElementById('formMenu'),{'formMenu:identificarFiliadoConsultaAtividade':'formMenu:identificarFiliadoConsultaAtividade'},'');return false">Atividade</a>
+                            </li>
+                            <li><a id="formMenu:historicoBeneficio" href="#"
+                                    onclick="mojarra.jsfcljs(document.getElementById('formMenu'),{'formMenu:historicoBeneficio':'formMenu:historicoBeneficio'},'');return false">Histórico
+                                    Benefício</a>
+                            </li>
+                            <li><a id="formMenu:contribuicoesAnuaisEmpregadorRural" href="#"
+                                    onclick="mojarra.jsfcljs(document.getElementById('formMenu'),{'formMenu:contribuicoesAnuaisEmpregadorRural':'formMenu:contribuicoesAnuaisEmpregadorRural'},'');return false">Contribuições
+                                    Anuais do Empregador Rural</a>
+                            </li>
+                            <li><a id="formMenu:consultaRegistroPesca" href="#"
+                                    onclick="mojarra.jsfcljs(document.getElementById('formMenu'),{'formMenu:consultaRegistroPesca':'formMenu:consultaRegistroPesca'},'');return false">Registro
+                                    Geral de Pesca</a>
+                            </li>
+                            <li><a id="formMenu:filtrarRequerimentos" href="#"
+                                    onclick="mojarra.jsfcljs(document.getElementById('formMenu'),{'formMenu:filtrarRequerimentos':'formMenu:filtrarRequerimentos'},'');return false">Requerimentos</a>
+                            </li>
+                            <li aria-haspopup="true">
+                                <a href="#" id="itemMenuConsultar1">Contribuições
+                                </a>
+                                <ul>
+                                    <li>
+                                        <a href="https://cnis.inss.gov.br/cnis/faces/pages/cicnis/consulta/contribuicaoRecolhimentoConsulta.xhtml"
+                                            id="itemMenuConsultarRecolhimentos">Recolhimentos
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="https://cnis.inss.gov.br/cnis/faces/pages/cicnis/consulta/contribuicaoInvalidosConsulta.xhtml"
+                                            id="itemMenuConsultarAda">ADA
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="https://cnis.inss.gov.br/cnis/faces/pages/cicnis/consulta/contribuicaoGrps3Consulta.xhtml"
+                                            id="itemMenuConsultarGRPS3">GRPS-3
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="http://www-dicfn" target="_blank" id="itemMenuDICFN">DICF.N
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="https://cnis.inss.gov.br/cnis/faces/pages/cicnis/consulta/historicoAcertoConsulta.xhtml"
+                                            id="itemMenuConsultarHistoricoAcerto">Histórico de Acerto
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="https://cnis.inss.gov.br/cnis/faces/pages/cicnis/consulta/historicoAcertoSARCIConsulta.xhtml"
+                                            id="itemMenuConsultarHistoricoAcertoSarci">Histórico de Acerto SARCI
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="https://cnis.inss.gov.br/cnis/faces/pages/consultas/gfipContribuinteIndividual/consultarGFIPContribuinteIndividual.xhtml"
+                                    id="itemMenuValoresCIGFIPINSS">Valores CI GFIP/eSocial/INSS</a>
+                            </li>
+                            <li><a id="formMenu:itemMenuReclamatorias" href="#"
+                                    onclick="mojarra.jsfcljs(document.getElementById('formMenu'),{'formMenu:itemMenuReclamatorias':'formMenu:itemMenuReclamatorias'},'');return false">Reclamatórias</a>
+                                <ul>
+                                    <li>
+                                        <a href="https://cnis.inss.gov.br/cnis/faces/pages/consultas/reclamatoria/consultaReclamatoriaPorNit.xhtml"
+                                            id="itemMenuConsultaPorNIT2">Consulta por NIT
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="https://cnis.inss.gov.br/cnis/faces/pages/consultas/reclamatoria/consultaReclamatoriaPorNumeroProcessoJuizo.xhtml"
+                                            id="itemMenuConsultaPorProcessoJuizo">Consulta por Processo/Juízo
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li><a id="formMenu:filtrarAuditoria" href="#"
+                                    onclick="mojarra.jsfcljs(document.getElementById('formMenu'),{'formMenu:filtrarAuditoria':'formMenu:filtrarAuditoria'},'');return false">Logs
+                                    de Auditoria</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="current" role="menuitem" aria-haspopup="true">
+                        <a href="#" id="itemMenuInscricao">Inscrição</a>
+                        <ul class="submenu">
+                            <li><a id="formMenu:itemMenuFiliado" href="#"
+                                    onclick="mojarra.jsfcljs(document.getElementById('formMenu'),{'formMenu:itemMenuFiliado':'formMenu:itemMenuFiliado'},'');return false">Filiado</a>
+                            </li>
+                            <li><a id="formMenu:itemMenuNaoFiliado" href="#"
+                                    onclick="mojarra.jsfcljs(document.getElementById('formMenu'),{'formMenu:itemMenuNaoFiliado':'formMenu:itemMenuNaoFiliado'},'');return false">Não
+                                    Filiado</a>
+                            </li>
+                            <li><a id="formMenu:itemMenuViaRequerimento" href="#"
+                                    onclick="mojarra.jsfcljs(document.getElementById('formMenu'),{'formMenu:itemMenuViaRequerimento':'formMenu:itemMenuViaRequerimento'},'');return false">Via
+                                    Requerimento</a>
+                            </li>
+                            <li><a id="formMenu:itemMenuComprovante" href="#"
+                                    onclick="mojarra.jsfcljs(document.getElementById('formMenu'),{'formMenu:itemMenuComprovante':'formMenu:itemMenuComprovante'},'');return false">Comprovante</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="current" role="menuitem">
+                        <a href="#" id="itemMenuAtualizacaoPF">Atualização PF</a>
+                        <ul class="submenu">
+                            <li><a id="formMenu:itemMenuAtualizarDadosDePF" href="#"
+                                    onclick="mojarra.jsfcljs(document.getElementById('formMenu'),{'formMenu:itemMenuAtualizarDadosDePF':'formMenu:itemMenuAtualizarDadosDePF'},'');return false">Atualizar
+                                    Dados de PF</a>
+                            </li>
+                            <li><a id="formMenu:itemMenuComplementarDadosSE" href="#"
+                                    onclick="mojarra.jsfcljs(document.getElementById('formMenu'),{'formMenu:itemMenuComplementarDadosSE':'formMenu:itemMenuComplementarDadosSE'},'');return false">Complementar
+                                    Dados SE</a>
+                            </li>
+                            <li><a id="formMenu:identificarPF" href="#"
+                                    onclick="mojarra.jsfcljs(document.getElementById('formMenu'),{'formMenu:identificarPF':'formMenu:identificarPF'},'');return false">Via
+                                    Requerimento</a>
+                            </li>
+                        </ul>
+                    </li> <!-- DM.039509 -->
+                    <!-- DM.039509 -->
+                    <li class="current" role="menuitem">
+                        <a href="#" id="itemMenuAtualizacaoVRCE">Atualização VRCE</a>
+                        <ul class="submenu">
+                            <!-- DM.039509 -->
+                            <li aria-haspopup="true">
+                                <a href="#" id="itemMenuCriarRequerimento">Requerimento</a>
+                                <ul>
+                                    <li><a id="formMenu:identificarFiliadoVRC" href="#"
+                                            onclick="mojarra.jsfcljs(document.getElementById('formMenu'),{'formMenu:identificarFiliadoVRC':'formMenu:identificarFiliadoVRC'},'');return false">VRE</a>
+                                    </li> <!-- DM.039509 -->
+                                    <li>
+                                        <a href="#" id="itemMenuContribuicoes">Contribuições</a>
+                                        <ul>
+                                            <li><a id="formMenu:identificarFiliadoCI" href="#"
+                                                    onclick="mojarra.jsfcljs(document.getElementById('formMenu'),{'formMenu:identificarFiliadoCI':'formMenu:identificarFiliadoCI'},'');return false">Filiado</a>
+                                            </li>
+                                            <li><a id="formMenu:identificarEmpresaCI" href="#"
+                                                    onclick="mojarra.jsfcljs(document.getElementById('formMenu'),{'formMenu:identificarEmpresaCI':'formMenu:identificarEmpresaCI'},'');return false">Empresa</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li><a id="formMenu:identificarFiliadoVRCSE" href="#"
+                                            onclick="mojarra.jsfcljs(document.getElementById('formMenu'),{'formMenu:identificarFiliadoVRCSE':'formMenu:identificarFiliadoVRCSE'},'');return false">Segurado
+                                            Especial</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li><a id="formMenu:filtrarRequerimentosParaAnalise" href="#"
+                                    onclick="mojarra.jsfcljs(document.getElementById('formMenu'),{'formMenu:filtrarRequerimentosParaAnalise':'formMenu:filtrarRequerimentosParaAnalise'},'');return false">Analisar</a>
+                            </li>
+                            <li><a id="formMenu:filtrarRequerimentosParaHomologacao" href="#"
+                                    onclick="mojarra.jsfcljs(document.getElementById('formMenu'),{'formMenu:filtrarRequerimentosParaHomologacao':'formMenu:filtrarRequerimentosParaHomologacao'},'');return false">Homologar</a>
+                            </li>
+                            <li aria-haspopup="true">
+                                <a href="#" id="itemMenuConsultarRequerimentosCancelamento">Cancelar
+                                </a>
+                                <ul>
+                                    <li><a id="formMenu:filtrarRequerimentosParaSolicitarCancelamento" href="#"
+                                            onclick="mojarra.jsfcljs(document.getElementById('formMenu'),{'formMenu:filtrarRequerimentosParaSolicitarCancelamento':'formMenu:filtrarRequerimentosParaSolicitarCancelamento'},'');return false">Solicitar</a>
+                                    </li>
+                                    <li><a id="formMenu:filtrarRequerimentosParAnalisarCancelamento" href="#"
+                                            onclick="mojarra.jsfcljs(document.getElementById('formMenu'),{'formMenu:filtrarRequerimentosParAnalisarCancelamento':'formMenu:filtrarRequerimentosParAnalisarCancelamento'},'');return false">Analisar
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li aria-haspopup="true">
+                            </li>
+                            <li aria-haspopup="true">
+                            </li>
+                        </ul>
+                    </li>
+
+                    <!-- DM.039509 -->
+                    <li class="current" role="menuitem">
+                        <a href="#" id="itemMenuContingencia">Contingência</a>
+                        <ul class="submenu">
+                            <li>
+                                <a href="https://cnis.inss.gov.br/cnis/faces/pages/requerimento/contingencia/listarMotivosContingenciasAPS.xhtml"
+                                    id="itemMenuContingenciaListar">Listar</a>
+                            </li>
+                            <li>
+                                <a href="https://cnis.inss.gov.br/cnis/faces/pages/requerimento/contingencia/incluirMotivoContingencia.xhtml"
+                                    id="itemMenuContingenciaIncluir">Incluir</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="current" role="menuitem">
+                        <a href="#" id="itemMenuManuais">Manuais</a>
+                        <ul class="submenu">
+                            <li>
+                                <a href="https://cnis.inss.gov.br/cnis/faces/pages/manuais/listarManuais.xhtml"
+                                    id="itemMenuManuaisListar">Listar</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav><input type="hidden" name="javax.faces.ViewState" id="javax.faces.ViewState"
+                value="-1958632712552502682:3496624504967069676" autocomplete="off" />
+        </form>
+    </div>
+    <div class="container" role="main">
+        <section class="cnisprj" id="conteudo"><span id="j_idt177"></span>
+            <script type="text/javascript">$(function () { PrimeFaces.focus(); });</script>
+            <h1>Identificação de Pessoa Física</h1><span id="j_idt183:j_idt184"></span>
+            <script id="j_idt183:j_idt184_s"
+                type="text/javascript">$(function () { PrimeFaces.cw('Growl', 'widget_j_idt183_j_idt184', { id: 'j_idt183:j_idt184', sticky: false, life: 10000, escape: true, msgs: [] }); });</script>
+            <div class="mensagem">
+                <div id="j_idt183:mensagensContexto" class="ui-messages ui-widget" aria-live="polite"></div>
+            </div>
+            <form id="formNovo" name="formNovo" method="post"
+                action="https://cnis.inss.gov.br/cnis/faces/pages/pfcnis/consultaPessoaFisicaComum/consultarPFDadosCadastrais2.xhtml"
+                class="form-horizontal" enctype="application/x-www-form-urlencoded">
+                <input type="hidden" name="formNovo" value="formNovo" />
+                <div id="formNovo:opcoesConsulta"
+                    class="ui-accordion ui-widget ui-helper-reset ui-hidden-container buscapf" role="tablist"
+                    data-widget="accordionPanelOpcoesConsulta">
+                    <h3 class="ui-accordion-header ui-helper-reset ui-state-default ui-state-active ui-corner-top"
+                        role="tab" aria-expanded="true"><span class="ui-icon ui-icon-triangle-1-s"></span>Pesquisa
+                        Básica</h3>
+                    <div id="formNovo:opcoesConsulta:pesquisaBasica"
+                        class="ui-accordion-content ui-helper-reset ui-widget-content" role="tabpanel"
+                        aria-hidden="false">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="form-group col-md-6" id="div_cpf">
+                                    <div class="dicaSimples">Informe um CPF válido com dígito verificador.
+                                    </div>
+                                    <div>
+                                        <div id="formNovo:opcoesConsulta:tipoConsultaBasica"
+                                            class="ui-selectonebutton ui-buttonset ui-widget ui-corner-all">
+                                            <div
+                                                class="ui-button ui-widget ui-state-default ui-button-text-only ui-corner-left ui-state-active">
+                                                <input id="formNovo:opcoesConsulta:tipoConsultaBasica:0"
+                                                    name="formNovo:opcoesConsulta:tipoConsultaBasica" type="radio"
+                                                    value="cpf" class="ui-helper-hidden"
+                                                    onchange="window.inputNumeroConsulta=PF('inputNumeroConsultaWv').getValue();PrimeFaces.ab({s:'formNovo:opcoesConsulta:tipoConsultaBasica',e:'change',p:'formNovo:opcoesConsulta:tipoConsultaBasica',u:'formNovo:opcoesConsulta',g:false,onco:function(xhr,status,args){PF('inputNumeroConsultaWv').setValue(window.inputNumeroConsulta);window.inputNumeroConsulta=null;}});"
+                                                    checked="checked" /><span class="ui-button-text ui-c">CPF</span>
+                                            </div>
+                                            <div
+                                                class="ui-button ui-widget ui-state-default ui-button-text-only ui-corner-right">
+                                                <input id="formNovo:opcoesConsulta:tipoConsultaBasica:1"
+                                                    name="formNovo:opcoesConsulta:tipoConsultaBasica" type="radio"
+                                                    value="nit" class="ui-helper-hidden"
+                                                    onchange="window.inputNumeroConsulta=PF('inputNumeroConsultaWv').getValue();PrimeFaces.ab({s:'formNovo:opcoesConsulta:tipoConsultaBasica',e:'change',p:'formNovo:opcoesConsulta:tipoConsultaBasica',u:'formNovo:opcoesConsulta',g:false,onco:function(xhr,status,args){PF('inputNumeroConsultaWv').setValue(window.inputNumeroConsulta);window.inputNumeroConsulta=null;}});" /><span
+                                                    class="ui-button-text ui-c">NIT</span>
+                                            </div>
+                                        </div>
+                                        <script id="formNovo:opcoesConsulta:tipoConsultaBasica_s"
+                                            type="text/javascript">PrimeFaces.cw("SelectOneButton", "widget_formNovo_opcoesConsulta_tipoConsultaBasica", { id: "formNovo:opcoesConsulta:tipoConsultaBasica", widgetVar: "widget_formNovo_opcoesConsulta_tipoConsultaBasica" });</script>
+                                        <label id="formNovo:opcoesConsulta:j_idt192"
+                                            class="ui-outputlabel ui-widget sr-only"
+                                            for="formNovo:opcoesConsulta:inputNumeroConsulta">CPF<span
+                                                class="ui-outputlabel-rfi">*</span></label><span
+                                            id="formNovo:opcoesConsulta:j_idt193"></span>
+                                        <script type="text/javascript">$(function () { PrimeFaces.focus(); });</script>
+                                        <input id="formNovo:opcoesConsulta:inputNumeroConsulta"
+                                            name="formNovo:opcoesConsulta:inputNumeroConsulta" type="text"
+                                            class="ui-inputfield ui-inputmask ui-widget ui-state-default ui-corner-all" />
+                                        <script id="formNovo:opcoesConsulta:inputNumeroConsulta_s"
+                                            type="text/javascript">PrimeFaces.cw("InputMask", "inputNumeroConsultaWv", { id: "formNovo:opcoesConsulta:inputNumeroConsulta", widgetVar: "inputNumeroConsultaWv", mask: "999.999.999-99" });</script>
+                                        <div id="formNovo:opcoesConsulta:msgInputNumeroConsulta" aria-live="polite"
+                                            class="ui-message"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <h3 class="ui-accordion-header ui-helper-reset ui-state-default ui-corner-all" role="tab"
+                        aria-expanded="false"><span class="ui-icon ui-icon-triangle-1-e"></span>Pesquisa Avançada</h3>
+                    <div id="formNovo:opcoesConsulta:pesquisaAvancada"
+                        class="ui-accordion-content ui-helper-reset ui-widget-content ui-helper-hidden" role="tabpanel"
+                        aria-hidden="true">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="dicaSimples">Por favor, informe os critérios para realização da pesquisa.
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-6"><label id="formNovo:opcoesConsulta:j_idt198"
+                                        class="ui-outputlabel ui-widget col-sm-4 control-label label required-label"
+                                        for="formNovo:opcoesConsulta:inputNomeFiliado">Nome:</label>
+                                    <div class="col-sm-8"><span id="formNovo:opcoesConsulta:j_idt200"></span>
+                                        <script type="text/javascript">$(function () { PrimeFaces.focus(); });</script>
+                                        <input id="formNovo:opcoesConsulta:inputNomeFiliado"
+                                            name="formNovo:opcoesConsulta:inputNomeFiliado" type="text" maxlength="100"
+                                            class="ui-inputfield ui-inputtext ui-widget ui-state-default ui-corner-all tamanho80" />
+                                        <script id="formNovo:opcoesConsulta:inputNomeFiliado_s"
+                                            type="text/javascript">PrimeFaces.cw("InputText", "widget_formNovo_opcoesConsulta_inputNomeFiliado", { id: "formNovo:opcoesConsulta:inputNomeFiliado", widgetVar: "widget_formNovo_opcoesConsulta_inputNomeFiliado" });</script>
+                                        <div id="formNovo:opcoesConsulta:msgInputNomeFiliado" aria-live="polite"
+                                            class="ui-message"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6"><label id="formNovo:opcoesConsulta:j_idt202"
+                                        class="ui-outputlabel ui-widget col-sm-4 control-label label"
+                                        for="formNovo:opcoesConsulta:inputDataNascimento_input">Data de
+                                        Nascimento:</label>
+                                    <div class="col-sm-8"><span id="formNovo:opcoesConsulta:inputDataNascimento"><input
+                                                id="formNovo:opcoesConsulta:inputDataNascimento_input"
+                                                name="formNovo:opcoesConsulta:inputDataNascimento_input" type="text"
+                                                class="ui-inputfield ui-widget ui-state-default ui-corner-all"
+                                                maxlength="10" size="10" /></span>
+                                        <script id="formNovo:opcoesConsulta:inputDataNascimento_s"
+                                            type="text/javascript">$(function () { PrimeFaces.cw("Calendar", "widget_formNovo_opcoesConsulta_inputDataNascimento", { id: "formNovo:opcoesConsulta:inputDataNascimento", widgetVar: "widget_formNovo_opcoesConsulta_inputDataNascimento", popup: true, locale: "pt_BR", dateFormat: "dd/mm/yy", maxDate: "today", yearRange: "-100:+0", changeMonth: true, changeYear: true, showOn: "button", mask: "99/99/9999" }); });</script>
+                                        <div id="formNovo:opcoesConsulta:msgInputDataNascimento" aria-live="polite"
+                                            class="ui-message"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-6"><label id="formNovo:opcoesConsulta:j_idt205"
+                                        class="ui-outputlabel ui-widget col-sm-4 control-label label"
+                                        for="formNovo:opcoesConsulta:inputNomeMae">Nome da Mãe:</label>
+                                    <div class="col-sm-8"><input id="formNovo:opcoesConsulta:inputNomeMae"
+                                            name="formNovo:opcoesConsulta:inputNomeMae" type="text" maxlength="100"
+                                            class="ui-inputfield ui-inputtext ui-widget ui-state-default ui-corner-all tamanho80" />
+                                        <script id="formNovo:opcoesConsulta:inputNomeMae_s"
+                                            type="text/javascript">PrimeFaces.cw("InputText", "widget_formNovo_opcoesConsulta_inputNomeMae", { id: "formNovo:opcoesConsulta:inputNomeMae", widgetVar: "widget_formNovo_opcoesConsulta_inputNomeMae" });</script>
+                                        <div id="formNovo:opcoesConsulta:msgInputNomeMae" aria-live="polite"
+                                            class="ui-message"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6"><label id="formNovo:opcoesConsulta:j_idt208"
+                                        class="ui-outputlabel ui-widget col-sm-4 control-label label"
+                                        for="formNovo:opcoesConsulta:inputIdentidade">Identidade:</label>
+                                    <div class="col-sm-8"><input id="formNovo:opcoesConsulta:inputIdentidade"
+                                            name="formNovo:opcoesConsulta:inputIdentidade" type="text" maxlength="10"
+                                            class="ui-inputfield ui-inputtext ui-widget ui-state-default ui-corner-all" />
+                                        <script id="formNovo:opcoesConsulta:inputIdentidade_s"
+                                            type="text/javascript">PrimeFaces.cw("InputText", "widget_formNovo_opcoesConsulta_inputIdentidade", { id: "formNovo:opcoesConsulta:inputIdentidade", widgetVar: "widget_formNovo_opcoesConsulta_inputIdentidade" });</script>
+                                        <div id="formNovo:opcoesConsulta:msgInputIdentidade" aria-live="polite"
+                                            class="ui-message"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-6"><label id="formNovo:opcoesConsulta:j_idt211"
+                                        class="ui-outputlabel ui-widget col-sm-4 control-label label"
+                                        for="formNovo:opcoesConsulta:inputTituloEleitor">Título de Eleitor:</label>
+                                    <div class="col-sm-8"><input id="formNovo:opcoesConsulta:inputTituloEleitor"
+                                            name="formNovo:opcoesConsulta:inputTituloEleitor" type="text" maxlength="20"
+                                            class="ui-inputfield ui-inputtext ui-widget ui-state-default ui-corner-all" />
+                                        <script id="formNovo:opcoesConsulta:inputTituloEleitor_s"
+                                            type="text/javascript">PrimeFaces.cw("InputText", "widget_formNovo_opcoesConsulta_inputTituloEleitor", { id: "formNovo:opcoesConsulta:inputTituloEleitor", widgetVar: "widget_formNovo_opcoesConsulta_inputTituloEleitor" });</script>
+                                        <div id="formNovo:opcoesConsulta:msgInputTituloEleitor" aria-live="polite"
+                                            class="ui-message"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6"><label id="formNovo:opcoesConsulta:j_idt214"
+                                        class="ui-outputlabel ui-widget col-sm-4 control-label label"
+                                        for="formNovo:opcoesConsulta:inputCtps">Número da CTPS:</label>
+                                    <div class="col-sm-8"><input id="formNovo:opcoesConsulta:inputCtps"
+                                            name="formNovo:opcoesConsulta:inputCtps" type="text" maxlength="20"
+                                            class="ui-inputfield ui-inputtext ui-widget ui-state-default ui-corner-all" />
+                                        <script id="formNovo:opcoesConsulta:inputCtps_s"
+                                            type="text/javascript">PrimeFaces.cw("InputText", "widget_formNovo_opcoesConsulta_inputCtps", { id: "formNovo:opcoesConsulta:inputCtps", widgetVar: "widget_formNovo_opcoesConsulta_inputCtps" });</script>
+                                        <div id="formNovo:opcoesConsulta:msgInputCtps" aria-live="polite"
+                                            class="ui-message"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-6"><label id="formNovo:opcoesConsulta:j_idt217"
+                                        class="ui-outputlabel ui-widget col-sm-4 control-label label"
+                                        for="formNovo:opcoesConsulta:inputCnh">CNH:</label>
+                                    <div class="col-sm-8"><input id="formNovo:opcoesConsulta:inputCnh"
+                                            name="formNovo:opcoesConsulta:inputCnh" type="text" maxlength="20"
+                                            class="ui-inputfield ui-inputtext ui-widget ui-state-default ui-corner-all" />
+                                        <script id="formNovo:opcoesConsulta:inputCnh_s"
+                                            type="text/javascript">PrimeFaces.cw("InputText", "widget_formNovo_opcoesConsulta_inputCnh", { id: "formNovo:opcoesConsulta:inputCnh", widgetVar: "widget_formNovo_opcoesConsulta_inputCnh" });</script>
+                                        <div id="formNovo:opcoesConsulta:msgInputCnh" aria-live="polite"
+                                            class="ui-message"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div><input type="hidden" id="formNovo:opcoesConsulta_active" name="formNovo:opcoesConsulta_active"
+                        value="0" />
+                </div>
+                <script id="formNovo:opcoesConsulta_s"
+                    type="text/javascript">PrimeFaces.cw("AccordionPanel", "accordionPanelOpcoesConsulta", { id: "formNovo:opcoesConsulta", widgetVar: "accordionPanelOpcoesConsulta", behaviors: { tabChange: function (ext) { PrimeFaces.ab({ s: 'formNovo:opcoesConsulta', e: 'tabChange', p: 'formNovo:opcoesConsulta', u: 'formNovo:opcoesConsulta' }, ext); } } });</script>
+
+                <div class="boxBotoes"><button id="formNovo:acaoPesquisar" name="formNovo:acaoPesquisar"
+                        class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-left principal"
+                        onclick="PrimeFaces.ab({s:'formNovo:acaoPesquisar',u:'formNovo',onco:function(xhr,status,args){PF('widgetPanelListaResultadosConsultaPf')[args.validationFailed ? 'close' : 'show']();}});return false;"
+                        type="submit"><span class="ui-button-icon-left ui-icon ui-c ui-icon-search"></span><span
+                            class="ui-button-text ui-c">Pesquisar</span></button>
+                    <script id="formNovo:acaoPesquisar_s"
+                        type="text/javascript">PrimeFaces.cw("CommandButton", "widget_formNovo_acaoPesquisar", { id: "formNovo:acaoPesquisar", widgetVar: "widget_formNovo_acaoPesquisar" });</script>
+                </div>
+                <div id="formNovo:panelListaResultadosConsultaPf"
+                    class="ui-panel ui-widget ui-widget-content ui-corner-all semborda ui-helper-hidden"
+                    data-widget="widgetPanelListaResultadosConsultaPf">
+                    <div id="formNovo:panelListaResultadosConsultaPf_content"
+                        class="ui-panel-content ui-widget-content">
+                        <div id="formNovo:lista" class="ui-datatable ui-widget">
+                            <div class="ui-datatable-tablewrapper">
+                                <table role="grid">
+                                    <thead id="formNovo:lista_head">
+                                        <tr role="row">
+                                            <th id="formNovo:lista:expandirDetalhamentoResultadoPF"
+                                                class="ui-state-default" role="columnheader" style="width:36px"><span
+                                                    class="ui-column-title"></span></th>
+                                            <th id="formNovo:lista:j_idt227" class="ui-state-default"
+                                                role="columnheader" style="width:99px"><span
+                                                    class="ui-column-title">NIT</span></th>
+                                            <th id="formNovo:lista:j_idt229" class="ui-state-default"
+                                                role="columnheader"><span class="ui-column-title">Nome</span></th>
+                                            <th id="formNovo:lista:j_idt231" class="ui-state-default"
+                                                role="columnheader"><span class="ui-column-title">Nome da Mãe</span>
+                                            </th>
+                                            <th id="formNovo:lista:j_idt233"
+                                                class="ui-state-default hidden-xs hidden-sm" role="columnheader"
+                                                style="width:102px"><span class="ui-column-title">Data de
+                                                    Nascimento</span></th>
+                                            <th id="formNovo:lista:j_idt235"
+                                                class="ui-state-default hidden-xs hidden-sm" role="columnheader"
+                                                style="width:102px"><span class="ui-column-title">CPF</span></th>
+                                            <th id="formNovo:lista:j_idt237"
+                                                class="ui-state-default hidden-xs hidden-sm hidden-md"
+                                                role="columnheader" style="width:130px"><span
+                                                    class="ui-column-title">Situação</span></th>
+                                            <th id="formNovo:lista:j_idt240" class="ui-state-default text-center"
+                                                role="columnheader" style="width:120px"><span
+                                                    class="ui-column-title">Ações</span></th>
+                                        </tr>
+                                    </thead>
+                                    <tfoot id="formNovo:lista_foot"></tfoot>
+                                    <tbody id="formNovo:lista_data" class="ui-datatable-data ui-widget-content">
+                                        <tr class="ui-widget-content ui-datatable-empty-message">
+                                            <td colspan="8">Não foram encontrados registros para os critérios informados
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <script id="formNovo:lista_s"
+                            type="text/javascript">$(function () { PrimeFaces.cw("DataTable", "widget_formNovo_lista", { id: "formNovo:lista", widgetVar: "widget_formNovo_lista", paginator: { id: ['formNovo:lista_paginator_bottom'], rows: 10, rowCount: 0, page: 0, currentPageTemplate: '[ {currentPage} de {totalPages} ]', alwaysVisible: false }, expansion: true, rowExpandMode: "multiple", behaviors: { rowToggle: function (ext) { PrimeFaces.ab({ s: 'formNovo:lista', e: 'rowToggle', p: 'formNovo:lista' }, ext); } } }); });</script>
+                        <div class="boxBotoes"><button id="formNovo:imprimirConsultaPFResultadoCompleto"
+                                name="formNovo:imprimirConsultaPFResultadoCompleto"
+                                class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-left secundario"
+                                onclick="this.form.target='_blank';;" type="submit"
+                                onmouseout="this.form.target='_self';"><span
+                                    class="ui-button-icon-left ui-icon ui-c ui-icon-print"></span><span
+                                    class="ui-button-text ui-c">Imprimir Consulta</span></button>
+                            <script id="formNovo:imprimirConsultaPFResultadoCompleto_s"
+                                type="text/javascript">PrimeFaces.cw("CommandButton", "widget_formNovo_imprimirConsultaPFResultadoCompleto", { id: "formNovo:imprimirConsultaPFResultadoCompleto", widgetVar: "widget_formNovo_imprimirConsultaPFResultadoCompleto" });</script>
+                        </div>
+                    </div><input type="hidden" id="formNovo:panelListaResultadosConsultaPf_visible"
+                        name="formNovo:panelListaResultadosConsultaPf_visible" value="false" />
+                </div>
+                <script id="formNovo:panelListaResultadosConsultaPf_s"
+                    type="text/javascript">PrimeFaces.cw("Panel", "widgetPanelListaResultadosConsultaPf", { id: "formNovo:panelListaResultadosConsultaPf", widgetVar: "widgetPanelListaResultadosConsultaPf", closable: true, closeSpeed: 0 });</script>
+                <input type="hidden" name="javax.faces.ViewState" id="javax.faces.ViewState"
+                    value="-1958632712552502682:3496624504967069676" autocomplete="off" />
+            </form>
+            <div id="dialogDetalharDados"
+                class="ui-dialog ui-widget ui-widget-content ui-overlay-hidden ui-corner-all ui-shadow">
+                <div class="ui-dialog-titlebar ui-widget-header ui-helper-clearfix ui-corner-top"><span
+                        id="dialogDetalharDados_title" class="ui-dialog-title"></span><a href="#"
+                        class="ui-dialog-titlebar-icon ui-dialog-titlebar-close ui-corner-all"><span
+                            class="ui-icon ui-icon-closethick"></span></a></div>
+                <div class="ui-dialog-content ui-widget-content">
+                    <form id="form" name="form" method="post"
+                        action="https://cnis.inss.gov.br/cnis/faces/pages/pfcnis/consultaPessoaFisicaComum/consultarPFDadosCadastrais2.xhtml"
+                        enctype="application/x-www-form-urlencoded">
+                        <input type="hidden" name="form" value="form" />
+
+
+
+                        <span id="form:j_idt313:j_idt314"></span>
+                        <script id="form:j_idt313:j_idt314_s"
+                            type="text/javascript">$(function () { PrimeFaces.cw('Growl', 'widget_form_j_idt313_j_idt314', { id: 'form:j_idt313:j_idt314', sticky: false, life: 10000, escape: true, msgs: [] }); });</script>
+                        <div class="mensagem">
+                            <div id="form:j_idt313:mensagensContexto" class="ui-messages ui-widget" aria-live="polite">
+                            </div>
+                        </div>
+                        <div class="mensagem">
+                            <ul>
+                                <li class="dica">
+                                    Não existem elos para o NIT selecionado.
+                                </li>
+                            </ul>
+                        </div>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th class="cabecalhoPrincipal" colspan="2" scope="colgroup">Dados Cadastrais</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="even">
+                                    <td class="textosimples right negrito">NIT</td>
+                                    <td></td>
+                                </tr>
+                                <tr class="odd">
+                                    <td class="textosimples right negrito">Fonte do NIT</td>
+                                    <td></td>
+                                </tr>
+                                <tr class="even">
+                                    <td class="textosimples right negrito">Administrador do NIT</td>
+                                    <td></td>
+                                </tr>
+                                <tr class="odd">
+                                    <td class="textosimples right negrito">Fonte Cadastramento</td>
+                                    <td></td>
+                                </tr>
+                                <tr class="even">
+                                    <td class="textosimples right negrito">Ano da administração</td>
+                                    <td></td>
+                                </tr>
+                                <tr class="odd">
+                                    <td class="textosimples right negrito">Data de Cadastramento</td>
+                                    <td></td>
+                                </tr>
+                                <tr class="even">
+                                    <td class="textosimples right negrito">Nome</td>
+                                    <td></td>
+                                </tr>
+                                <tr class="odd">
+                                    <td class="textosimples right negrito">Nome da Mãe</td>
+                                    <td></td>
+                                </tr>
+                                <tr class="even">
+                                    <td class="textosimples right negrito">Nome do Pai</td>
+                                    <td></td>
+                                </tr>
+                                <tr class="odd">
+                                    <td class="textosimples right negrito">Sexo</td>
+                                    <td></td>
+                                </tr>
+                                <tr class="even">
+                                    <td class="textosimples right negrito">Estado Civil</td>
+                                    <td></td>
+                                </tr>
+                                <tr class="odd">
+                                    <td class="textosimples right negrito">Grau de Instrução</td>
+                                    <td></td>
+                                </tr>
+                                <tr class="even">
+                                    <td class="textosimples right negrito">Cor/Raça</td>
+                                    <td></td>
+                                </tr>
+                                <tr class="odd">
+                                    <td class="textosimples right negrito">Data Nascimento</td>
+                                    <td></td>
+                                </tr>
+                                <tr class="even">
+                                    <td class="textosimples right negrito">Data de Óbito</td>
+                                    <td></td>
+                                </tr>
+                                <tr class="odd">
+                                    <td class="textosimples right negrito">Data de Atualização</td>
+                                    <td></td>
+                                </tr>
+                                <tr class="even">
+                                    <td class="textosimples right negrito">Nacionalidade</td>
+                                    <td></td>
+                                </tr>
+                                <tr class="odd">
+                                    <td class="textosimples right negrito">Data de chegada</td>
+                                    <td></td>
+                                </tr>
+                                <tr class="even">
+                                    <td class="textosimples right negrito">País de Origem</td>
+                                    <td></td>
+                                </tr>
+                                <tr class="odd">
+                                    <td class="textosimples right negrito">UF de Nascimento</td>
+                                    <td></td>
+                                </tr>
+                                <tr class="even">
+                                    <td class="textosimples right negrito">Município de Nascimento</td>
+                                    <td></td>
+                                </tr>
+                                <tr class="odd">
+                                    <td class="textosimples right negrito">CPF</td>
+                                    <td></td>
+                                </tr>
+                                <tr class="even">
+                                    <td class="textosimples right negrito">Identidade</td>
+                                    <td></td>
+                                </tr>
+                                <tr class="odd">
+                                    <td class="textosimples right negrito">CTPS</td>
+                                    <td></td>
+                                </tr>
+                                <tr class="even">
+                                    <td class="textosimples right negrito">Título de Eleitor</td>
+                                    <td></td>
+                                </tr>
+                                <tr class="odd">
+                                    <td class="textosimples right negrito">CNH</td>
+                                    <td></td>
+                                </tr>
+                                <tr class="even">
+                                    <td class="textosimples right negrito">Doc. Estrangeiro</td>
+                                    <td></td>
+                                </tr>
+                                <tr class="odd">
+                                    <td class="textosimples right negrito">Carteira de Maritimo</td>
+                                    <td></td>
+                                </tr>
+                                <tr class="even">
+                                    <td class="textosimples right negrito">Passaporte</td>
+                                    <td></td>
+                                </tr>
+                                <tr class="odd">
+                                    <td class="textosimples right negrito">Certidões Civis</td>
+                                    <td></td>
+                                </tr>
+                                <tr class="even">
+                                    <td class="textosimples right negrito">Endereço principal</td>
+                                    <td></td>
+                                </tr>
+                                <tr class="odd">
+                                    <td class="textosimples right negrito">Endereço Secundário</td>
+                                    <td></td>
+                                </tr>
+                                <tr class="even">
+                                    <td class="textosimples right negrito">Telefone 1</td>
+                                    <td></td>
+                                </tr>
+                                <tr class="odd">
+                                    <td class="textosimples right negrito">Telefone 2</td>
+                                    <td></td>
+                                </tr>
+                                <tr class="even">
+                                    <td class="textosimples right negrito">Celular</td>
+                                    <td></td>
+                                </tr>
+                                <tr class="odd">
+                                    <td class="textosimples right negrito">Email</td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div id="form:j_idt444" class="ui-panel ui-widget ui-widget-content ui-corner-all semborda"
+                            data-widget="widget_form_j_idt444">
+                            <div id="form:j_idt444_content" class="ui-panel-content ui-widget-content">
+                                <div id="form:j_idt445" class="ui-datatable ui-widget">
+                                    <div class="ui-datatable-header ui-widget-header ui-corner-top">Lista de Elos</div>
+                                    <div class="ui-datatable-tablewrapper">
+                                        <table role="grid">
+                                            <thead id="form:j_idt445_head">
+                                                <tr role="row">
+                                                    <th id="form:j_idt445:j_idt447" class="ui-state-default"
+                                                        role="columnheader" style="width:99px"><span
+                                                            class="ui-column-title">NIT</span></th>
+                                                    <th id="form:j_idt445:j_idt449" class="ui-state-default"
+                                                        role="columnheader" style="width:200px"><span
+                                                            class="ui-column-title">Fonte Origem</span></th>
+                                                    <th id="form:j_idt445:j_idt451"
+                                                        class="ui-state-default hidden-xs hidden-sm" role="columnheader"
+                                                        style="width:108px"><span class="ui-column-title">CPF</span>
+                                                    </th>
+                                                    <th id="form:j_idt445:j_idt453" class="ui-state-default"
+                                                        role="columnheader"><span class="ui-column-title">Nome</span>
+                                                    </th>
+                                                    <th id="form:j_idt445:j_idt455" class="ui-state-default text-center"
+                                                        role="columnheader" style="width:100px"><span
+                                                            class="ui-column-title">Ações</span></th>
+                                                </tr>
+                                            </thead>
+                                            <tfoot id="form:j_idt445_foot"></tfoot>
+                                            <tbody id="form:j_idt445_data" class="ui-datatable-data ui-widget-content">
+                                                <tr class="ui-widget-content ui-datatable-empty-message">
+                                                    <td colspan="5">Sem registros na tabela</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div id="form:j_idt445_paginator_bottom"
+                                        class="ui-paginator ui-paginator-bottom ui-widget-header ui-corner-bottom"
+                                        role="navigation"><span class="ui-paginator-current">[ 1 de 1 ]</span><span
+                                            class="ui-paginator-first ui-state-default ui-corner-all ui-state-disabled"><span
+                                                class="ui-icon ui-icon-seek-first">p</span></span><span
+                                            class="ui-paginator-prev ui-state-default ui-corner-all ui-state-disabled"><span
+                                                class="ui-icon ui-icon-seek-prev">p</span></span><span
+                                            class="ui-paginator-pages"></span><span
+                                            class="ui-paginator-next ui-state-default ui-corner-all ui-state-disabled"><span
+                                                class="ui-icon ui-icon-seek-next">p</span></span><span
+                                            class="ui-paginator-last ui-state-default ui-corner-all ui-state-disabled"><span
+                                                class="ui-icon ui-icon-seek-end">p</span></span><select
+                                            id="form:j_idt445_rppDD"
+                                            class="ui-paginator-rpp-options ui-widget ui-state-default ui-corner-left"
+                                            value="10" autocomplete="off">
+                                            <option value="5">5</option>
+                                            <option value="10" selected="selected">10</option>
+                                            <option value="15">15</option>
+                                        </select></div>
+                                </div>
+                                <script id="form:j_idt445_s"
+                                    type="text/javascript">$(function () { PrimeFaces.cw("DataTable", "widget_form_j_idt445", { id: "form:j_idt445", widgetVar: "widget_form_j_idt445", paginator: { id: ['form:j_idt445_paginator_bottom'], rows: 10, rowCount: 0, page: 0, currentPageTemplate: '[ {currentPage} de {totalPages} ]' } }); });</script>
+                            </div>
+                        </div>
+                        <script id="form:j_idt444_s"
+                            type="text/javascript">PrimeFaces.cw("Panel", "widget_form_j_idt444", { id: "form:j_idt444", widgetVar: "widget_form_j_idt444" });</script>
+
+                        <div class="boxBotoes"><button id="form:j_idt461" name="form:j_idt461"
+                                class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only principal"
+                                onclick="this.form.target='_blank';;" type="submit"
+                                onmouseout="this.form.target='_self';"><span class="ui-button-text ui-c">Imprimir
+                                    Cadastro</span></button>
+                            <script id="form:j_idt461_s"
+                                type="text/javascript">PrimeFaces.cw("CommandButton", "widget_form_j_idt461", { id: "form:j_idt461", widgetVar: "widget_form_j_idt461" });</script>
+                            <button id="form:j_idt463" name="form:j_idt463"
+                                class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"
+                                onclick="PF('wvDialogDetalharDocumento').hide();" type="submit"><span
+                                    class="ui-button-text ui-c">Voltar</span></button>
+                            <script id="form:j_idt463_s"
+                                type="text/javascript">PrimeFaces.cw("CommandButton", "widget_form_j_idt463", { id: "form:j_idt463", widgetVar: "widget_form_j_idt463" });</script>
+                        </div><input type="hidden" name="javax.faces.ViewState" id="javax.faces.ViewState"
+                            value="-1958632712552502682:3496624504967069676" autocomplete="off" />
+                    </form>
+                </div>
+            </div>
+            <script id="dialogDetalharDados_s"
+                type="text/javascript">$(function () { PrimeFaces.cw("Dialog", "wvDialogDetalharDados", { id: "dialogDetalharDados", widgetVar: "wvDialogDetalharDados", modal: true, width: "90%", height: "500px", position: "center, center", closeOnEscape: true }); });</script>
+        </section>
+    </div>
+    <br />
+    <br />
+    <br />
+    <footer class="footer">
+        <div class="container-fluid">
+            <div id="footer_popover">
+                <button class="btn btn-primary popper popper-info">
+                    <span class="ico-info-c"></span> Info
+                </button>
+                <div class="popper-info-content hide">
+                    <table class="table table-condensed">
+                        <tbody>
+                            <tr>
+                                <td><strong>Versão: </strong></td>
+                                <td>4.11.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Baseline: </strong></td>
+                                <td>4.11.7 131132.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Data do Build: </strong></td>
+                                <td>01/04/2021-17:26</td>
+                            </tr>
+                            <tr>
+                                <td><strong>TimeZone: </strong></td>
+                                <td>America/Sao_Paulo</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Build Negócio: </strong></td>
+                                <td>01/04/2021-17:26</td>
+                            </tr>
+                            <tr>
+                                <td><strong>TimeZone Negócio: </strong></td>
+                                <td>America/Sao_Paulo</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Data: </strong></td>
+                                <td>Sábado, 01 de Maio de 2021</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <button class="btn btn-primary popper popper-ajuda">
+                    <span class="ico-help-c"></span> Ajuda
+                </button>
+                <div class="popper-ajuda-content hide">
+                    <p>Dúvidas? Abra um chamado no
+                        <a href="http://www-suportewebinss" target="_blank">SuporteWebINSS</a>.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <div id="j_idt473"></div>
+    <script id="j_idt473_s"
+        type="text/javascript">$(function () { PrimeFaces.cw("AjaxStatus", "widget_j_idt473", { id: "j_idt473", widgetVar: "widget_j_idt473", start: function () { sessionMonitor.stop(); PF('bloquearTelaWidget').block(); }, error: function () { forceUpdate(); }, success: function () { PF('bloquearTelaWidget').unblock(); }, complete: function () { sessionMonitor.restart(); } }); });</script>
+    <div id="j_idt474_content" style="display: none;"><img
+            src="https://cnis.inss.gov.br/cnis/faces/javax.faces.resource/datainss-loader3.gif?ln=images" /></div>
+    <script id="j_idt474_s"
+        type="text/javascript">$(function () { PrimeFacesExt.cw('BlockUI', 'bloquearTelaWidget', { id: 'j_idt474', widgetVar: 'bloquearTelaWidget', source: 'j_idt19', autoShow: false, centerX: true, centerY: true, content: '#j_idt474_content', contentExtern: false, namingContSep: ':', regEx: /javax.faces.source=j_idt19(.)*$/ }, true); });</script>
+    <form id="j_idt476" name="j_idt476" method="post"
+        action="https://cnis.inss.gov.br/cnis/faces/pages/pfcnis/consultaPessoaFisicaComum/consultarPFDadosCadastrais2.xhtml"
+        enctype="application/x-www-form-urlencoded">
+        <input type="hidden" name="j_idt476" value="j_idt476" />
+        <script
+            type="text/javascript">killSession = function () { PrimeFaces.ab({ s: 'j_idt476:j_idt477', f: 'j_idt476', p: '@none', u: '@none', g: false, pa: arguments[0] }); }</script>
+        <script
+            type="text/javascript">keepSession = function () { PrimeFaces.ab({ s: 'j_idt476:j_idt478', f: 'j_idt476', p: '@none', u: '@none', onco: function (xhr, status, args) { PF('sessionExpiringWv').hide(); $('#temporizador').removeClass('mensagemAtencao');; }, pa: arguments[0] }); }</script>
+        <script
+            type="text/javascript">forceUpdate = function () { PrimeFaces.ab({ s: 'j_idt476:j_idt479', f: 'j_idt476', p: '@none', u: 'j_idt476:errorAjaxFragment', g: false, onco: function (xhr, status, args) { sessionMonitor.stop(); PF('bloquearTelaWidget').unblock(); PF('erroAjaxWv').show(); $('.mensagemForcada').show();; }, pa: arguments[0] }); }</script>
+        <div id="j_idt476:j_idt480"
+            class="ui-dialog ui-widget ui-widget-content ui-overlay-hidden ui-corner-all ui-shadow">
+            <div class="ui-dialog-titlebar ui-widget-header ui-helper-clearfix ui-corner-top"><span
+                    id="j_idt476:j_idt480_title" class="ui-dialog-title">Aviso</span></div>
+            <div class="ui-dialog-content ui-widget-content">
+                <div class="alternaSessaoInativa">Sua sessão irá expirar por inatividade em <span
+                        id="temporizador">00:00</span></div>
+                <div class="alternaSessaoInativa escondido">Por razões de segurança, você será direcionado à página
+                    principal.</div>
+            </div>
+            <div class="ui-dialog-footer ui-widget-content"><span>
+                    <div class="boxBotoes"><button id="j_idt476:manterSessaoButton" name="j_idt476:manterSessaoButton"
+                            class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-left ui-confirmdialog-yes principal alternaSessaoInativa"
+                            onclick="window.sessionMonitor.success();;" type="button"><span
+                                class="ui-button-icon-left ui-icon ui-c ui-icon-check"></span><span
+                                class="ui-button-text ui-c">Quero continuar usando o sistema</span></button>
+                        <script id="j_idt476:manterSessaoButton_s"
+                            type="text/javascript">PrimeFaces.cw("CommandButton", "widget_j_idt476_manterSessaoButton", { id: "j_idt476:manterSessaoButton", widgetVar: "widget_j_idt476_manterSessaoButton" });</script>
+                        <button id="j_idt476:sessaoExpiradaButton" name="j_idt476:sessaoExpiradaButton"
+                            class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-left ui-confirmdialog-yes principal alternaSessaoInativa escondido"
+                            onclick="window.top.location.assign('/cnis');;" type="button"><span
+                                class="ui-button-icon-left ui-icon ui-c ui-icon-check"></span><span
+                                class="ui-button-text ui-c">OK</span></button>
+                        <script id="j_idt476:sessaoExpiradaButton_s"
+                            type="text/javascript">PrimeFaces.cw("CommandButton", "widget_j_idt476_sessaoExpiradaButton", { id: "j_idt476:sessaoExpiradaButton", widgetVar: "widget_j_idt476_sessaoExpiradaButton" });</script>
+                    </div>
+                </span></div>
+        </div>
+        <script id="j_idt476:j_idt480_s"
+            type="text/javascript">$(function () { PrimeFaces.cw("Dialog", "sessionExpiringWv", { id: "j_idt476:j_idt480", widgetVar: "sessionExpiringWv", resizable: false, modal: true, width: "500" }); });</script>
+        <div id="j_idt476:erroAjaxWvDialog"
+            class="ui-dialog ui-widget ui-widget-content ui-overlay-hidden ui-corner-all ui-shadow">
+            <div class="ui-dialog-titlebar ui-widget-header ui-helper-clearfix ui-corner-top"><span
+                    id="j_idt476:erroAjaxWvDialog_title" class="ui-dialog-title">Erro no processamento</span><a href="#"
+                    class="ui-dialog-titlebar-icon ui-dialog-titlebar-close ui-corner-all"><span
+                        class="ui-icon ui-icon-closethick"></span></a></div>
+            <div class="ui-dialog-content ui-widget-content"><span id="j_idt476:j_idt484:j_idt485"></span>
+                <script id="j_idt476:j_idt484:j_idt485_s"
+                    type="text/javascript">$(function () { PrimeFaces.cw('Growl', 'widget_j_idt476_j_idt484_j_idt485', { id: 'j_idt476:j_idt484:j_idt485', sticky: false, life: 10000, escape: true, msgs: [] }); });</script>
+                <div class="mensagem">
+                    <div id="j_idt476:j_idt484:mensagensContexto" class="ui-messages ui-widget" aria-live="polite">
+                    </div>
+                </div>
+                <div id="j_idt476:errorAjaxFragment"><span class="mensagemForcada" style="display:none;"></span><br />
+                </div>
+                <br />Ao fechar este aviso, você será redirecionado à página principal para reiniciar o processo.
+            </div>
+        </div>
+        <script id="j_idt476:erroAjaxWvDialog_s"
+            type="text/javascript">$(function () { PrimeFaces.cw("Dialog", "erroAjaxWv", { id: "j_idt476:erroAjaxWvDialog", widgetVar: "erroAjaxWv", resizable: false, modal: true, width: "500", onHide: function () { window.top.location.assign('/cnis'); } }); });</script>
+        <script id="j_idt476:j_idt491_s"
+            type="text/javascript">$(function () { PrimeFaces.cw("ConfirmDialog", "confirmDialogWv", { id: "j_idt476:j_idt491", widgetVar: "confirmDialogWv", closeOnEscape: true, global: true }); });</script>
+        <div id="j_idt476:j_idt491"
+            class="ui-confirm-dialog ui-dialog ui-widget ui-widget-content ui-overlay-hidden ui-corner-all ui-shadow">
+            <div class="ui-dialog-titlebar ui-widget-header ui-helper-clearfix ui-corner-top"><span
+                    class="ui-dialog-title">Confirmação</span><a href="#"
+                    class="ui-dialog-titlebar-icon ui-dialog-titlebar-close ui-corner-all"><span
+                        class="ui-icon ui-icon-closethick"></span></a></div>
+            <div class="ui-dialog-content ui-widget-content"><span
+                    class="ui-icon ui-confirm-dialog-severity"></span><span class="ui-confirm-dialog-message">Tem
+                    certeza que deseja continuar?</span></div>
+            <div class="ui-dialog-buttonpane ui-dialog-footer ui-widget-content ui-helper-clearfix"><button
+                    id="j_idt476:j_idt492" name="j_idt476:j_idt492"
+                    class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-left ui-confirmdialog-yes principal"
+                    type="button"><span class="ui-button-icon-left ui-icon ui-c ui-icon-check"></span><span
+                        class="ui-button-text ui-c">Sim</span></button>
+                <script id="j_idt476:j_idt492_s"
+                    type="text/javascript">PrimeFaces.cw("CommandButton", "widget_j_idt476_j_idt492", { id: "j_idt476:j_idt492", widgetVar: "widget_j_idt476_j_idt492" });</script>
+                <button id="j_idt476:j_idt493" name="j_idt476:j_idt493"
+                    class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-left ui-confirmdialog-no secundario"
+                    type="button"><span class="ui-button-icon-left ui-icon ui-c ui-icon-close"></span><span
+                        class="ui-button-text ui-c">Não</span></button>
+                <script id="j_idt476:j_idt493_s"
+                    type="text/javascript">PrimeFaces.cw("CommandButton", "widget_j_idt476_j_idt493", { id: "j_idt476:j_idt493", widgetVar: "widget_j_idt476_j_idt493" });</script>
+            </div>
+        </div><input type="hidden" name="javax.faces.ViewState" id="javax.faces.ViewState"
+            value="-1958632712552502682:3496624504967069676" autocomplete="off" />
+    </form>
+    <script id="j_idt494_s"
+        type="text/javascript">$(function () { PrimeFacesExt.cw('Tooltip', 'widget_j_idt494', { id: 'j_idt494', widgetVar: 'widget_j_idt494', global: true, shared: false, autoShow: false, forTarget: '@(a[title],:input[title],:button[title],span[title])', show: { event: 'mouseenter', delay: 0, effect: function () { $(this).fadeIn(500); } }, hide: { event: 'mouseleave', delay: 50, fixed: true, effect: function () { $(this).fadeOut(500); } }, position: { at: 'bottom right', my: 'top left', adjust: { x: 0, y: 0 }, viewport: $(window) } }, true); });</script>
+    <script type="text/javascript">
+        /*<![CDATA[*/
+        adicionarLoadEvent(function () {
+            var ancora = '';
+            if (ancora) {
+                location.href = '#' + ancora;
+            }
+        });
+		/*]]>*/
+    </script>
+</body>
+
+</html>
