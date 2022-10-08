@@ -1024,15 +1024,27 @@ function cabecalho() {
 
     console.log("cabecalho");
 
+    let especie = getEspecie();
+
     let txt = `Req.: ${nome}<br>
                                     Ref.: ${servico}<br>
-                                        NB.: 41/ ${nb_presente}<br>`;
+                                        NB.: ${especie}${especie != '' ? '/' : ''} ${nb_presente}<br>`;
+    // NB.: 41/ ${nb_presente}<br>`;
     //cabecalhoView.innerHTML = txt;
 
     return txt;
     /*     const delta = cabecalhoView.clipboard.convert(tudo);
     
         cabecalhoView.setContents(delta, 'silent'); */
+}
+
+function getEspecie() {
+    if (servico.includes("Salário-Maternidade")) return "80"
+    else if (servico.includes("Aposentadoria por Idade")) return "41"
+    else if (servico.includes("Pensão")) return "21"
+    else return ""
+
+
 }
 
 function paragrafoDeApresentacao() {
