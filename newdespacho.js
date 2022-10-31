@@ -55,7 +55,7 @@ function sugerirDespacho() {
     todoDespacho += `<p class="ql-align-justify ">${espaco}${paragrafoDeApresentacao()}</p>`;
     todoDespacho += `<br>`;
 
-    if (servico == "Aposentadoria por Idade Rural" || servico == "Aposentadoria por Idade Híbrida") {
+    if (servico == "Aposentadoria por Idade Rural" || servico == "Aposentadoria por Idade Híbrida" || servico.includes("Rural")) {
 
         //se for para indeferir pq já é aposentado, não quero que imprima o CNIS ou período de autodeclaração
         if (deferir || (!deferir && motivoIndeferimento1 != `ja-aposentado`)) {
@@ -160,7 +160,17 @@ function paragrafoDeAnalisePeranteANorma() {
             txt = `<p class="ql-align-justify ">${espaco}${paragrafoAnaliseAposentadoriaRural()}</p><br>`;
             txt += `<p class="ql-align-justify ">${espaco}${paragrafoAnaliseAposentadoriaUrbana()}</p><br>`;
 
+        } else if (servico == "Salário-Maternidade Rural") {
+
+            txt = `<p class="ql-align-justify ">${espaco}${paragrafoAnaliseSalarioMaternidadeRural()}</p><br>`;
+
+
+        } else if (servico == "Salário-Maternidade Urbano") {
+
+            txt = `<p class="ql-align-justify ">${espaco}${paragrafoAnaliseSalarioMaternidadeUrbano()}</p><br>`;
+
         }
+
 
 
 
@@ -196,7 +206,37 @@ function paragrafoAnaliseAposentadoriaRural() {
         txt += `${getNumeracaoDosParagrafos()}Observa-se que os documentos apresentados pel${sexo == "homem" ? "o" : "a"} requerente comprovam o labor rural alegado, na forma dos art. 116  da IN 128/2022 e a Certidão fornecida pela FUNAI; `;
     } else {
 
-        txt = `${getNumeracaoDosParagrafos()}Observa-se que os documentos apresentados pel${sexo == "homem" ? "o" : "a"} requerente e as bases governamentais identificadas são listados nos art. 115 e 116 da IN 128/2022 e, ou, no art. 106 da Lei nº 8213/1991. Assim, à luz da IN nº 128 PRES/INSS, de 28/03/2022, art. 115 e 116, os documentos apresentados e as bases governamentais apontadas ratificam a atividade como segurado especial satisfazendo a carência exigida (180 meses - na forma dos art. 182 do Decreto 3.048/99 e art.25, II e art. 142 da Lei 8.213/1991);`;
+        txt = `${getNumeracaoDosParagrafos()}Observa-se que os documentos apresentados pel${sexo == "homem" ? "o" : "a"} requerente e as bases governamentais identificadas são listados nos art. 115 e 116 da IN 128/2022 e, ou, no art. 106 da Lei nº 8213/1991. Assim, à luz da IN nº 128 PRES/INSS, de 28/03/2022, art. 115 e 116, os documentos apresentados e as bases governamentais apontadas ratificam a atividade como segurado especial satisfazendo a carência exigida (180 meses) na forma dos art. 182 do Decreto 3.048/99 e art.25, II e art. 142 da Lei 8.213/1991);`;
+
+
+
+    }
+    return txt;
+}
+
+function paragrafoAnaliseSalarioMaternidadeRural() {
+
+    let txt = "";
+    if (isIndigena()) {
+        txt += `${getNumeracaoDosParagrafos()}Observa-se que os documentos apresentados pel${sexo == "homem" ? "o" : "a"} requerente comprovam o labor rural alegado, na forma dos art. 116  da IN 128/2022 e a Certidão fornecida pela FUNAI; `;
+    } else {
+
+        txt = `${getNumeracaoDosParagrafos()}Observa-se que os documentos apresentados pel${sexo == "homem" ? "o" : "a"} requerente e as bases governamentais identificadas são listados nos art. 115 e 116 da IN 128/2022 e, ou, no art. 106 da Lei nº 8213/1991. Assim, à luz da IN nº 128 PRES/INSS, de 28/03/2022, art. 115 e 116, os documentos apresentados e as bases governamentais apontadas ratificam a atividade como segurad${sexo == "homem" ? "o" : "a"} especial satisfazendo a carência exigida (10 meses - art. 197 da IN 128/2022) e mantendo a qualidade de segurad${sexo == "homem" ? "o" : "a"} até a data do parto (art. 184 da IN 128/2022);`;
+
+
+
+    }
+    return txt;
+}
+
+function paragrafoAnaliseSalarioMaternidadeUrbano() {
+
+    let txt = "";
+    if (isIndigena()) {
+        txt += `${getNumeracaoDosParagrafos()}Observa-se que os documentos apresentados pel${sexo == "homem" ? "o" : "a"} requerente comprovam o labor rural alegado, na forma dos art. 116  da IN 128/2022 e a Certidão fornecida pela FUNAI; `;
+    } else {
+
+        txt = `${getNumeracaoDosParagrafos()}Face ao todo o exposto, restou cumprido as exigências legais de carência e qualidade de segurada - art. 197 e 184 da IN 128/2022;`;
 
 
 
@@ -265,7 +305,17 @@ function getParagrafosIndeferimento(motivo, ordem) {
 
         console.log("falta de carência");
 
-        txt += `${getNumeracaoDosParagrafos()}Na forma dos art. 115 e 116 da IN 128/2022 e art. 106 da Lei nº 8213/1991, os documentos apresentados e as bases governamentais encontradas - ou a ausência destes elementos - mesmo após emissão de carta de exigências${dataDeEmissaoDasExigencias != "" ? ` em ${getData(dataDeEmissaoDasExigencias)}` : ``}, não ratificam a atividade como segurad${sexo == "homem" ? "o" : "a"} especial em período suficiente à carência exigida (180 meses - na forma dos art. 182 do Decreto 3.048/99 e art.25, II e art. 142 da Lei 8.213/1991);`;
+
+
+        if (servico.includes("Aposentadoria por Idade Rural")) {
+            txt += `${getNumeracaoDosParagrafos()}Na forma dos art. 115 e 116 da IN 128/2022 e art. 106 da Lei nº 8213/1991, os documentos apresentados e as bases governamentais encontradas - ou a ausência destes elementos - mesmo após emissão de carta de exigências${dataDeEmissaoDasExigencias != "" ? ` em ${getData(dataDeEmissaoDasExigencias)}` : ``}, não ratificam a atividade como segurad${sexo == "homem" ? "o" : "a"} especial em período suficiente à carência exigida (180 meses - na forma dos art. 182 do Decreto 3.048/99 e art.25, II e art. 142 da Lei 8.213/1991);`;
+        } else if (servico.includes("Salário-Maternidade Rural")) {
+            txt += `${getNumeracaoDosParagrafos()}Na forma dos art. 115 e 116 da IN 128/2022 e art. 106 da Lei nº 8213/1991, os documentos apresentados e as bases governamentais encontradas - ou a ausência destes elementos - mesmo após emissão de carta de exigências${dataDeEmissaoDasExigencias != "" ? ` em ${getData(dataDeEmissaoDasExigencias)}` : ``}, não ratificam a atividade como segurad${sexo == "homem" ? "o" : "a"} especial em período suficiente à carência exigida (10 meses - art. 197 da IN 128/2022). Na forma do Ofício-Circular nº 46 /DIRBEN/INSS de 13 de setembro de 2019, item III, b) "para o salário maternidade, é necessário apresentar ao menos um documento anterior à data presumida do início da gravidez, guarda para fins de adoção ou ao documento que comprove a adoção.";`;
+        }
+
+
+
+
 
         //paragrafosDeAnalisePeranteANormaView.innerHTML = txt;
 
@@ -1064,6 +1114,22 @@ function paragrafoDeApresentacao() {
     } else if (servico == "Aposentadoria por Idade Híbrida") {
 
         txt = `${getNumeracaoDosParagrafos()}Trata-se de requerimento de Aposentadoria por Idade Híbrida (períodos rurais e urbanos) realizado em ${getData(der)}, data em que  ${sexo == "homem" ? "o" : "a"} requerente,  ${sexo == "homem" ? "nascido" : "nascida"} em ${getData(dataNascimento)}, contava com ${idade} anos de vida;`;
+
+    } else if (servico == "Salário-Maternidade Rural") {
+
+        txt = `${getNumeracaoDosParagrafos()}Trata-se de requerimento de Salário-maternidade rural realizado por declarada trabalhadora rural em ${getData(der)}, face nascimento de filho em ______________;`;
+
+    } else if (servico == "Salário-Maternidade Urbano") {
+
+        txt = `${getNumeracaoDosParagrafos()}Trata-se de requerimento de Salário maternidade urbano realizado em ${getData(der)}, face nascimento de filho em ____________;`;
+
+    } else if (servico == "Pensão por Morte Urbana") {
+
+        txt = `${getNumeracaoDosParagrafos()}Trata-se de requerimento de pensão por morte realizado em ${getData(der)}, face óbito do(a) proposto(a) instituidor(a) em ______________. ${sexo == "homem" ? "O" : "A"} requerente figura na condição de ________________`;
+
+    } else if (servico == "Pensão por Idade Rural") {
+
+        txt = `${getNumeracaoDosParagrafos()}Trata-se de requerimento de pensão por morte rural realizado em ${getData(der)}, face óbito do(a) proposto(a) instituidor(a) em ______________. ${sexo == "homem" ? "O" : "A"} requerente figura na condição de ________________`;
     }
     return txt;
 

@@ -699,7 +699,8 @@ function povoarVinculosFromCnis() {
 
     cnisVinculos.forEach(vCnis => {
 
-        if (vCnis.nome.includes("SEGURADO ESPECIAL") && servico == "Aposentadoria por Idade Rural") {
+        //if (vCnis.nome.includes("SEGURADO ESPECIAL") && servico == "Aposentadoria por Idade Rural") {
+        if (vCnis.nome.includes("SEGURADO ESPECIAL") && (servico.includes("Rural") || servico.includes("Híbrid"))) {
 
 
             //adcionar a prova
