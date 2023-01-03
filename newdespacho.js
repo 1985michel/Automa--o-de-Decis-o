@@ -272,7 +272,14 @@ function getParagrafosIndeferimento(motivo, ordem) {
 
         console.log("falta de qualidade de segurado na DER");
 
-        txt += `${getNumeracaoDosParagrafos()}O art.258 da IN 128/2022 determina a necessidade do trabalhador rural possuir qualidade de segurado especial na DER ou na data de implementação de todos os requisitos. ${sexo == "homem" ? "O" : "A"} requerente completou ${sexo == "homem" ? "60" : "55"} anos em ${sexo == "homem" ? calculaAnoQueCompletouIdadeDesejada(60) : calculaAnoQueCompletouIdadeDesejada(55)}, data em que já não possuiria qualidade de segurad${sexo == "homem" ? "o" : "a"} especial.`;
+        if (servico.includes("Aposentadoria por Idade Rural")) {
+            txt += `${getNumeracaoDosParagrafos()}O art.258 da IN 128/2022 determina a necessidade do trabalhador rural possuir qualidade de segurado especial na DER ou na data de implementação de todos os requisitos. ${sexo == "homem" ? "O" : "A"} requerente completou ${sexo == "homem" ? "60" : "55"} anos em ${sexo == "homem" ? calculaAnoQueCompletouIdadeDesejada(60) : calculaAnoQueCompletouIdadeDesejada(55)}, data em que já não possuiria qualidade de segurad${sexo == "homem" ? "o" : "a"} especial.`;
+
+        } else if (servico.includes("Salário-Maternidade Rural")) {
+            txt += `${getNumeracaoDosParagrafos()}Na forma dos art. 115 e 116 da IN 128/2022 e art. 106 da Lei nº 8213/1991, os documentos apresentados e as bases governamentais encontradas - ou a ausência destes elementos - mesmo após emissão de carta de exigências${dataDeEmissaoDasExigencias != "" ? ` em ${getData(dataDeEmissaoDasExigencias)}` : ``}, não ratificam a atividade como segurad${sexo == "homem" ? "o" : "a"} especial em período suficiente à carência exigida (10 meses - art. 197 da IN 128/2022). Na forma do Ofício-Circular nº 46 /DIRBEN/INSS de 13 de setembro de 2019, item III, b) "para o salário maternidade, é necessário apresentar ao menos um documento anterior à data presumida do início da gravidez, guarda para fins de adoção ou ao documento que comprove a adoção." Sendo que a validade das provas se limitam a 7,5 anos de sua comprovada emissão, na forma do item III do item 6.1 do mesmo O.C. Portanto, a requerente não comprovou qualidade de segurada da previdência social com cumprimento da carência na data do parto.`;
+        }
+
+        // txt += `${getNumeracaoDosParagrafos()}O art.258 da IN 128/2022 determina a necessidade do trabalhador rural possuir qualidade de segurado especial na DER ou na data de implementação de todos os requisitos. ${sexo == "homem" ? "O" : "A"} requerente completou ${sexo == "homem" ? "60" : "55"} anos em ${sexo == "homem" ? calculaAnoQueCompletouIdadeDesejada(60) : calculaAnoQueCompletouIdadeDesejada(55)}, data em que já não possuiria qualidade de segurad${sexo == "homem" ? "o" : "a"} especial.`;
 
 
         //paragrafosDeAnalisePeranteANormaView.innerHTML = txt;
