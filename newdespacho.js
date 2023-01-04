@@ -328,6 +328,26 @@ function getParagrafosIndeferimento(motivo, ordem) {
 
 
 
+    } else if (motivo == "responsabilidade_do_empregador") {
+
+        conclusao = "indeferimento"
+
+        console.log("responsabilidade do empregador");
+
+
+
+        if (servico.includes("Salário-Maternidade")) {
+            txt += `${getNumeracaoDosParagrafos()}Conforme art. 426 da PORTARIA DIRBEN/INSS Nº 991, DE 28 DE MARÇO DE 2022, o pagamento do benefício deve ser feito por meio da empresa empregadora para seguradas empregadas.`;
+        }
+
+
+
+
+
+        //paragrafosDeAnalisePeranteANormaView.innerHTML = txt;
+
+
+
     } else if (motivo == "falta_de_carencia_periodo_declarado_insuficiente") {
 
         conclusao = "indeferimento"
