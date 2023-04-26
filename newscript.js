@@ -1687,19 +1687,22 @@ function processaCategoriaEAnexos() {
     //adicionando a exigencias da autodeclaração
     if (!temAutodeclaracao) {
         if (categoriaTrabalhador === "rural") {
-            exigenciasGerais.push(`
+            exigenciasGerais.push(`Autodeclaração de Segurado Especial Rural preenchida de forma eletrônica pelo Meu INSS ou telefone 135.`);
+            /* exigenciasGerais.push(`
       - Apresentar declaração de atividade rural na forma do Anexo VIII da IN nº 128 PRES/INSS, de 28/03/2022, o qual substituiu a entrevista rural (o modelo da declaração segue em anexo a esta carta e esta disponibilizado no presente requerimento, podendo ser acessado por meio do portal/aplicativo Meu INSS;
-        `);
+        `); */
         } else if (categoriaTrabalhador == "pescador") {
-            exigenciasGerais.push(`
+            exigenciasGerais.push(`Autodeclaração de Segurado Especial Pescador preenchida de forma eletrônica pelo Meu INSS ou telefone 135.`);
+            /* exigenciasGerais.push(`
         - Apresentar formulário preenchido da Autodeclaração do Segurado Especial Pescador, na forma do Anexo IX da IN nº 128 PRES/INSS, de 28/03/2022;      
-      `);
+      `); */
         } else if (categoriaTrabalhador == "indigena") {
             exigenciasGerais.push(`
       – Para comprovação da atividade de indígena, apresentar declaração, emitida preferencialmente via Sistema SEI, na forma do Anexo XXV da IN 128/2022;
       `);
         } else if (categoriaTrabalhador == "nao-indigena") {
-            exigenciasGerais.push(`Se Trabalhador rural: <br>
+            exigenciasGerais.push(`Autodeclaração de Segurado Especial (Rural/ Pescador/Extrativista) preenchida de forma eletrônica pelo Meu INSS ou telefone 135.`);
+            /* exigenciasGerais.push(`Se Trabalhador rural: <br>
         - Apresentar declaração de atividade rural na forma doAnexo VIII da IN nº 128 PRES/INSS, de 28/03/2022, o qual substituiu a entrevista rural (o modelo da declaração segue em anexo a esta carta e esta disponibilizado no presente requerimento, podendo ser acessado por meio do portal/aplicativo Meu INSS;;
       <br><br>
       Se Pescador:<br>
@@ -1707,9 +1710,16 @@ function processaCategoriaEAnexos() {
       <br><br>
       Se Extrativista:<br>
       - Apresentar formulário preenchido da Autodeclaração do Segurado Especial - Extrativista, na forma do Anexo X da IN nº 128 PRES/INSS, de 28/03/2022;      
-      `);
+      `); */
         } else {
-            exigenciasGerais.push(`Se Trabalhador rural: <br>
+            exigenciasGerais.push(`
+            Se Trabalhador Rural ou Pescador ou Extrativista: <br>
+            Autodeclaração de Segurado Especial (Rural/ Pescador/Extrativista) preenchida de forma eletrônica pelo Meu INSS ou telefone 135.
+        <br><br>
+      Se Indígena:<br>
+      -Para comprovação da atividade de indígena, apresentar declaração, emitida preferencialmente via Sistema SEI, na forma do Anexo XXV da IN 128/2022;
+      `);
+            /* exigenciasGerais.push(`Se Trabalhador rural: <br>
         - Apresentar declaração de atividade rural na forma do Anexo VIII da IN nº 128 PRES/INSS, de 28/03/2022;
                 <br><br>
         Se Pescador:<br>
@@ -1720,7 +1730,7 @@ function processaCategoriaEAnexos() {
         <br><br>
       Se Indígena:<br>
       -Para comprovação da atividade de indígena, apresentar declaração, emitida preferencialmente via Sistema SEI, na forma do Anexo XXV da IN 128/2022;
-      `);
+      `); */
         }
     }
 
@@ -2325,15 +2335,18 @@ function carregarExigencia(tipo) {
 
     } else if (tipo == "anexo-1") {
 
-        txt += "<br>- Apresentar declaração de atividade rural na forma do Anexo VIII da IN nº 128 PRES/INSS, de 28/03/2022";
+        /* txt += "<br>- Apresentar declaração de atividade rural na forma do Anexo VIII da IN nº 128 PRES/INSS, de 28/03/2022"; */
+        txt += "<br>- Apresentar Autodeclaração de Segurado Especial Rural preenchida de forma eletrônica pelo Meu INSS ou telefone 135.";
 
     } else if (tipo == "anexo-2") {
 
-        txt += "- Apresentar formulário preenchido da Autodeclaração do Segurado Especial - Pescador, na forma do Anexo IX da IN nº 128 PRES/INSS, de 28/03/2022";
+        /* txt += "- Apresentar formulário preenchido da Autodeclaração do Segurado Especial - Pescador, na forma do Anexo IX da IN nº 128 PRES/INSS, de 28/03/2022"; */
+        txt += "<br>- Apresentar Autodeclaração de Segurado Especial Pescador preenchida de forma eletrônica pelo Meu INSS ou telefone 135.";
 
     } else if (tipo == "anexo-3") {
 
-        txt += "- Apresentar formulário preenchido da Autodeclaração do Segurado Especial - Extrativista, na forma do Anexo X da IN nº 128 PRES/INSS, de 28/03/2022";
+        /* txt += "- Apresentar formulário preenchido da Autodeclaração do Segurado Especial - Extrativista, na forma do Anexo X da IN nº 128 PRES/INSS, de 28/03/2022"; */
+        txt += "<br>- Apresentar Autodeclaração de Segurado Especial Extrativista preenchida de forma eletrônica pelo Meu INSS ou telefone 135.";
 
     } else if (tipo == "provas-rurais") {
 
