@@ -1,0 +1,422 @@
+< !DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Teste Ativo</title>
+
+        <link rel="stylesheet" href="https://code.jquery.com/qunit/qunit-2.18.1.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+        <script src="homologacaogpt5.js"></script>
+
+    </head>
+
+    <body>
+        <div id="qunit"></div>
+        <div id="qunit-fixture"></div>
+        <script src="https://code.jquery.com/qunit/qunit-2.18.1.js"></script>
+
+        <script>
+
+            const periodosDeclarados = [];
+            const periodosProibidos = [];
+
+
+            periodosDeclarados.push(new Periodo('Período Declarado 1', '01/01/2000', '31/12/2000'));
+
+            periodosProibidos.push(new Periodo('Período Proibido 1', '01/03/2000', '31/03/2000'));
+            periodosProibidos.push(new Periodo('Período Proibido 1', '01/05/2000', '31/05/2000'));
+
+
+
+            const periodosProibidosV2 = [];
+            periodosProibidosV2.push(new Periodo('Período Proibido 1', '01/03/2000', '31/03/2000'));
+            periodosProibidosV2.push(new Periodo('Período Proibido 1', '01/05/2000', '31/05/2000'));
+            periodosProibidosV2.push(new Periodo('Período Proibido 1', '01/12/2000', '15/12/2000'));
+
+            const periodosDeclaradosV2 = [];
+            periodosDeclaradosV2.push(new Periodo('Período Declarado 1', '01/01/2000', '31/12/2000'));
+            periodosDeclaradosV2.push(new Periodo('Período Declarado 2', '01/06/2000', '31/10/2000'));
+
+            const periodosDeclaradosV3 = [];
+            periodosDeclaradosV3.push(new Periodo('Período Declarado 1', '01/01/2000', '31/12/2030'));
+
+            const provas = [];
+            const prova1 = new Prova('Prova 1', '03/01/2010', '03/01/2010');
+            const prova2 = new Prova('Prova 2', '20/01/2020', '22/01/2020');
+            const prova3 = new Prova('Prova 5', '01/01/2030', '01/01/2030');
+
+            provas.push(prova1);
+            provas.push(prova2);
+            provas.push(prova3);
+
+
+
+
+
+
+            QUnit.module('Esta funcionando', function () {
+                QUnit.test('Esta funcionando', function (assert) {
+                    assert.equal(isTesteFuncionando(), 1985);
+                });
+            });
+
+            QUnit.module('Teste recebeDDMMAAAARetornaMoment', function () {
+                QUnit.test('Teste recebeDDMMAAAARetornaMoment', function (assert) {
+                    const momento = moment('08/03/1985', 'DD/MM/YYYY');
+                    assert.equal(recebeDDMMAAAARetornaMoment(`08/03/1985`)._i, momento._i);
+                });
+            });
+
+            QUnit.module('Teste recebeMomentoRetornaDDMMAAAA', function () {
+                QUnit.test('Teste recebeMomentoRetornaDDMMAAAA', function (assert) {
+                    const momento = moment('08/03/1985', 'DD/MM/YYYY');
+                    assert.equal(recebeMomentoRetornaDDMMAAAA(momento), `08/03/1985`);
+                });
+            });
+
+            QUnit.module('Teste Duracao', function () {
+                QUnit.test('Teste Duracao', function (assert) {
+                    const periodo = new Periodo('Período Declarado 1', '01/01/2000', '31/12/2000');
+                    assert.equal(getDuracaoDoPeriodoEmMeses(periodo), 11);
+                });
+            });
+
+            QUnit.module('Teste retira periodos impedidos', function () {
+                QUnit.test('Teste retira periodos impedidos', function (assert) {
+                    let retorno = removePeriodosProibidos(periodosDeclarados, periodosProibidos)
+                    // console.log(`Retorno:`);
+                    // console.log(retorno);
+                    assert.deepEqual(retorno,
+                        [
+                            {
+                                "descricao": "Período Declarado 1",
+                                "fim": "29/02/2000",
+                                "inicio": "01/01/2000",
+                                "isDepoisDeImpedimento": false,
+                                "provas": []
+                            },
+                            {
+                                "descricao": "Período Declarado 1",
+                                "fim": "30/04/2000",
+                                "inicio": "01/04/2000",
+                                "isDepoisDeImpedimento": true,
+                                "provas": []
+                            },
+                            {
+                                "descricao": "Período Declarado 1",
+                                "fim": "31/12/2000",
+                                "inicio": "01/06/2000",
+                                "isDepoisDeImpedimento": true,
+                                "provas": []
+                            },
+                        ]);
+                });
+            });
+
+            QUnit.module('Remove concomitancias', function () {
+                QUnit.test('Remove concomitancias', function (assert) {
+                    let retorno = removePeriodosProibidos(periodosDeclaradosV2, periodosProibidos)
+
+                    //primeiro tirando a duplicidade depois de tirar os proibidos
+                    let semDuplicidade = removePeriodosConcomitantesFundindoPeriodos(retorno);
+
+                    //Agora tirando a duplicidade dos declarados para depois tirar os proibidos
+                    let semDuplicidade2 = removePeriodosConcomitantesFundindoPeriodos(periodosDeclaradosV2);
+                    let retorno2 = removePeriodosConcomitantesFundindoPeriodos(semDuplicidade2, periodosProibidos)
+
+                    //nos dois casos deu certo
+
+                    assert.deepEqual(semDuplicidade,
+                        [
+                            {
+                                "descricao": "Período Declarado 1",
+                                "fim": "29/02/2000",
+                                "inicio": "01/01/2000",
+                                "isDepoisDeImpedimento": false,
+                                "provas": []
+                            },
+                            {
+                                "descricao": "Período Declarado 1",
+                                "fim": "30/04/2000",
+                                "inicio": "01/04/2000",
+                                "isDepoisDeImpedimento": true,
+                                "provas": []
+                            },
+                            {
+                                "descricao": "Período Declarado 1",
+                                "fim": "31/12/2000",
+                                "inicio": "01/06/2000",
+                                "isDepoisDeImpedimento": true,
+                                "provas": []
+                            },
+                        ]);
+                });
+            });
+
+            QUnit.module('Remove concomitancias2', function () {
+                QUnit.test('Remove concomitancias2', function (assert) {
+
+                    const impedimentos = [];
+                    impedimentos.push(new Impedimento('Período Proibido 1', '01/03/2000', '31/03/2000'));
+                    impedimentos.push(new Impedimento('Período Proibido 1', '01/05/2000', '31/05/2000'));
+                    impedimentos.push(new Impedimento('Período Proibido 1', '01/12/2000', '15/12/2000'));
+
+                    const declarados = [];
+                    declarados.push(new Periodo('Período Declarado 1', '01/01/2000', '31/12/2000'));
+                    declarados.push(new Periodo('Período Declarado 2', '01/06/2000', '31/10/2000'));
+                    declarados.push(new Periodo('Período Declarado 3', '01/11/2000', '31/10/2001'));
+
+                    const periodosDeclaradosV3 = [];
+                    periodosDeclaradosV3.push(new Periodo('Período Declarado 1', '01/01/2000', '31/12/2030'));
+
+                    const provas = [];
+                    const prova1 = new Prova('Prova 1', '03/01/2010', '03/01/2010');
+                    const prova2 = new Prova('Prova 2', '20/01/2020', '22/01/2020');
+                    const prova3 = new Prova('Prova 5', '01/01/2030', '01/01/2030');
+
+                    provas.push(prova1);
+                    provas.push(prova2);
+                    provas.push(prova3);
+
+
+                    let semDuplicidade = removePeriodosConcomitantesFundindoPeriodos(declarados);
+
+                    const declarados2 = [];
+                    declarados2.push(new Periodo('Período Declarado 3', '01/10/2011', '31/12/2011'));
+                    declarados2.push(new Periodo('Período Declarado 1', '01/01/2000', '30/12/2010'));
+                    declarados2.push(new Periodo('Período Declarado 1', '01/01/2005', '31/12/2010'));
+                    declarados2.push(new Periodo('Período Declarado 2', '01/06/2011', '31/10/2011'));
+                    declarados2.push(new Periodo('Período Declarado 3', '01/10/2011', '31/12/2011'));
+
+                    let semDuplicidade2 = removePeriodosConcomitantesFundindoPeriodos(declarados2);
+
+
+
+
+                    //nos dois casos deu certo
+
+                    assert.deepEqual(semDuplicidade,
+
+                        [
+                            {
+                                "descricao": "Período Declarado 1",
+                                "fim": "31/10/2001",
+                                "inicio": "01/01/2000",
+                                "isDepoisDeImpedimento": false,
+                                "provas": []
+                            }
+                        ]);
+
+                    assert.deepEqual(semDuplicidade2,
+                        [
+                            {
+                                "descricao": "Período Declarado 1",
+                                "fim": "31/12/2010",
+                                "inicio": "01/01/2000",
+                                "isDepoisDeImpedimento": false,
+                                "provas": []
+                            },
+                            {
+                                "descricao": "Período Declarado 2",
+                                "fim": "31/12/2011",
+                                "inicio": "01/06/2011",
+                                "isDepoisDeImpedimento": false,
+                                "provas": []
+                            }
+                        ]);
+                });
+            });
+
+
+            QUnit.module('Teste Adicionar provas aos períodos', function () {
+                QUnit.test('Teste Adicionar provas aos períodos', function (assert) {
+
+                    const periodosDeclarados = [];
+                    periodosDeclarados.push(new Periodo('Período Declarado 1', '01/01/2000', '31/12/2020'));
+
+
+                    const provas = [];
+                    provas.push(new Prova('Prova 1', '03/01/2010', '03/01/2010'));
+                    provas.push(new Prova('Prova 2', '20/01/2020', '22/01/2020'));
+                    provas.push(new Prova('Prova 3', '01/01/2030', '01/01/2030'));
+
+
+                    const periodosDeclarados2 = [];
+                    periodosDeclarados2.push(new Periodo('Período Declarado 1', '01/01/2000', '31/12/2020'));
+                    periodosDeclarados2.push(new Periodo('Período Declarado 1', '01/01/2000', '31/12/2020'));
+
+                    const provas2 = [];
+                    provas2.push(new Prova('Prova 1', '03/01/2010', '03/01/2010'));
+                    provas2.push(new Prova('Prova 2', '20/01/2020', '22/01/2020'));
+                    provas2.push(new Prova('Prova 3', '01/01/2030', '01/01/2030'));
+
+
+
+                    adicionarProvasAoPeriodo(periodosDeclarados, provas)
+                    // console.log(`Retorno:`);
+                    // console.log(retorno);
+                    assert.deepEqual(periodosDeclarados,
+                        [
+                            {
+                                "descricao": "Período Declarado 1",
+                                "fim": "31/12/2020",
+                                "inicio": "01/01/2000",
+                                "isDepoisDeImpedimento": false,
+                                "provas": [
+                                    {
+                                        "descricao": "Prova 1",
+                                        "fim": "03/01/2010",
+                                        "inicio": "03/01/2010"
+                                    },
+                                    {
+                                        "descricao": "Prova 2",
+                                        "fim": "22/01/2020",
+                                        "inicio": "20/01/2020"
+                                    }
+                                ]
+                            }
+                        ]);
+
+
+                    adicionarProvasAoPeriodo(periodosDeclarados2, provas2)
+
+
+                    assert.deepEqual(periodosDeclarados2,
+                        [
+                            {
+                                "descricao": "Período Declarado 1",
+                                "fim": "31/12/2020",
+                                "inicio": "01/01/2000",
+                                "isDepoisDeImpedimento": false,
+                                "provas": [
+                                    {
+                                        "descricao": "Prova 1",
+                                        "fim": "03/01/2010",
+                                        "inicio": "03/01/2010"
+                                    },
+                                    {
+                                        "descricao": "Prova 2",
+                                        "fim": "22/01/2020",
+                                        "inicio": "20/01/2020"
+                                    }
+                                ]
+                            },
+                            {
+                                "descricao": "Período Declarado 1",
+                                "fim": "31/12/2020",
+                                "inicio": "01/01/2000",
+                                "isDepoisDeImpedimento": false,
+                                "provas": [
+                                    {
+                                        "descricao": "Prova 1",
+                                        "fim": "03/01/2010",
+                                        "inicio": "03/01/2010"
+                                    },
+                                    {
+                                        "descricao": "Prova 2",
+                                        "fim": "22/01/2020",
+                                        "inicio": "20/01/2020"
+                                    }
+                                ]
+                            }
+                        ]);
+                });
+            });
+
+
+
+            QUnit.module('Teste Remover provas duplicadas', function () {
+                QUnit.test('Teste Remover provas duplicadas', function (assert) {
+
+                    const periodosDeclarados = [];
+                    periodosDeclarados.push(new Periodo('Período Declarado 1', '01/01/2000', '31/12/2020'));
+
+
+                    const provas = [];
+                    provas.push(new Prova('Prova 1', '03/01/2010', '03/01/2010'));
+                    provas.push(new Prova('Prova 2', '20/01/2020', '22/01/2020'));
+                    provas.push(new Prova('Prova 3', '01/01/2030', '01/01/2030'));
+                    provas.push(new Prova('Prova 1', '03/01/2010', '03/01/2010'));
+                    provas.push(new Prova('Prova 2', '20/01/2020', '22/01/2020'));
+                    provas.push(new Prova('Prova 3', '01/01/2030', '01/01/2030'));
+
+
+
+
+
+                    let provasLimpas = removerProvasDuplicadas(provas)
+                    // console.log(`Retorno:`);
+                    // console.log(retorno);
+                    assert.deepEqual(provasLimpas,
+                        [
+                            {
+                                "descricao": "Prova 1",
+                                "fim": "03/01/2010",
+                                "inicio": "03/01/2010"
+                            },
+                            {
+                                "descricao": "Prova 2",
+                                "fim": "22/01/2020",
+                                "inicio": "20/01/2020"
+                            },
+                            {
+                                "descricao": "Prova 3",
+                                "fim": "01/01/2030",
+                                "inicio": "01/01/2030"
+                            }
+                        ]);
+
+
+
+                });
+            });
+
+
+            QUnit.module('Obtendo Sugestoes de Periodos', function () {
+                QUnit.test('Obtendo Sugestoes de Periodos', function (assert) {
+                    //let retorno = removePeriodosProibidos(periodosDeclaradosV3, periodosProibidos)
+
+                    //primeiro tirando a duplicidade depois de tirar os proibidos
+                    //let semDuplicidade = removePeriodosConcomitantes(retorno);
+
+                    const periodosDeclaradosV4 = [];
+                    periodosDeclaradosV4.push(new Periodo('Período Declarado 1', '01/01/2000', '28/04/2010'));
+
+                    const provasV2 = [];
+                    const prova1V2 = new Prova('Prova 1', '03/01/2010', '03/01/2010');
+
+                    provasV2.push(prova1V2);
+
+                    adicionarProvasAosPeriodos(periodosDeclaradosV4, provasV2);
+
+
+
+
+                    console.log(`Sugestões`);
+                    const fragmentado = fragmentarPeriodo(periodosDeclaradosV4[0]);
+                    console.log(fragmentado);
+                    console.log();
+                    console.log();
+                    console.log();
+
+                    console.log(`Agora colocando as provas`);
+                    adicionarProvasAosPeriodos(fragmentado, provasV2);
+                    console.log(fragmentado);
+                    console.log(`Agora vou tirar os períodos que não têm provas`);
+                    console.log(removerOsPeriodosSemProvas(fragmentado));
+
+                    assert.deepEqual(fragmentado,
+
+                        [
+                        ]);
+                });
+            });
+
+        </script>
+
+    </body>
+
+    </html>

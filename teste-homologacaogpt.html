@@ -1,0 +1,1117 @@
+< !DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Teste Ativo</title>
+
+        <link rel="stylesheet" href="https://code.jquery.com/qunit/qunit-2.18.1.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+
+    </head>
+
+    <body>
+        <div id="qunit"></div>
+        <div id="qunit-fixture"></div>
+        <script src="https://code.jquery.com/qunit/qunit-2.18.1.js"></script>
+
+        <script>
+            class Periodo {
+                constructor(descricao, inicio, fim) {
+                    this.descricao = descricao.slice();
+                    this.inicio = inicio.slice();
+                    this.fim = fim.slice();
+                    this.provas = [];
+                    this.isDepoisDeImpedimento = false;
+                }
+
+            }
+
+            class Impedimento {
+                constructor(descricao, inicio, fim) {
+                    this.descricao = descricao.slice();
+                    this.inicio = inicio.slice();
+                    this.fim = fim.slice()
+                }
+            }
+
+            class Prova {
+                constructor(descricao, inicio, fim) {
+                    this.descricao = descricao.slice();
+                    this.inicio = inicio.slice();
+                    this.fim = fim.slice()
+                }
+            }
+
+
+
+
+
+
+            function isTesteFuncionando() {
+                return true;
+            }
+
+            function retiraPartesProibidasDoPeriodo1(periodo1, periodo2) {
+                const partesAusentes = [];
+
+                const formatoData = "DD/MM/YYYY";
+                const dataInicio1 = moment(periodo1.inicio, formatoData);
+                const dataFim1 = moment(periodo1.fim, formatoData);
+                const dataInicio2 = moment(periodo2.inicio, formatoData);
+                const dataFim2 = moment(periodo2.fim, formatoData);
+
+                //situação 1: Todo o período declarado está impedido
+                // Verifica se o período 1 está completamente dentro do período 2
+                //se o declarado começa igual ou depois do impedido e termina igual ou depois do impedido
+                if (dataInicio1 >= dataInicio2 && dataFim1 <= dataFim2) {
+                    //retorna vazio pois todo o declarado está impedido
+                    return partesAusentes;
+                }
+
+                //situação 2: há periodo desempedido antes e, ou, depois
+                // Verifica se o período 2 está completamente dentro do período 1
+                //se o impedido começa depois do declarado e o impedido termina antes do declarado
+                //então sobra período válido antes e depois do impedido
+                if (dataInicio2 >= dataInicio1 && dataFim2 <= dataFim1) {
+                    const antes = new Periodo(
+                        periodo1.descricao,
+                        periodo1.inicio,
+                        moment(periodo2.inicio, formatoData)
+                            .subtract(1, "days")
+                            .format(formatoData)
+                    );
+                    const depois = new Periodo(
+                        periodo1.descricao,
+                        moment(periodo2.fim, formatoData)
+                            .add(1, "days")
+                            .format(formatoData),
+                        periodo1.fim
+                    );
+                    if (antes.inicio < antes.fim) {
+                        //agora também estou atribuindo "isDepoisDeImpedimento" ao que vem antes, mas setando false
+                        antes.isDepoisDeImpedimento = periodo1.isDepoisDeImpedimento;
+                        partesAusentes.push(antes);
+                    }
+                    if (depois.inicio < depois.fim) {
+                        //só o depois do impedido recebe o atributo "isDepoisDeImpedimento"
+                        depois.isDepoisDeImpedimento = true;
+                        partesAusentes.push(depois);
+                    }
+                    return partesAusentes;
+                }
+
+                //Situação 3: Não entendi essa situação.
+                // Verifica se os períodos se sobrepõem
+                //se o declarado começa antes do impedido terminar e o declarado terminada depois do impedido começar
+                //então o impedimento está no final declarado
+                if (dataInicio1 < dataFim2 && dataFim1 > dataInicio2) {
+                    const antes = new Periodo(
+                        periodo1.descricao,
+                        periodo1.inicio,
+                        moment(periodo2.inicio, formatoData)
+                            .subtract(1, "days")
+                            .format(formatoData)
+                    );
+                    //Da forma como interpretei não vi nenhuma situação em que haveria período depois
+                    //Pois Declarado começa, impedido começa, declardo termina primeiro e só então impedido termina.
+                    const depois = new Periodo(
+                        periodo1.descricao,
+                        moment(periodo2.fim, formatoData)
+                            .add(1, "days")
+                            .format(formatoData),
+                        periodo1.fim
+                    );
+
+                    //acabo de perceber uma  coisa: não posso setar false em nenhum caso, pois o período analisado
+                    //pode ser parte de outro período analisado antes
+                    //portanto, não vou setar false jamais, mas sim copiar o atributo do período declarado
+                    if (antes.inicio < antes.fim) {
+                        antes.isDepoisDeImpedimento = periodo1.isDepoisDeImpedimento;
+                        partesAusentes.push(antes);
+                    }
+                    if (depois.inicio < depois.fim) {
+                        depois.isDepoisDeImpedimento = true;
+                        partesAusentes.push(depois);
+                    }
+                    return partesAusentes;
+                }
+
+                // Os períodos não se sobrepõem
+                //Situação 4: Não há sobreposição
+                partesAusentes.push(periodo1);
+                return partesAusentes;
+            }
+
+            function removePeriodosProibidos(periodosDeclarados, periodosProibidos) {
+                let periodosFinais = periodosDeclarados.slice(); // cria um array cópia dos períodos declarados
+
+                for (let periodoProibido of periodosProibidos) {
+                    let periodosTemp = [];
+
+                    // para cada período proibido, percorre todos os períodos finais e retira as partes proibidas
+                    for (let periodoFinal of periodosFinais) {
+                        const partesAusentes = retiraPartesProibidasDoPeriodo1(periodoFinal, periodoProibido);
+                        periodosTemp = periodosTemp.concat(partesAusentes);
+                    }
+
+                    periodosFinais = periodosTemp; // atualiza o array de períodos finais com as partes ausentes dos períodos declarados
+                }
+
+                return periodosFinais;
+            }
+
+            function removePeriodosConcomitantes(periodos) {
+                // Ordenar os períodos por data de início crescente
+                const periodosOrdenados = periodos.sort((a, b) => moment(a.inicio, 'DD/MM/YYYY') - moment(b.inicio, 'DD/MM/YYYY'));
+
+                // Inicializar o novo array de períodos
+                const periodosSemConcomitancia = [Object.assign({}, periodosOrdenados[0])];
+
+                // Iterar sobre os demais períodos
+                for (let i = 1; i < periodosOrdenados.length; i++) {
+                    const periodoAtual = periodosOrdenados[i];
+                    const ultimoPeriodo = periodosSemConcomitancia[periodosSemConcomitancia.length - 1];
+
+                    // Verificar se há sobreposição
+                    if (moment(periodoAtual.inicio, 'DD/MM/YYYY') <= moment(ultimoPeriodo.fim, 'DD/MM/YYYY')) {
+                        // Substituir o último período pelo resultado da união
+                        const periodoUniao = new Periodo(
+                            ultimoPeriodo.descricao,
+                            ultimoPeriodo.inicio,
+                            moment.max(moment(periodoAtual.fim, 'DD/MM/YYYY'), moment(ultimoPeriodo.fim, 'DD/MM/YYYY')).format('DD/MM/YYYY')
+                        );
+
+                        periodoUniao.isDepoisDeImpedimento = ultimoPeriodo.isDepoisDeImpedimento || periodoAtual.isDepoisDeImpedimento;
+                        periodosSemConcomitancia[periodosSemConcomitancia.length - 1] = Object.assign({}, periodoUniao);
+                    } else {
+                        // Adicionar o período atual ao novo array
+                        periodosSemConcomitancia.push(Object.assign({}, periodoAtual));
+                    }
+                }
+
+                return periodosSemConcomitancia;
+            }
+
+
+            const adicionarProvasAoPeriodo = (periodos, provas) => {
+                for (let periodo of periodos) {
+                    for (let prova of provas) {
+                        const inicioPeriodo = moment(periodo.inicio, "DD/MM/YYYY").toDate().getTime();
+                        const fimPeriodo = moment(periodo.fim, "DD/MM/YYYY").toDate().getTime();
+                        const inicioProva = moment(prova.inicio, "DD/MM/YYYY").toDate().getTime();
+                        if (inicioProva >= inicioPeriodo && inicioProva <= fimPeriodo) {
+                            periodo.provas.push(prova);
+                        }
+                    }
+                }
+            }
+
+            function provaMaisAntiga(periodo) {
+                let provaMaisAntiga = periodo.provas[0]; // Inicia com a primeira prova
+
+                for (let i = 1; i < periodo.provas.length; i++) {
+                    const prova = periodo.provas[i];
+                    const dataProvaMaisAntiga = new Date(provaMaisAntiga.inicio.split('/').reverse().join('-'));
+                    const dataProva = new Date(prova.inicio.split('/').reverse().join('-'));
+
+                    if (dataProva < dataProvaMaisAntiga) {
+                        provaMaisAntiga = prova;
+                    }
+                }
+
+                return provaMaisAntiga;
+            }
+
+            function dataProvaMaisAntiga(periodo) {
+                if (periodo.provas.length === 0) {
+                    return null;
+                }
+                let dataMaisAntiga = moment(periodo.provas[0].inicio, "DD/MM/YYYY");
+                for (let i = 1; i < periodo.provas.length; i++) {
+                    const dataProva = moment(periodo.provas[i].inicio, "DD/MM/YYYY");
+                    if (dataProva.isBefore(dataMaisAntiga)) {
+                        dataMaisAntiga = dataProva;
+                    }
+                }
+                return dataMaisAntiga.toDate();
+            }
+
+
+
+            function formatStringToDate(dateString) {
+                const [day, month, year] = dateString.split('/');
+                return new Date(year, month - 1, day);
+            }
+
+            // function fragmentarPeriodos(periodo) {
+            //     const dataInicioPeriodo = new Date(periodo.inicio.split('/').reverse().join('-'));
+            //     const dataFimPeriodo = new Date(periodo.fim.split('/').reverse().join('-'));
+            //     const periodoTotalEmMeses = (dataFimPeriodo.getFullYear() - dataInicioPeriodo.getFullYear()) * 12 + (dataFimPeriodo.getMonth() - dataInicioPeriodo.getMonth());
+
+            //     //se o período declarado for superior a sete anos e meio
+            //     if (periodoTotalEmMeses > 90) {
+            //         const blocos = [];
+
+            //         //assume a data incicial do bloco como sendo a data inicial do período
+            //         //let dataInicioBloco = dataInicioPeriodo;
+
+            //         //aqui vou realizar uma intervenção
+            //         //>>>>>>>>>>>>>> 
+            //         //a ideia é que nos blocos frutos do resto de período após impedimento, a data de início do bloco seja a data da prova mais antiga
+            //         let dataInicioBloco = dataInicioPeriodo;
+            //         if (periodo.isDepoisDeImpedimento) {
+            //             //const inicioProvaMaisAntiga = formatStringToDate(provaMaisAntiga(periodo).inicio);
+            //             const inicioProvaMaisAntiga = provaMaisAntiga(periodo).inicio;
+            //             console.log(`Inicio da prova mais antiga: ${inicioProvaMaisAntiga}`);
+            //             dataInicioBloco = new Date(inicioProvaMaisAntiga.split('/').reverse().join('-'));
+
+            //             // dataInicioBloco = dataProvaMaisAntiga(periodo);
+
+            //         }
+
+            //         //coloca a data final do bloco como sendo a inicial mais sete anos e meio
+            //         let dataFimBloco = new Date(dataInicioBloco.getFullYear() + 7, dataInicioBloco.getMonth() + 6, dataInicioBloco.getDate());
+
+            //         //verifica se a data final projetada para o bloco é dentro do período declarado
+            //         while (dataFimBloco <= dataFimPeriodo) {
+
+            //             //filtra as provas presentes no bloco desejado
+            //             const provasNoBloco = periodo.provas.filter(prova => {
+            //                 const dataInicioProva = new Date(prova.inicio.split('/').reverse().join('-'));
+            //                 return dataInicioProva >= dataInicioBloco && dataInicioProva <= dataFimBloco;
+            //             });
+
+            //             //verifica se há alguma prova no bloco que está sendo projetado
+            //             if (provasNoBloco.length > 0) {
+
+            //                 //cria o bloco
+            //                 const novoBloco = new Periodo(periodo.descricao, dataInicioBloco.toLocaleDateString('pt-BR'), dataFimBloco.toLocaleDateString('pt-BR'));
+
+            //                 //recebe as provas encontradas no bloco
+            //                 novoBloco.provas = provasNoBloco;
+
+            //                 //copia o valor de "isDepoisDeImpedimento" do bloco original
+            //                 novoBloco.isDepoisDeImpedimento = periodo.isDepoisDeImpedimento;
+
+            //                 //adiciona o bloco em "blocos"
+            //                 blocos.push(novoBloco);
+            //             }
+
+            //             //Prepara para a criação do novo bloco
+            //             dataInicioBloco = new Date(dataFimBloco.getFullYear(), dataFimBloco.getMonth() + 1, dataFimBloco.getDate());
+            //             dataFimBloco = new Date(dataInicioBloco.getFullYear() + 7, dataInicioBloco.getMonth() + 6, dataInicioBloco.getDate());
+            //         }
+
+            //         return blocos;
+            //     }
+
+            //     return [periodo];
+            // } 
+
+
+            //a função abaixo é igual à função acima, porém utiliza nas operações com data "Moment.js" o que aumenta a precisão
+            // function fragmentarPeriodos(periodo) {
+            //     const dataInicioPeriodo = moment(periodo.inicio, 'DD/MM/YYYY');
+            //     const dataFimPeriodo = moment(periodo.fim, 'DD/MM/YYYY');
+            //     const periodoTotalEmMeses = dataFimPeriodo.diff(dataInicioPeriodo, 'months');
+
+            //     console.log(`Aqui ficou definido que o periodo começa em ${dataInicioPeriodo}`);
+            //     console.log(`E termina em ${dataFimPeriodo}`);
+            //     console.log(`A duração total do período em meses é ${periodoTotalEmMeses}`);
+
+            //     //se o período declarado for superior a sete anos e meio
+            //     if (periodoTotalEmMeses > 90) {
+
+            //         console.log(`entrou no "if", vamos processar`);
+
+            //         const blocos = [];
+
+            //         //assume a data incicial do bloco como sendo a data inicial do período
+            //         let dataInicioBloco = dataInicioPeriodo;
+
+            //         //aqui vou realizar uma intervenção
+            //         //>>>>>>>>>>>>>> 
+            //         //a ideia é que nos blocos frutos do resto de período após impedimento, a data de início do bloco seja a data da prova mais antiga
+            //         if (periodo.isDepoisDeImpedimento) {
+            //             const inicioProvaMaisAntiga = moment(provaMaisAntiga(periodo).inicio, 'DD/MM/YYYY');
+            //             console.log(`Inicio da prova mais antiga: ${inicioProvaMaisAntiga.format('DD/MM/YYYY')}`);
+            //             dataInicioBloco = inicioProvaMaisAntiga;
+            //         }
+
+            //         //coloca a data final do bloco como sendo a inicial mais sete anos e meio
+            //         let dataFimBloco = moment(dataInicioBloco).add(7, 'years').add(6, 'months');
+
+            //         console.log(`O bloco criado começa em ${dataInicioBloco} e termina em ${dataFimBloco}`);
+
+            //         //verifica se a data final projetada para o bloco é dentro do período declarado
+            //         while (dataFimBloco.isSameOrBefore(dataFimPeriodo)) {
+
+            //             //filtra as provas presentes no bloco desejado
+            //             const provasNoBloco = periodo.provas.filter(prova => {
+            //                 const dataInicioProva = moment(prova.inicio, 'DD/MM/YYYY');
+            //                 return dataInicioProva.isSameOrAfter(dataInicioBloco) && dataInicioProva.isSameOrBefore(dataFimBloco);
+            //             });
+
+            //             console.log(`Há ${provasNoBloco.length} provas no bloco`);
+
+            //             //verifica se há alguma prova no bloco que está sendo projetado
+            //             if (provasNoBloco.length > 0) {
+
+            //                 //cria o bloco
+            //                 const novoBloco = new Periodo(periodo.descricao, dataInicioBloco.format('DD/MM/YYYY'), dataFimBloco.format('DD/MM/YYYY'));
+
+            //                 //recebe as provas encontradas no bloco
+            //                 novoBloco.provas = provasNoBloco;
+
+            //                 //copia o valor de "isDepoisDeImpedimento" do bloco original
+            //                 novoBloco.isDepoisDeImpedimento = periodo.isDepoisDeImpedimento;
+
+            //                 //adiciona o bloco em "blocos"
+            //                 blocos.push(novoBloco);
+            //             }
+
+            //             //Prepara para a criação do novo bloco
+            //             dataInicioBloco = moment(dataFimBloco).add(1, 'month');
+            //             dataFimBloco = moment(dataInicioBloco).add(7, 'years').add(6, 'months');
+
+            //             // console.log(`Vamos preparar o novo bloco para análise:`);
+            //             // console.log(`Início: ${dataInicioBloco} e Fim: ${dataFimBloco}`);
+            //             // console.log(`O novo bloco que vamos analisar termina dentro do período? : ${dataFimBloco.isSameOrBefore(dataFimPeriodo)}`);
+
+            //             // //Então vamos colocar o fim do bloco no fim do período e retornar a data de início dele o máximo que der sem chocar com o anterior
+            //             // if (!dataFimBloco.isSameOrBefore(dataFimPeriodo)) {
+            //             //     console.log(`O Período termina antes do fim do bloco`);
+            //             //     console.log(`Bloco: Início: ${dataInicioBloco} e Fim: ${dataFimBloco}`);
+            //             //     console.log(`Período: Início: ${dataInicioPeriodo} e Fim: ${dataFimPeriodo}`);
+            //             //     console.log(`Inicio do bloco:: ${dataInicioBloco} e Fim do Periodo: ${dataFimPeriodo}`);
+
+            //             //     //Vou colocar o fim do bloco no fim do período
+            //             //     dataFimBloco = moment(dataFimPeriodo);
+            //             //     console.log(`Vou colocar o fim do bloco no fim do período`);
+            //             //     console.log(`Novo Fim do bloco: ${dataFimBloco}`);
+
+            //             //     //vou colocar o início do bloco 
+            //             //     //ou voltando sete anos e meio da data fim
+            //             //     dataInicioBloco = moment(dataFimBloco).subtract(7, 'years').subtract(6, 'months');
+            //             //     console.log(`Vou colocar o início do bloco voltando sete anos e meio do início`);
+            //             //     console.log(`Novo início do bloco: ${dataFimBloco}`);
+
+            //             //     //ou no dia seguinte à última data fim utilizada no último bloco criado
+
+            //             //     //se já foi setado algum bloco anteriormente
+            //             //     if (blocos.length > 0) {
+            //             //         console.log(`Como partes do período já foi utilizado antes em outros blocos...`);
+
+            //             //         const ultimaData = blocos[blocos.length - 1].fim;
+            //             //         console.log(`Vou pegar a última data do último bloco criado ${ultimaData}`);
+
+            //             //         dataInicioBloco = moment(ultimaData).add(1, 'days');
+            //             //         console.log(`E avançar um dia. Assim o bloco começará em ${dataInicioBloco}`);
+
+            //             //         console.log(`O bloco ficou assim Início: ${dataInicioBloco} e Fim: ${dataFimBloco}`);
+            //             //     }
+
+
+            //             //     if (dataInicioBloco.isSameOrBefore(dataFimPeriodo)) {
+            //             //         console.log(`Então vamos setar o novo bloco assim:`);
+            //             //         console.log(`Início: ${dataInicioBloco} e Fim: ${dataFimBloco}`);
+            //             //         dataFimBloco = moment(dataFimPeriodo);
+            //             //     }
+            //         }
+
+
+            //         //Se o novo bloco que vamos analisar não termina dentro do período, então temos que limitar sua duração ao fim do período, mas checando se a data de início do bloco está dentro do período
+            //         // if (!dataFimBloco.isSameOrBefore(dataFimPeriodo)) {
+            //         //     console.log(`O Período termina antes do fim do bloco`);
+            //         //     console.log(`Bloco: Início: ${dataInicioBloco} e Fim: ${dataFimBloco}`);
+            //         //     console.log(`Período: Início: ${dataInicioPeriodo} e Fim: ${dataFimPeriodo}`);
+            //         //     console.log(`Inicio do bloco:: ${dataInicioBloco} e Fim do Periodo: ${dataFimPeriodo}`);
+            //         //     if (dataInicioBloco.isSameOrBefore(dataFimPeriodo)) {
+            //         //         console.log(`Então vamos setar o novo bloco assim:`);
+            //         //         console.log(`Início: ${dataInicioBloco} e Fim: ${dataFimBloco}`);
+            //         //         dataFimBloco = moment(dataFimPeriodo);
+            //         //     }
+            //         // }
+
+
+            //     }
+
+            //     return blocos;
+            // }
+
+            // return [periodo];
+            // }
+
+
+
+
+
+
+
+
+
+
+            function fragmentarPeriodosTodos(periodos) {
+                let todosBlocos = [];
+                periodos.forEach(periodo => {
+                    console.log(`Vamos fragmentar o período:`);
+                    console.log(periodo);
+                    const blocos = fragmentarPeriodos(periodo);
+                    console.log(`O retorno foi :`);
+                    console.log(blocos);
+                    todosBlocos = [...todosBlocos, ...blocos];
+                });
+                return todosBlocos;
+            }
+
+
+
+            // function sugestoesPeriodos(periodo, N) {
+
+
+            //     console.log(`Em SUGESTOES chegou o periodo: `);
+            //     console.log(periodo);
+            //     console.log(`E foram pedidas ${N} sugestões`);
+
+
+            //     const inicio = new Date(periodo.inicio);
+            //     const fim = new Date(periodo.fim);
+            //     const duracao = (fim - inicio) / (1000 * 60 * 60 * 24 * 365.25);
+
+            //     if (duracao <= 7.5) {
+            //         // Caso a duração seja menor ou igual a 7 anos e meio, não há necessidade de fragmentar o período
+            //         return [];
+            //     }
+
+            //     const blocos = [];
+            //     let inicioBloco = new Date(inicio);
+            //     let fimBloco = new Date(inicioBloco.getFullYear() + 7, inicioBloco.getMonth(), inicioBloco.getDate());
+            //     while (fimBloco < fim) {
+            //         const provasNoBloco = periodo.provas.filter(prova => {
+            //             const dataProva = new Date(prova.inicio);
+            //             return dataProva >= inicioBloco && dataProva <= fimBloco;
+            //         });
+
+            //         if (provasNoBloco.length > 0) {
+            //             blocos.push({ inicio: new Date(inicioBloco), fim: new Date(fimBloco), provas: provasNoBloco });
+            //             inicioBloco = fimBloco;
+            //             fimBloco = new Date(inicioBloco.getFullYear() + 7, inicioBloco.getMonth(), inicioBloco.getDate());
+            //         } else {
+            //             fimBloco = new Date(fimBloco.getFullYear() + 7, fimBloco.getMonth(), fimBloco.getDate());
+            //         }
+            //     }
+
+            //     const sugestoes = [];
+            //     for (const prova of periodo.provas) {
+            //         const dataProva = new Date(prova.inicio);
+            //         for (const bloco of blocos) {
+            //             const inicioSugestao = new Date(bloco.inicio);
+            //             const fimSugestao = new Date(bloco.inicio.getFullYear() + 7, bloco.inicio.getMonth(), bloco.inicio.getDate() + 182);
+            //             while (fimSugestao <= bloco.fim) {
+            //                 if (dataProva >= inicioSugestao && dataProva <= fimSugestao) {
+            //                     sugestoes.push({ inicio: new Date(inicioSugestao), fim: new Date(fimSugestao) });
+            //                 }
+            //                 inicioSugestao.setDate(inicioSugestao.getDate() + 1);
+            //                 fimSugestao.setDate(fimSugestao.getDate() + 1);
+            //             }
+            //         }
+            //     }
+
+            //     return sugestoes.slice(0, N);
+            // }
+
+            //const moment = require('moment');
+
+
+            function recebeDDMMAAAARetornaMoment(data) {
+                return moment(data, 'DD/MM/YYYY');
+            }
+
+            function duracaoEmMeses(inicio, fim) {
+                //const moment = require('moment');
+
+                const inicioMoment = moment(inicio, 'DD/MM/YYYY');
+                const fimMoment = moment(fim, 'DD/MM/YYYY');
+                return fimMoment.diff(inicioMoment, 'months', true);
+                // const dataInicioPeriodo = moment(periodo.inicio, 'DD/MM/YYYY');
+                // const dataFimPeriodo = moment(periodo.fim, 'DD/MM/YYYY');
+                // const periodoTotalEmMeses = dataFimPeriodo.diff(dataInicioPeriodo, 'months');
+            }
+
+            function sugestoesPeriodos(periodo, N) {
+
+                console.log(`Em "sugestoesPeriodos" chegou o período `);
+                console.log(periodo);
+                console.log(`E nós queremos ${N} sugestões`);
+
+
+                //const moment = require('moment');
+                const duracao = duracaoEmAnos(periodo.inicio, periodo.fim);
+
+                console.log(`O período dura anos`);
+                console.log(duracao);
+
+                if (duracao <= 7.5) {
+                    // Caso a duração seja menor ou igual a 7 anos e meio, não há necessidade de fragmentar o período
+                    console.log(`A Duração foi menor que 7.5 anos, não precisa fragmentar.`);
+                    return [];
+                }
+
+                console.log(`Aqui 1`);
+
+                const blocos = [];
+                let inicioBloco = moment(periodo.inicio, 'DD/MM/YYYY');
+                let fimBloco = moment(inicioBloco).add(7, 'years').add(6, 'months');
+
+                console.log(`Começaremos sugerindo o seguinte bloc:`);
+                console.log(`${inicioBloco} >>> a <<< ${fimBloco}`);
+
+                console.log(`Antes do While`);
+                while (fimBloco < moment(periodo.fim, 'DD/MM/YYYY')) {
+
+                    console.log(`Entramos no while`);
+
+                    const provasNoBloco = periodo.provas.filter(prova => {
+                        const dataProva = moment(prova.inicio, 'DD/MM/YYYY');
+                        return dataProva >= inicioBloco && dataProva <= fimBloco;
+                    });
+
+                    if (provasNoBloco.length > 0) {
+                        blocos.push({ inicio: moment(inicioBloco), fim: moment(fimBloco), provas: provasNoBloco });
+                        inicioBloco = moment(fimBloco).add(1, 'days');
+                        fimBloco = moment(inicioBloco).add(7, 'years').add(6, 'months');
+                    } else {
+                        fimBloco = moment(fimBloco).add(7, 'years').add(6, 'months');
+                    }
+                }
+
+
+                console.log(`Aqui temos ${periodo.provas.length} provas`);
+
+                const sugestoes = [];
+                for (const prova of periodo.provas) {
+                    const dataProva = moment(prova.inicio, 'DD/MM/YYYY');
+                    for (const bloco of blocos) {
+                        const inicioSugestao = moment(bloco.inicio);
+                        const fimSugestao = moment(bloco.inicio).add(7, 'years').add(6, 'months');
+                        while (fimSugestao <= bloco.fim) {
+                            if (dataProva >= inicioSugestao && dataProva <= fimSugestao) {
+                                sugestoes.push({ inicio: moment(inicioSugestao), fim: moment(fimSugestao) });
+                            }
+                            inicioSugestao.add(1, 'days');
+                            fimSugestao.add(1, 'days');
+                        }
+                    }
+                }
+
+                return sugestoes.slice(0, N);
+            }
+
+
+
+            const periodosDeclarados = [];
+            const periodosProibidos = [];
+
+
+            periodosDeclarados.push(new Periodo('Período Declarado 1', '01/01/2000', '31/12/2000'));
+
+            periodosProibidos.push(new Periodo('Período Proibido 1', '01/03/2000', '31/03/2000'));
+            periodosProibidos.push(new Periodo('Período Proibido 1', '01/05/2000', '31/05/2000'));
+
+
+
+            const periodosProibidosV2 = [];
+            periodosProibidosV2.push(new Periodo('Período Proibido 1', '01/03/2000', '31/03/2000'));
+            periodosProibidosV2.push(new Periodo('Período Proibido 1', '01/05/2000', '31/05/2000'));
+            periodosProibidosV2.push(new Periodo('Período Proibido 1', '01/12/2000', '15/12/2000'));
+
+            const periodosDeclaradosV2 = [];
+            periodosDeclaradosV2.push(new Periodo('Período Declarado 1', '01/01/2000', '31/12/2000'));
+            periodosDeclaradosV2.push(new Periodo('Período Declarado 2', '01/06/2000', '31/10/2000'));
+
+            const periodosDeclaradosV3 = [];
+            periodosDeclaradosV3.push(new Periodo('Período Declarado 1', '01/01/2000', '31/12/2030'));
+
+            const provas = [];
+            const prova1 = new Prova('Prova 1', '03/01/2010', '03/01/2010');
+            const prova2 = new Prova('Prova 2', '20/01/2020', '22/01/2020');
+            const prova3 = new Prova('Prova 5', '01/01/2030', '01/01/2030');
+
+            provas.push(prova1);
+            provas.push(prova2);
+            provas.push(prova3);
+
+
+
+
+
+
+            QUnit.module('Esta funcionando', function () {
+                QUnit.test('Esta funcionando', function (assert) {
+                    assert.equal(isTesteFuncionando(), true);
+                });
+            });
+
+            QUnit.module('Desconta proibidos', function () {
+                QUnit.test('Desconta proibidos', function (assert) {
+                    let retorno = removePeriodosProibidos(periodosDeclarados, periodosProibidos)
+                    // console.log(`Retorno:`);
+                    // console.log(retorno);
+                    assert.deepEqual(retorno,
+                        [
+                            {
+                                "descricao": "Período Declarado 1",
+                                "fim": "29/02/2000",
+                                "inicio": "01/01/2000",
+                                "isDepoisDeImpedimento": false,
+                                "provas": []
+                            },
+                            {
+                                "descricao": "Período Declarado 1",
+                                "fim": "30/04/2000",
+                                "inicio": "01/04/2000",
+                                "isDepoisDeImpedimento": true,
+                                "provas": []
+                            },
+                            {
+                                "descricao": "Período Declarado 1",
+                                "fim": "31/12/2000",
+                                "inicio": "01/06/2000",
+                                "isDepoisDeImpedimento": true,
+                                "provas": []
+                            },
+                        ]);
+                });
+            });
+
+            QUnit.module('Desconta proibidos v2', function () {
+                QUnit.test('Desconta proibidos v2', function (assert) {
+                    let retorno = removePeriodosProibidos(periodosDeclarados, periodosProibidosV2)
+                    console.log(`Retorno:`);
+                    console.log(retorno);
+                    assert.deepEqual(retorno,
+                        [
+                            {
+                                "descricao": "Período Declarado 1",
+                                "fim": "29/02/2000",
+                                "inicio": "01/01/2000",
+                                "isDepoisDeImpedimento": false,
+                                "provas": []
+                            },
+                            {
+                                "descricao": "Período Declarado 1",
+                                "fim": "30/04/2000",
+                                "inicio": "01/04/2000",
+                                "isDepoisDeImpedimento": true,
+                                "provas": []
+                            },
+                            {
+                                "descricao": "Período Declarado 1",
+                                "fim": "30/11/2000",
+                                "inicio": "01/06/2000",
+                                "isDepoisDeImpedimento": true,
+                                "provas": []
+                            },
+                            {
+                                "descricao": "Período Declarado 1",
+                                "fim": "31/12/2000",
+                                "inicio": "16/12/2000",
+                                "isDepoisDeImpedimento": true,
+                                "provas": []
+                            }
+                        ]);
+                });
+            });
+
+
+            QUnit.module('Desconta proibidos com Duplicidade', function () {
+                QUnit.test('Desconta proibidos com Duplicidade', function (assert) {
+                    let retorno = removePeriodosProibidos(periodosDeclaradosV2, periodosProibidos)
+
+                    //primeiro tirando a duplicidade depois de tirar os proibidos
+                    let semDuplicidade = removePeriodosConcomitantes(retorno);
+
+                    //Agora tirando a duplicidade dos declarados para depois tirar os proibidos
+                    let semDuplicidade2 = removePeriodosConcomitantes(periodosDeclaradosV2);
+                    let retorno2 = removePeriodosProibidos(semDuplicidade2, periodosProibidos)
+
+                    //nos dois casos deu certo
+
+                    assert.deepEqual(semDuplicidade,
+                        [
+                            {
+                                "descricao": "Período Declarado 1",
+                                "fim": "29/02/2000",
+                                "inicio": "01/01/2000",
+                                "isDepoisDeImpedimento": false,
+                                "provas": []
+                            },
+                            {
+                                "descricao": "Período Declarado 1",
+                                "fim": "30/04/2000",
+                                "inicio": "01/04/2000",
+                                "isDepoisDeImpedimento": true,
+                                "provas": []
+                            },
+                            {
+                                "descricao": "Período Declarado 1",
+                                "fim": "31/12/2000",
+                                "inicio": "01/06/2000",
+                                "isDepoisDeImpedimento": true,
+                                "provas": []
+                            },
+                        ]);
+                });
+            });
+
+
+            QUnit.module('Colocando provas no período', function () {
+                QUnit.test('Colocando provas no período', function (assert) {
+                    //let retorno = removePeriodosProibidos(periodosDeclaradosV3, periodosProibidos)
+
+                    //primeiro tirando a duplicidade depois de tirar os proibidos
+                    //let semDuplicidade = removePeriodosConcomitantes(retorno);
+
+                    const provasV2 = [];
+                    const prova1V2 = new Prova('Prova 1', '03/01/2010', '03/01/2010');
+                    const prova2V2 = new Prova('Prova 2', '20/01/2020', '22/01/2020');
+                    const prova3V2 = new Prova('Prova 5', '01/01/2030', '01/01/2030');
+
+                    adicionarProvasAoPeriodo(periodosDeclaradosV3, provasV2);
+
+                    console.log(`Fragmentação`);
+                    const fragmentado = fragmentarPeriodosTodos(periodosDeclaradosV3);
+                    console.log(fragmentado);
+
+                    assert.deepEqual(fragmentado,
+
+                        [
+                            {
+                                "descricao": "Período Declarado 1",
+                                "fim": "31/12/2030",
+                                "inicio": "01/01/2000",
+                                "isDepoisDeImpedimento": false,
+                                "provas": [
+                                    {
+                                        "descricao": "Prova 1",
+                                        "fim": "03/01/2010",
+                                        "inicio": "03/01/2010"
+                                    },
+                                    {
+                                        "descricao": "Prova 2",
+                                        "fim": "22/01/2020",
+                                        "inicio": "20/01/2020"
+                                    },
+                                    {
+                                        "descricao": "Prova 5",
+                                        "fim": "01/01/2030",
+                                        "inicio": "01/01/2030"
+                                    }
+                                ]
+                            }
+                        ]);
+                });
+            });
+
+            QUnit.module('Fragmentando', function () {
+                QUnit.test('Fragmentando', function (assert) {
+                    //let retorno = removePeriodosProibidos(periodosDeclaradosV3, periodosProibidos)
+
+                    //primeiro tirando a duplicidade depois de tirar os proibidos
+                    //let semDuplicidade = removePeriodosConcomitantes(retorno);
+
+                    const periodosDeclaradosV4 = [];
+                    periodosDeclaradosV4.push(new Periodo('Período Declarado 1', '01/01/2000', '31/12/2030'));
+
+                    const provasV2 = [];
+                    const prova1V2 = new Prova('Prova 1', '03/01/2010', '03/01/2010');
+                    const prova2V2 = new Prova('Prova 2', '20/01/2020', '22/01/2020');
+                    const prova3V2 = new Prova('Prova 5', '01/01/2030', '01/01/2030');
+
+                    provasV2.push(prova1V2);
+                    provasV2.push(prova2V2);
+                    provasV2.push(prova3V2);
+
+                    adicionarProvasAoPeriodo(periodosDeclaradosV4, provasV2);
+
+                    console.log(`Fragmentação`);
+                    const fragmentado = fragmentarPeriodosTodos(periodosDeclaradosV4);
+                    console.log(fragmentado);
+
+                    assert.deepEqual(fragmentado,
+
+                        [
+                            {
+                                "descricao": "Período Declarado 1",
+                                "fim": "01/02/2015",
+                                "inicio": "01/08/2007",
+                                "isDepoisDeImpedimento": false,
+                                "provas": [
+                                    {
+                                        "descricao": "Prova 1",
+                                        "fim": "03/01/2010",
+                                        "inicio": "03/01/2010"
+                                    }
+                                ]
+                            },
+                            {
+                                "descricao": "Período Declarado 1",
+                                "fim": "01/09/2022",
+                                "inicio": "01/03/2015",
+                                "isDepoisDeImpedimento": false,
+                                "provas": [
+                                    {
+                                        "descricao": "Prova 2",
+                                        "fim": "22/01/2020",
+                                        "inicio": "20/01/2020"
+                                    }
+                                ]
+                            },
+                            {
+                                "descricao": "Período Declarado 1",
+                                "fim": "01/04/2030",
+                                "inicio": "01/10/2022",
+                                "isDepoisDeImpedimento": false,
+                                "provas": [
+                                    {
+                                        "descricao": "Prova 5",
+                                        "fim": "01/01/2030",
+                                        "inicio": "01/01/2030"
+                                    }
+                                ]
+                            }
+                        ]);
+                });
+            });
+
+
+            QUnit.module('Teste Duracao em Anoss', function () {
+                QUnit.test('Teste Duracao em Anos', function (assert) {
+                    //let retorno = removePeriodosProibidos(periodosDeclaradosV3, periodosProibidos)
+
+                    //primeiro tirando a duplicidade depois de tirar os proibidos
+                    //let semDuplicidade = removePeriodosConcomitantes(retorno);
+
+                    const periodosDeclaradosV4 = [];
+                    periodosDeclaradosV4.push(new Periodo('Período Declarado 1', '01/01/2000', '28/04/2010'));
+
+                    const provasV2 = [];
+                    const prova1V2 = new Prova('Prova 1', '03/01/2010', '03/01/2010');
+
+                    provasV2.push(prova1V2);
+
+                    adicionarProvasAoPeriodo(periodosDeclaradosV4, provasV2);
+
+
+
+
+                    console.log(`Duracao`);
+                    const duracao = duracaoEmAnos(periodosDeclaradosV4[0].inicio, periodosDeclaradosV4[0].fim);
+                    console.log(`Duracação: ${duracao}`);
+
+                    assert.deepEqual(duracao, 10.32258064516129);
+                });
+            });
+
+
+            QUnit.module('Obtendo Sugestoes de Periodos', function () {
+                QUnit.test('Obtendo Sugestoes de Periodos', function (assert) {
+                    //let retorno = removePeriodosProibidos(periodosDeclaradosV3, periodosProibidos)
+
+                    //primeiro tirando a duplicidade depois de tirar os proibidos
+                    //let semDuplicidade = removePeriodosConcomitantes(retorno);
+
+                    const periodosDeclaradosV4 = [];
+                    periodosDeclaradosV4.push(new Periodo('Período Declarado 1', '01/01/2000', '28/04/2010'));
+
+                    const provasV2 = [];
+                    const prova1V2 = new Prova('Prova 1', '03/01/2010', '03/01/2010');
+
+                    provasV2.push(prova1V2);
+
+                    adicionarProvasAoPeriodo(periodosDeclaradosV4, provasV2);
+
+
+
+
+                    console.log(`Sugesões`);
+                    const fragmentado = fragmentarPeriodo(periodosDeclaradosV4[0]);
+                    console.log(fragmentado);
+
+                    assert.deepEqual(fragmentado,
+
+                        [
+                        ]);
+                });
+            });
+
+            // QUnit.module('Fragmentando periodo simples para ajuste', function () {
+            //     QUnit.test('Fragmentando periodo simples para ajuste', function (assert) {
+            //         //let retorno = removePeriodosProibidos(periodosDeclaradosV3, periodosProibidos)
+
+            //         //primeiro tirando a duplicidade depois de tirar os proibidos
+            //         //let semDuplicidade = removePeriodosConcomitantes(retorno);
+
+            //         const periodosDeclaradosV4 = [];
+            //         periodosDeclaradosV4.push(new Periodo('Período Declarado 1', '01/01/2000', '28/04/2010'));
+
+            //         const provasV2 = [];
+            //         const prova1V2 = new Prova('Prova 1', '03/01/2010', '03/01/2010');
+
+            //         provasV2.push(prova1V2);
+
+            //         adicionarProvasAoPeriodo(periodosDeclaradosV4, provasV2);
+
+
+            //         console.log(`Fragmentação`);
+            //         const fragmentado = fragmentarPeriodosTodos(periodosDeclaradosV4);
+            //         console.log(fragmentado);
+
+            //         assert.deepEqual(fragmentado,
+
+            //             [
+            //                 {
+            //                     "descricao": "Período Declarado 1",
+            //                     "fim": "01/02/2015",
+            //                     "inicio": "01/08/2007",
+            //                     "isDepoisDeImpedimento": false,
+            //                     "provas": [
+            //                         {
+            //                             "descricao": "Prova 1",
+            //                             "fim": "03/01/2010",
+            //                             "inicio": "03/01/2010"
+            //                         }
+            //                     ]
+            //                 },
+            //                 {
+            //                     "descricao": "Período Declarado 1",
+            //                     "fim": "01/09/2022",
+            //                     "inicio": "01/03/2015",
+            //                     "isDepoisDeImpedimento": false,
+            //                     "provas": [
+            //                         {
+            //                             "descricao": "Prova 2",
+            //                             "fim": "22/01/2020",
+            //                             "inicio": "20/01/2020"
+            //                         }
+            //                     ]
+            //                 },
+            //                 {
+            //                     "descricao": "Período Declarado 1",
+            //                     "fim": "01/04/2030",
+            //                     "inicio": "01/10/2022",
+            //                     "isDepoisDeImpedimento": false,
+            //                     "provas": [
+            //                         {
+            //                             "descricao": "Prova 5",
+            //                             "fim": "01/01/2030",
+            //                             "inicio": "01/01/2030"
+            //                         }
+            //                     ]
+            //                 }
+            //             ]);
+            //     });
+            // });
+
+
+            // QUnit.module('Fragmentando com Obstáculo', function () {
+            //     QUnit.test('Fragmentando com Obstáculo', function (assert) {
+            //         //let retorno = removePeriodosProibidos(periodosDeclaradosV3, periodosProibidos)
+
+            //         //primeiro tirando a duplicidade depois de tirar os proibidos
+            //         //let semDuplicidade = removePeriodosConcomitantes(retorno);
+
+            //         const periodosDeclaradosV4 = [];
+            //         periodosDeclaradosV4.push(new Periodo('Período Declarado 1', '01/01/2000', '31/12/2030'));
+
+            //         const provasV2 = [];
+            //         const prova1V2 = new Prova('Prova 1', '03/01/2010', '03/01/2010');
+            //         const prova2V2 = new Prova('Prova 2', '20/01/2020', '22/01/2020');
+            //         const prova3V2 = new Prova('Prova 5', '01/01/2030', '01/01/2030');
+
+            //         provasV2.push(prova1V2);
+            //         provasV2.push(prova2V2);
+            //         provasV2.push(prova3V2);
+
+
+
+
+            //         const periodosProibidosV2 = [];
+
+            //         periodosProibidosV2.push(new Periodo('Período Proibido 1', '01/03/2010', '31/03/2010'));
+
+            //         const periodosLimpos = removePeriodosProibidos(periodosDeclaradosV4, periodosProibidosV2);
+
+
+            //         console.log(`Periodos Limpos: `);
+            //         console.log(periodosLimpos);
+
+            //         adicionarProvasAoPeriodo(periodosLimpos, provasV2);
+
+
+            //         console.log(`Fragmentação`);
+            //         const fragmentado = fragmentarPeriodosTodos(periodosLimpos);
+            //         console.log(fragmentado);
+
+            //         assert.deepEqual(fragmentado,
+
+            //             [
+            //                 {
+            //                     "descricao": "Período Declarado 1",
+            //                     "fim": "01/02/2015",
+            //                     "inicio": "01/08/2007",
+            //                     "isDepoisDeImpedimento": false,
+            //                     "provas": [
+            //                         {
+            //                             "descricao": "Prova 1",
+            //                             "fim": "03/01/2010",
+            //                             "inicio": "03/01/2010"
+            //                         }
+            //                     ]
+            //                 },
+            //                 {
+            //                     "descricao": "Período Declarado 1",
+            //                     "fim": "01/09/2022",
+            //                     "inicio": "01/03/2015",
+            //                     "isDepoisDeImpedimento": false,
+            //                     "provas": [
+            //                         {
+            //                             "descricao": "Prova 2",
+            //                             "fim": "22/01/2020",
+            //                             "inicio": "20/01/2020"
+            //                         }
+            //                     ]
+            //                 },
+            //                 {
+            //                     "descricao": "Período Declarado 1",
+            //                     "fim": "01/04/2030",
+            //                     "inicio": "01/10/2022",
+            //                     "isDepoisDeImpedimento": false,
+            //                     "provas": [
+            //                         {
+            //                             "descricao": "Prova 5",
+            //                             "fim": "01/01/2030",
+            //                             "inicio": "01/01/2030"
+            //                         }
+            //                     ]
+            //                 }
+            //             ]);
+            //     });
+            // });
+
+
+
+
+
+
+
+
+
+        </script>
+
+    </body>
+
+    </html>

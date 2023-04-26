@@ -3267,6 +3267,30 @@ function apresentarPeriodosPreviamenteConfirmados() {
 
 }
 
+function ordenaPorData(array) {
+    array.sort((a, b) => {
+        const dataA = new Date(a.inicio.split('/').reverse().join('-'));
+        const dataB = new Date(b.inicio.split('/').reverse().join('-'));
+        return dataA - dataB;
+    });
+}
+
+function estaDentroDoPeriodo(evento, periodo) {
+    const inicioEvento = new Date(parseDate(evento.inicio));
+    const fimEvento = new Date(parseDate(evento.fim));
+    const inicioPeriodo = new Date(parseDate(periodo.inicio));
+    const fimPeriodo = new Date(parseDate(periodo.fim));
+
+    return (inicioEvento <= fimPeriodo && inicioEvento >= inicioPeriodo) ||
+        (fimEvento <= fimPeriodo && fimEvento >= inicioPeriodo) ||
+        (inicioEvento <= inicioPeriodo && fimEvento >= fimPeriodo);
+}
+
+function parseDate(dateString) {
+    const [day, month, year] = dateString.split('/');
+    return `${year}-${month}-${day}`;
+}
+
 
 function showTimeLineTable() {
 
@@ -3378,7 +3402,18 @@ function showTimeLineTable() {
 
         } else {
 
-            if (pvnv.impedimentos.length == 0) {
+            let impedimentosIn = [];
+            for (const impedimento of pvnv.impedimentos) {
+                if (estaDentroDoPeriodo(impedimento, pvnv.periodo)) {
+                    impedimentosIn.push(impedimento);
+                }
+            }
+
+            if (impedimentosIn.length > 0) ordenaPorData(impedimentosIn);
+
+
+            if (impedimentosIn.length == 0) {
+                //if (pvnv.impedimentos.length == 0) {
 
                 if (pvnv.provas.length == 0) {
 
@@ -3391,7 +3426,8 @@ function showTimeLineTable() {
 
 
 
-            for (const impedimento of pvnv.impedimentos) {
+            // for (const impedimento of pvnv.impedimentos) {
+            for (const impedimento of impedimentosIn) {
 
                 conteudo += `<tr class="table-active">
                                         <th scope="row" class="align-middle">${impedimento.inicio}</th>
@@ -3440,6 +3476,7 @@ function showTimeLineTable() {
     //document.getElementById(`time-line-data`).innerHTML = conteudo;
 
 }
+
 
 
 function isPescador() {
