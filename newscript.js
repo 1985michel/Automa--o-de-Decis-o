@@ -2282,28 +2282,28 @@ function fazerExigenciasDocumentaisFunction() {
     if (categoriasTrabalhador.includes("rural")) {
         exigenciasGerais.push(`
         - Para comprovação dos períodos de trabalho rural:<br>
-        -- Apresentar documentos contemporâneos ao exercício da atividade rural alegada, como escritura da terra, ITRs, CCIRs, contratos de arrendamento, contratos de comodato, meação, etc., notas fiscais de compra de insumos e de venda de produção, DAPs, etc.`);
+        -- Apresentar documentos contemporâneos ao exercício da atividade rural alegada${servico.includes("Salário-Maternidade") ? " e comprovadamente emitidos antes do início da gestação" : ""}, como escritura da terra, ITRs, CCIRs, contratos de arrendamento, contratos de comodato, meação, etc., notas fiscais de compra de insumos e de venda de produção, DAPs, etc.`);
 
     } else if (categoriasTrabalhador.includes("pescador")) {
         exigenciasGerais.push(`- Para comprovação dos períodos como Pescador(a):<br>
-        --Apresentar todos dos documentos que possuir para comprovação do exercício da atividade de pesca, a exemplo de carteiras de identificação profissional, notas fiscais de compras de insumos, recibos de venda de produção pesqueira, etc.`);
+        --Apresentar todos dos documentos que possuir para comprovação do exercício da atividade de pesca${servico.includes("Salário-Maternidade") ? " e comprovadamente emitidos antes do início da gestação" : ""}, a exemplo de carteiras de identificação profissional, notas fiscais de compras de insumos, recibos de venda de produção pesqueira, etc.`);
 
     } else if (categoriasTrabalhador.includes("nao-identificado")) {
         exigenciasGerais.push(`SE TRABALHADOR RURAL<br>
-        - Apresentar documentos contemporâneos ao exercício da atividade rural alegada, como escritura da terra, ITRs, CCIRs, contratos de arrendamento, contratos de comodato, meação, etc., notas fiscais de compra de insumos e de venda de produção, DAPs, etc.
+        - Apresentar documentos contemporâneos ao exercício da atividade rural alegada${servico.includes("Salário-Maternidade") ? " e comprovadamente emitidos antes do início da gestação" : ""}, como escritura da terra, ITRs, CCIRs, contratos de arrendamento, contratos de comodato, meação, etc., notas fiscais de compra de insumos e de venda de produção, DAPs, etc.
         <br><br>
         SE PESCADOR<br>
-        - Apresentar todos dos documentos que possuir para comprovação do exercício da atividade de pesca, a exemplo de carteiras de identificação profissional, notas fiscais de compras de insumos, recibos de venda de produção pesqueira, etc.
+        - Apresentar todos dos documentos que possuir para comprovação do exercício da atividade de pesca${servico.includes("Salário-Maternidade") ? " e comprovadamente emitidos antes do início da gestação" : ""}, a exemplo de carteiras de identificação profissional, notas fiscais de compras de insumos, recibos de venda de produção pesqueira, etc.
         <br><br>
         SE Indígena<br>
         – Para comprovação da atividade de indígena, apresentar declaração, emitida preferencialmente via Sistema SEI, na forma do Anexo XXV da IN 128/2022;`);
 
     } else if (categoriasTrabalhador.includes("nao-indigena")) {
         exigenciasGerais.push(`SE TRABALHADOR RURAL<br>
-        - Apresentar documentos contemporâneos ao exercício da atividade rural alegada, como escritura da terra, ITRs, CCIRs, contratos de arrendamento, contratos de comodato, meação, etc., notas fiscais de compra de insumos e de venda de produção, DAPs, etc.
+        - Apresentar documentos contemporâneos ao exercício da atividade rural alegada${servico.includes("Salário-Maternidade") ? " e comprovadamente emitidos antes do início da gestação" : ""}, como escritura da terra, ITRs, CCIRs, contratos de arrendamento, contratos de comodato, meação, etc., notas fiscais de compra de insumos e de venda de produção, DAPs, etc.
         <br><br>
         SE PESCADOR<br>
-        - Apresentar todos dos documentos que possuir para comprovação do exercício da atividade de pesca, a exemplo de carteiras de identificação profissional, notas fiscais de compras de insumos, recibos de venda de produção pesqueira, etc.`);
+        - Apresentar todos dos documentos que possuir para comprovação do exercício da atividade de pesca${servico.includes("Salário-Maternidade") ? " e comprovadamente emitidos antes do início da gestação" : ""}, a exemplo de carteiras de identificação profissional, notas fiscais de compras de insumos, recibos de venda de produção pesqueira, etc.`);
     }
 }
 
