@@ -1,0 +1,2157 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+
+    <link href="https://bootswatch.com/5/darkly/bootstrap.css" rel="stylesheet">
+    <link href="https://bootswatch.com/5/darkly/bootstrap.css" rel="stylesheet">
+    <link href="https://bootswatch.com/_vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+
+
+
+    <link rel="stylesheet" href="styleboot.css" />
+
+    <title>Automação de Decisão</title>
+
+    <!-- Include Quill stylesheet -->
+    <!-- <link href="https://cdn.quilljs.com/1.0.0/quill.snow.css" rel="stylesheet"> -->
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+
+
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+
+    <script language="javascript">
+        var gAutoPrint = true;
+    </script>
+
+    <!-- vue -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+
+
+    <!-- sobre imprimir o conteúdo em outra janela
+https://stackoverflow.com/questions/468881/print-div-id-printarea-div-only
+-->
+</head>
+
+<body>
+
+
+    <p></p>
+
+
+    <div class="container">
+
+        <nav class="navbar navbar-dark bg-primary">
+            <div class="container-fluid">
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <a class="navbar-brand" href="#"><span class="h1">Automação de Decisão</span></a>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#">Nova Análise</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#">Reprocessa Provas</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#">Despacho Sugerido</a>
+                        </li>
+
+                    </ul>
+
+                </div>
+
+            </div>
+        </nav>
+        <p></p>
+
+    </div>
+
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col-8">
+                <div class="row">
+                    <div class="col-4">
+
+                        <div class=" btn-group-vertical " role=" group" aria-label="First group">
+                            <button type="button" class="btn btn-primary left_buttom active" id="btn_etapa_1">01 -
+                                Dados
+                                Básicos</button>
+                            <button type="button" class="btn btn-primary left_buttom" id="btn_etapa_2">02 - Vínculos
+                                Públicos</button>
+                            <button type="button" class="btn btn-primary left_buttom" id="btn_etapa_3">03 - Vínculos
+                                e
+                                Recolhimentos</button>
+                            <button type="button" class="btn btn-primary left_buttom" id="btn_etapa_4">04 - Períodos
+                                Positivados</button>
+                            <button type="button" class="btn btn-primary left_buttom" id="btn_etapa_5">05 -
+                                Benefícios</button>
+                            <button type="button" class="btn btn-primary left_buttom" id="btn_etapa_6">06 -
+                                Atividades</button>
+                            <button type="button" class="btn btn-primary left_buttom" id="btn_etapa_7">07 - Bases
+                                Governamentais</button>
+                            <button type="button" class="btn btn-primary left_buttom" id="btn_etapa_8">08 - Empresas
+                                no
+                                CPF</button>
+                            <button type="button" class="btn btn-primary left_buttom" id="btn_etapa_9">09 -
+                                Categoria e
+                                Anexos</button>
+
+                            <button type="button" class="btn btn-primary left_buttom" id="btn_etapa_10">10 -
+                                Períodos
+                                Autodeclarados</button>
+                            <button type="button" class="btn btn-primary left_buttom" id="btn_etapa_11">11 -
+                                Provas</button>
+                            <button type="button" class="btn btn-primary left_buttom" id="btn_etapa_12">12 -
+                                Análise</button>
+                            <button type="button" class="btn btn-primary left_buttom" id="btn_etapa_13">13 -
+                                Exigência</button>
+                            <button type="button" class="btn btn-primary left_buttom" id="btn_etapa_14">14 -
+                                Despacho
+                                Editável</button>
+                            <button type="button" class="btn btn-primary left_buttom" id="btn_etapa_15">15 - Recebe
+                                CNIS</button>
+                            <br>
+                            <textarea id="txtarea2" class="form-control col-3 form-control btn-dark"
+                                rows="1"></textarea>
+
+                            <button class="btn strBtn btn-success form-control">Stringfy</button>
+                            <br>
+
+                        </div>
+                        <br>
+
+
+
+
+
+                    </div>
+                    <div class="col-8">
+                        <!-- dados básicos -->
+                        <div class="etapa-1 etapa">
+                            <br>
+
+                            <div class="form-group row ">
+
+                                <label for="nome" class="form-label">PAT:</label><br>
+                                <div class="col-8">
+                                    <textarea id="txtareaPat" class="form-control col-sm-8 form-control btn-dark"
+                                        rows="1"></textarea>
+                                </div>
+                                <div class="col-4">
+                                    <button class="btn pastBtnPat btn-success form-control">PAT</button>
+                                </div>
+
+
+                            </div>
+                            <br>
+
+                            <hr>
+
+                            <div class="form-group row ">
+
+                                <label for="nome" class="form-label">PJE- Tela 1:</label><br>
+                                <div class="col-8">
+                                    <textarea id="txtareaPJE1" class="form-control col-sm-8 form-control btn-dark"
+                                        rows="1"></textarea>
+                                </div>
+                                <div class="col-4">
+                                    <button class="btn pastBtnPJE1 btn-success form-control">PJE - 1</button>
+                                </div>
+
+
+                            </div>
+
+                            <br><br>
+
+                            <label for="nome" class="form-label">Nome:</label><br>
+                            <input type="text" id="nome" name="nome" value="" class="form-control btn-dark"><br>
+
+                            <label for="data-de-nascimento" class="form-label">Data de Nascimento: </label><br>
+                            <div class="input-group has-validation">
+                                <input type="date" id="data-de-nascimento" placeholder="dd-mm-yyyy"
+                                    name="data-de-nascicmento" value="" class="form-control btn-dark " required>
+                                <div class="invalid-tooltip">
+                                    Data de nascimento inválida!
+                                </div>
+                            </div>
+
+                            <br><br>
+
+                            <div class="btn-group col-12" role="group" aria-label="Basic radio toggle button group">
+                                <input type="radio" class="btn-check" name="btnradio-sexo" id="btnradio1"
+                                    autocomplete="off" value="homem" checked>
+                                <label class="btn btn-outline-info " for="btnradio1">Homem</label>
+
+                                <input type="radio" class="btn-check" name="btnradio-sexo" id="btnradio2"
+                                    autocomplete="off" value="mulher">
+                                <label class="btn btn-outline-danger " for="btnradio2">Mulher</label>
+                            </div>
+
+                            <br>
+                            <br>
+                            <label for="der" class="form-label">DER:</label><br>
+                            <div class="input-group has-validation">
+                                <input type="date" id="der" name="der" placeholder="dd-mm-yyyy" value=""
+                                    class="form-control btn-dark" required>
+                                <div class="invalid-tooltip">
+                                    DER inválida!
+                                </div>
+                            </div>
+
+                            <br>
+
+                            <div class="col-12">
+                                <button type="button"
+                                    class=" form-control gravar-etapa-1 btn btn-primary btn-lg btn-block">Gravar</button>
+                            </div>
+                        </div>
+
+
+                        <!-- CAPITURANDO CNIS -->
+                        <div class="etapa-15 etapa hidden">
+                            <div class="form-group row ">
+
+                                <div class="col-8">
+                                    <textarea id="txtareacnis" class="form-control col-sm-8 form-control btn-dark"
+                                        rows="2"></textarea>
+                                </div>
+                                <div class="col-4">
+                                    <button class="btn pastBtnCnis btn-success form-control">CNIS-PDF</button>
+                                </div>
+
+
+                            </div>
+                            <br><br>
+                        </div>
+
+                        <!-- vinculos públicos -->
+                        <div class="etapa-2 etapa hidden">
+                            <label for="nit">Nit:</label><br>
+                            <input type="text" id="nit" name="nit" value="" class="form-control btn-dark"><br>
+                            <p class="h3 text-center">Vínculos Públicos</p>
+                            <!--  <label for="nit">Nit:</label><br>
+                            <input type="text" id="nit" name="nit" value="" class="guess"><br> -->
+
+                            <br>
+                            <div class="teve-vinculo-publico-class btn-group col-12" role="group"
+                                aria-label="Basic radio toggle button group">
+                                <input type="radio" class="btn-check" name="btnradio-tem-vinculo-publico"
+                                    id="btnradio21" autocomplete="off" value="tem-vinculo-publico">
+                                <label class="btn btn-outline-success" for="btnradio21">Sim</label>
+
+                                <input type="radio" class="btn-check" name="btnradio-tem-vinculo-publico"
+                                    id="btnradio22" autocomplete="off" value="nao-tem-vinculo-publico" checked>
+                                <label class="btn btn-outline-danger" for="btnradio22">Não</label>
+                            </div>
+                            <br><br>
+
+                            <div class="tem_vinculo_publico_dados_class hidden">
+                                <label for="orgao" class="form-label">Órgão:</label><br>
+                                <input type="text" id="orgao" name="orgao" value="" class="form-control btn-dark"><br>
+
+                                <label for="data-inicio-orgao" class="form-label">Data de Início:</label><br>
+                                <div class="input-group has-validation">
+                                    <input type="date" id="data-inicio-orgao" name="data-inicio-orgao" value=""
+                                        class="form-control btn-dark">
+                                    <div class="invalid-tooltip">
+                                        Data inicial inválida!
+                                    </div>
+                                </div>
+
+                                <label for="data-fim-orgao" class="form-label">Data de Término:</label><br>
+                                <div class="input-group has-validation">
+                                    <input type="date" id="data-fim-orgao" name="data-fim-orgao" value=""
+                                        class="form-control btn-dark"><br>
+                                    <div class="invalid-tooltip">
+                                        Data final inválida!<br>Se não tem data de término, marque "Sim" para
+                                        "Pendente de
+                                        Acerto" <span id="orgao-ou-der">ou</span> <button type="button"
+                                            class=" form-control btn btn-success btn-sm btn-block"
+                                            id="assumir-der-orgao">Assumir
+                                            DER</button>
+                                    </div>
+                                </div>
+                                </br>
+                                <label class="form-label">Pendente de Acerto?</label>
+                                <div class="row">
+                                    <div class="col-2"></div>
+                                    <div class="teve-vinculo-publico-pendente-class btn-group col-8" role="group"
+                                        aria-label="Basic radio toggle button group">
+
+                                        <input type="radio" class="btn-check" name="tem-vinculo-publico-pendente"
+                                            id="btnradio23" autocomplete="off" value="sim">
+                                        <label class="btn btn-outline-success" for="btnradio23">Sim</label>
+
+                                        <input type="radio" class="btn-check" name="tem-vinculo-publico-pendente"
+                                            id="btnradio24" autocomplete="off" value="nao" checked>
+                                        <label class="btn btn-outline-danger" for="btnradio24">Não</label>
+                                    </div>
+                                    <div class="col-2"></div>
+                                </div>
+
+                                <br>
+
+                                <div class="col-12">
+                                    <button type="button"
+                                        class=" form-control outro-orgao btn btn-info btn-lg btn-block">Outro
+                                        Período</button>
+                                </div>
+                                <br>
+                            </div>
+
+
+                            <div class="col-12">
+                                <button type="button"
+                                    class=" form-control gravar-etapa-2 btn btn-primary btn-lg btn-block">Gravar</button>
+                            </div>
+                            <br>
+                        </div>
+
+
+                        <!-- vínculos e recolhimentos -->
+                        <div class="etapa-3 etapa hidden ">
+
+                            <p class="h3 text-center">Vínculos e Recolhimentos?</p>
+                            <br>
+                            <div class="teve-vinculo-class btn-group col-12" role="group"
+                                aria-label="Basic radio toggle button group">
+
+                                <input type="radio" class="btn-check" name="btnradio-teve-vinculo" id="btnradio31"
+                                    autocomplete="off" value="tem-vinculo-recolhimento">
+                                <label class="btn btn-outline-success" for="btnradio31">Sim</label>
+
+                                <input type="radio" class="btn-check" name="btnradio-teve-vinculo" id="btnradio32"
+                                    autocomplete="off" checked value="nao-tem-vinculo-recolhimento">
+                                <label class="btn btn-outline-danger" for="btnradio32">Não</label>
+                            </div>
+                            <br>
+
+                            <div class="teve_vinculo_ate_class hidden ">
+                                <br>
+                                <label for="empregador">Empregador:</label><br>
+                                <input type="text" id="empregador" name="empregador" value=""
+                                    class="form-control btn-dark"><br>
+
+                                <label for="data-inicio-vinculo">Data de Início:</label><br>
+                                <div class="input-group has-validation">
+                                    <input type="date" id="data-inicio-vinculo" name="data-inicio-vinculo" value=""
+                                        class="form-control btn-dark">
+                                    <div class="invalid-tooltip">
+                                        Data inicial inválida!
+                                    </div>
+                                </div>
+
+                                <label for="data-fim-vinculo">Data de Término:</label><br>
+                                <div class="input-group has-validation">
+                                    <input type="date" id="data-fim-vinculo" name="data-fim-vinculo" value=""
+                                        class="form-control btn-dark"><br>
+                                    <div class="invalid-tooltip">
+                                        Data Final inválida!<br>
+                                        <button type="button" class=" form-control btn btn-success btn-sm btn-block"
+                                            id="assumir-der-vinculo">Assumir
+                                            DER</button>
+                                    </div>
+                                </div>
+
+                                </br>
+                                <p>Este vínculo/recolhimento é rural?</p>
+                                <div class="row">
+                                    <div class="col-2"></div>
+                                    <div class=" btn-group col-8" role="group"
+                                        aria-label="Basic radio toggle button group">
+
+                                        <input type="radio" class="btn-check" name="is-vinculo-rural" id="btnradio33"
+                                            autocomplete="off" checked value="sim">
+                                        <label class="btn btn-outline-success" for="btnradio33">Sim</label>
+
+                                        <input type="radio" class="btn-check" name="is-vinculo-rural" id="btnradio34"
+                                            autocomplete="off" value="nao" checked>
+                                        <label class="btn btn-outline-danger" for="btnradio34">Não</label>
+
+                                    </div>
+                                    <div class="col-2"></div>
+                                </div>
+
+
+                                <br>
+                                <p>Fazer exigências para acerto do vínculo?</p>
+                                <div class="row">
+                                    <div class="col-2"></div>
+                                    <div class="teve-vinculo-publico-pendente-class btn-group col-8" role="group"
+                                        aria-label="Basic radio toggle button group">
+
+                                        <input type="radio" class="btn-check" name="fazer-exigencias-vinculo"
+                                            id="btnradio35" autocomplete="off" value="sim">
+                                        <label class="btn btn-outline-success" for="btnradio35">Sim</label>
+
+                                        <input type="radio" class="btn-check" name="fazer-exigencias-vinculo"
+                                            id="btnradio36" autocomplete="off" value="nao" checked>
+                                        <label class="btn btn-outline-danger" for="btnradio36">Não</label>
+
+                                    </div>
+                                    <div class="col-2"></div>
+                                </div>
+                                <br>
+                                <div class="col-12">
+                                    <button type="button"
+                                        class=" form-control outro-vinculo btn btn-info btn-lg btn-block">Outro
+                                        Período</button>
+                                </div>
+                            </div>
+                            <br>
+
+                            <div class="col-12">
+                                <button type="button"
+                                    class=" form-control gravar-etapa-3 btn btn-primary btn-lg btn-block">Gravar</button>
+                            </div>
+                            <br><br>
+                        </div>
+
+
+                        <!-- periodos positivados -->
+                        <div class="etapa-4 etapa hidden">
+
+                            <div class="teve-periodo-positivado-class ">
+                                <p class="h3 text-center">Períodos Previamente Positivados</p>
+
+                                <div class="teve-vinculo-publico-pendente-class btn-group col-12" role="group"
+                                    aria-label="Basic radio toggle button group">
+
+                                    <input type="radio" class="btn-check" name="btnradio-teve-positivado"
+                                        id="btnradio41" autocomplete="off" value="tem-periodo-positivado">
+                                    <label class="btn btn-outline-success" for="btnradio41">Sim</label>
+
+                                    <input type="radio" class="btn-check" name="btnradio-teve-positivado"
+                                        id="btnradio42" autocomplete="off" checked value="nao-tem-periodo-positivado">
+                                    <label class="btn btn-outline-danger" for="btnradio42">Não</label>
+
+                                </div>
+                                <br><br>
+                            </div>
+
+                            <div class="teve_positivado_class hidden">
+
+                                <label for="data-inicio-positivado">Data de Início:</label><br>
+                                <div class="input-group has-validation">
+                                    <input type="date" id="data-inicio-positivado" name="data-inicio-positivado"
+                                        value="" class="form-control btn-dark">
+                                    <div class="invalid-tooltip">
+                                        Data inicial inválida!
+                                    </div>
+                                </div>
+                                <label for="data-fim-positivado">Data de Término:</label><br>
+                                <div class="input-group has-validation">
+                                    <input type="date" id="data-fim-positivado" name="data-fim-positivado" value=""
+                                        class="form-control btn-dark"><br>
+                                    <div class="invalid-tooltip">
+                                        Data Final inválida!<br>
+                                        <button type="button" class=" form-control btn btn-success btn-sm btn-block"
+                                            id="assumir-der-positivado">Assumir
+                                            DER</button>
+                                    </div>
+                                </div>
+
+                                <br>
+
+
+                                <div class="col-12">
+                                    <button type="button"
+                                        class=" form-control outro-periodo-positivado btn btn-info btn-lg btn-block">Outro
+                                        Período</button>
+                                </div>
+
+                                <br>
+
+
+                            </div>
+
+                            <div class="col-12">
+                                <button type="button"
+                                    class=" form-control gravar-etapa-4 btn btn-primary btn-lg btn-block">Gravar</button>
+                            </div>
+
+
+                        </div>
+
+
+                        <!-- benefícios -->
+                        <div class="etapa-5 etapa hidden ">
+
+
+
+                            <p class="h3 text-center">Benefícios Recebidos</p>
+
+                            <div class="teve-beneficio-class btn-group col-12" role="group"
+                                aria-label="Basic radio toggle button group">
+                                <input type="radio" class="btn-check" name="btnradio-teve-beneficio" id="btnradio51"
+                                    autocomplete="off" value="sim">
+                                <label class="btn btn-outline-success" for="btnradio51">Sim</label>
+
+                                <input type="radio" class="btn-check" name="btnradio-teve-beneficio" id="btnradio52"
+                                    autocomplete="off" value="nao" checked>
+                                <label class="btn btn-outline-danger" for="btnradio52">Não</label>
+                            </div>
+                            <br>
+                            <div class="teve_beneficio_ate_class hidden">
+                                <br>
+                                <label for="tipo-beneficio">Qual a espécie?</label>
+                                <div class="input-group has-validation">
+                                    <select name="tipo-beneficio" id="tipo-beneficio"
+                                        class="form-control form-select btn-dark">
+                                        <option value="">Selecione</option>
+                                        <option value="01">B01</option>
+                                        <option value="21">B21</option>
+                                        <option value="31">B31</option>
+                                        <option value="36">B36</option>
+                                        <option value="91">B91</option>
+                                        <option value="32">B32</option>
+                                        <option value="41">B41</option>
+                                        <option value="80">B80</option>
+                                        <option value="87">B87</option>
+                                        <option value="88">B88</option>
+                                    </select>
+                                    <div class="invalid-tooltip">
+                                        Selecione o Tipo do Benefício!
+                                    </div>
+                                </div>
+                                <br>
+
+                                <label for="NB">NB:</label>
+                                <div class="input-group has-validation">
+                                    <input type="text" id="nb" name="nb" value="" class="form-control btn-dark"><br>
+                                    <div class="invalid-tooltip">
+                                        Informe o NB!
+                                    </div>
+                                </div>
+
+                                <label for="data-inicio-beneficio">Data de Início:</label><br>
+                                <div class="input-group has-validation">
+                                    <input type="date" id="data-inicio-beneficio" name="data-inicio-beneficio" value=""
+                                        class="form-control btn-dark">
+                                    <div class="invalid-tooltip">
+                                        Data inicial inválida!
+                                    </div>
+                                </div>
+
+                                <label for="data-fim-beneficio">Data de Término:</label><br>
+                                <div class="input-group has-validation">
+                                    <input type="date" id="data-fim-beneficio" name="data-fim-beneficio" value=""
+                                        class="form-control btn-dark">
+                                    <div class="invalid-tooltip">
+                                        Data Final inválida!
+                                        <!-- <button type="button"
+                                            class=" form-control btn btn-success btn-sm btn-block hidden"
+                                            id="assumir-der-beneficio">Assumir
+                                            DER</button> -->
+                                    </div>
+                                </div>
+
+
+                                <br>
+                                <div class="row" id="categoria-do-beneficio">
+                                    <label>Benefício Urbano ou maior que salário mínimo?</label>
+                                    <div class="col-2"></div>
+                                    <div class=" btn-group col-8" role="group"
+                                        aria-label="Basic radio toggle button group">
+                                        <input type="radio" class="btn-check" name="is-beneficio-urbano" id="btnradio53"
+                                            autocomplete="off" checked value="urbano">
+                                        <label class="btn btn-outline-success" for="btnradio53">Urbano</label>
+
+                                        <input type="radio" class="btn-check" name="is-beneficio-urbano" id="btnradio54"
+                                            autocomplete="off" value="rural">
+                                        <label class="btn btn-outline-danger" for="btnradio54">Rural</label>
+                                    </div>
+                                    <div class="col-2"></div>
+                                </div>
+
+                                <br>
+                                <br>
+
+                                <div class="col-12">
+                                    <button type="button"
+                                        class=" form-control outro-beneficio btn btn-info btn-lg btn-block">Outro
+                                        Benefício</button>
+                                </div>
+
+                            </div>
+
+                            <br>
+
+                            <div class="col-12">
+                                <button type="button"
+                                    class=" form-control gravar-etapa-5 btn btn-primary btn-lg btn-block">Gravar</button>
+                            </div>
+                            <br>
+
+                        </div>
+
+                        <!-- Atividades -->
+                        <div class="etapa-6 etapa hidden ">
+                            <div class="teve-atividade-class">
+
+                                <p class="h3 text-center">Atividades no CNIS</p>
+
+                                <div class=" btn-group col-12" role="group"
+                                    aria-label="Basic radio toggle button group">
+                                    <input type="radio" class="btn-check" name="btnradio-tem-atividade" id="btnradio61"
+                                        autocomplete="off" value="tem-atividade">
+                                    <label class="btn btn-outline-success" for="btnradio61">Sim</label>
+
+                                    <input type="radio" class="btn-check" name="btnradio-tem-atividade" id="btnradio62"
+                                        autocomplete="off" checked value="nao-tem-atividade">
+                                    <label class="btn btn-outline-danger" for="btnradio62">Não</label>
+                                </div>
+                                <br><br>
+                            </div>
+
+                            <div class="teve_atividade_ate_class hidden">
+
+                                <label for="atividade">Atividade:</label><br>
+                                <div class="input-group has-validation">
+                                    <input type="text" id="atividade" name="atividade" value=""
+                                        class="form-control btn-dark"><br>
+                                    <div class="invalid-tooltip">
+                                        Informe a atividade!
+                                    </div>
+                                </div>
+
+                                <label for="data-inicio-atividade">Data de Início:</label><br>
+                                <div class="input-group has-validation">
+                                    <input type="date" id="data-inicio-atividade" name="data-inicio-atividade" value=""
+                                        class="form-control btn-dark">
+                                    <div class="invalid-tooltip">
+                                        Data inicial inválida!
+                                    </div>
+                                </div>
+
+                                <br>
+
+                                <label for="atividade_ativa"> Status atual:</label><br>
+                                <div class="row">
+                                    <div class="col-2"></div>
+                                    <div class=" btn-group col-8" role="group"
+                                        aria-label="Basic radio toggle button group">
+                                        <input type="radio" class="btn-check" name="btnradio-atividade-ativa"
+                                            id="btnradio63" autocomplete="off" checked value="ativa">
+                                        <label class="btn btn-outline-success col-6" for="btnradio63">Ativa</label>
+
+                                        <input type="radio" class="btn-check" name="btnradio-atividade-ativa"
+                                            id="btnradio64" autocomplete="off" value="encerrada">
+                                        <label class="btn btn-outline-danger col-6" for="btnradio64">Encerrada</label>
+                                    </div>
+                                    <div class="col-2"></div>
+                                </div>
+
+                                <br>
+                                <div class="row hidden" id="termino-atividade">
+                                    <div class="col-2"></div>
+                                    <div class="col-8">
+                                        <label for="data-fim-atividade">Data de Término:</label><br>
+                                        <div class="input-group has-validation">
+                                            <input type="date" id="data-fim-atividade" name="data-fim-atividade"
+                                                value="" class="form-control btn-dark"><br>
+                                            <div class="invalid-tooltip">
+                                                Data Final inválida!
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-2"></div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <label>Categoria da Atividade:</label>
+                                    <div class="col-2"></div>
+                                    <div class=" btn-group col-8" role="group"
+                                        aria-label="Basic radio toggle button group">
+                                        <input type="radio" class="btn-check" name="is-atividade-urbana" id="btnradio65"
+                                            autocomplete="off" checked value="nao">
+                                        <label class="btn btn-outline-success col-6" for="btnradio65">Rural</label>
+
+                                        <input type="radio" class="btn-check" name="is-atividade-urbana" id="btnradio66"
+                                            autocomplete="off" value="sim">
+                                        <label class="btn btn-outline-danger col-6" for="btnradio66">Urbana</label>
+                                    </div>
+                                    <div class="col-2"></div>
+                                </div>
+
+                                <br>
+                                <div class="col-12">
+                                    <button type="button"
+                                        class=" form-control outra-atividade btn btn-info btn-lg btn-block">Outra
+                                        Atividade</button>
+                                </div>
+                            </div>
+                            <br>
+
+                            <div class="col-12">
+                                <button type="button"
+                                    class=" form-control gravar-etapa-6 btn btn-primary btn-lg btn-block">Gravar</button>
+                            </div>
+                            <br><br>
+
+                        </div>
+
+
+                        <!-- bases governamentais -->
+                        <div class="etapa-7 etapa hidden">
+
+                            <p class="h3 text-center">Bases Governamentais</p>
+
+                            <div class="teve-base-governamental-class">
+                                <p class="h5">Teve base governamental?</p>
+                                <div class=" btn-group col-12" role="group"
+                                    aria-label="Basic radio toggle button group">
+                                    <input type="radio" class="btn-check" name="teve-base" id="btnradio71"
+                                        autocomplete="off" value="sim">
+                                    <label class="btn btn-outline-success" for="btnradio71">Sim</label>
+
+                                    <input type="radio" class="btn-check" name="teve-base" id="btnradio72"
+                                        autocomplete="off" value="nao" checked>
+                                    <label class="btn btn-outline-danger" for="btnradio72">Não</label>
+                                </div>
+                                <br><br>
+                            </div>
+
+
+                            <div class="teve_base_ate_class hidden">
+
+                                <div class="teve-dap-class card border-secondary">
+                                    <div class="card-header">
+                                        <label class="h5 text-center">Teve DAP?</label>
+                                        <div class=" btn-group col-12" role="group"
+                                            aria-label="Basic radio toggle button group">
+                                            <input type="radio" class="btn-check" name="teve-dap" id="btnradio73"
+                                                autocomplete="off" value="sim">
+                                            <label class="btn btn-outline-success" for="btnradio73">Sim</label>
+
+                                            <input type="radio" class="btn-check" name="teve-dap" id="btnradio74"
+                                                autocomplete="off" value="nao" checked>
+                                            <label class="btn btn-outline-danger" for="btnradio74">Não</label>
+                                            <br>
+                                        </div>
+                                    </div>
+                                    <div class="row card-body hidden" id="dap-body">
+
+
+                                        <div class="col-1"></div>
+                                        <div class="teve_dap_ate_class col-10 ">
+
+                                            <br>
+
+                                            <label for="numero_dap">Número da DAP válida:</label><br>
+                                            <div class="input-group has-validation">
+                                                <input type="text" id="numero_dap" name="numero_dap" value=""
+                                                    class="form-control btn-secondary""><br>
+                                                    <div class=" invalid-tooltip">
+                                                Informe o número da DAP
+                                            </div>
+
+                                        </div>
+                                        <br>
+
+                                        <label for=" data-inicio-dap">Data de Início:</label><br>
+                                        <div class="input-group has-validation">
+                                            <input type="date" id="data-inicio-dap" name="data-inicio-dap" value=""
+                                                class="form-control btn-secondary"">
+                                                <div class=" invalid-tooltip">
+                                            Data inicial inválida!
+                                        </div>
+                                    </div>
+
+                                    <label for=" data-fim-dap">Data Fim:</label><br>
+                                    <div class="input-group has-validation">
+                                        <input type="date" id="data-fim-dap" name="data-fim-dap" value=""
+                                            class="form-control btn-secondary""><br>
+                                            <div class=" invalid-tooltip">
+                                        Data final inválida!
+                                    </div>
+                                    <br>
+                                </div>
+                                <br>
+
+
+
+                                <label for=" categoria_dap">Categoria da DAP:</label><br>
+                                <div class="input-group has-validation">
+                                    <input type="text" id="categoria_dap" name="categoria_dap" value=""
+                                        class="form-control btn-secondary""><br>
+                                        <div class=" invalid-tooltip">
+                                    Data inicial inválida!
+                                </div>
+                            </div>
+
+                            <br>
+
+
+                            <button type=" button" class=" form-control outra-dap btn btn-info btn-block">Gravar
+                                DAP</button>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-1"></div>
+
+                <br>
+                <div class="teve-defeso-class card border-secondary">
+                    <div class="card-header">
+                        <label class="h5 text-center">Teve Seguro Defeso?</label>
+                        <div class=" btn-group col-12" role="group" aria-label="Basic radio toggle button group">
+
+                            <input type="radio" class="btn-check" name="teve-defeso" id="btnradio75" autocomplete="off"
+                                value="sim">
+                            <label class="btn btn-outline-success" for="btnradio75">Sim</label>
+
+                            <input type="radio" class="btn-check" name="teve-defeso" id="btnradio76" autocomplete="off"
+                                value="nao" checked>
+                            <label class="btn btn-outline-danger" for="btnradio76">Não</label>
+                            <br>
+                        </div>
+                    </div>
+
+                    <div class="row card-body hidden" id="defeso-body">
+
+
+                        <div class="col-1"></div>
+                        <div class="teve_defeso_ate_class col-10">
+
+                            <label for="data-inicio-defeso">Data de Início:</label><br>
+                            <div class="input-group has-validation">
+                                <input type="date" id="data-inicio-defeso" name="data-inicio-defeso" value=""
+                                    class="form-control btn-secondary">
+                                <div class=" invalid-tooltip">
+                                    Data inicial inválida!
+                                </div>
+
+                            </div>
+
+                            <label for="data-fim-defeso">Data Fim:</label><br>
+                            <div class="input-group has-validation">
+                                <input type="date" id="data-fim-defeso" name="data-fim-defeso" value=""
+                                    class="form-control btn-secondary"><br>
+                                <div class=" invalid-tooltip">
+                                    Data final inválida!
+                                </div>
+                            </div>
+
+                            <!-- <input type="checkbox" id="atividade_ativa" name="atividade_ativa" value="sim">
+                                    <label for="atividade_ativa"> Atividade ativa?</label><br> -->
+                            </br>
+
+                            <div class="col-12">
+                                <button type="button" class=" form-control outro-defeso btn btn-info btn-block">Gravar
+                                    Defeso</button>
+                            </div>
+
+                        </div>
+                        <div class="col-1"></div>
+                    </div>
+                </div>
+                <br>
+
+                <div class="teve-sala-cidadania-class card border-secondary">
+
+                    <div class="card-header">
+                        <label class="h5 text-center">Tem registro no Sala da Cidadania?</label>
+                        <div class=" btn-group col-12" role="group" aria-label="Basic radio toggle button group">
+
+                            <input type="radio" class="btn-check" name="teve-sala" id="btnradio77" autocomplete="off"
+                                value="sim">
+                            <label class="btn btn-outline-success" for="btnradio77">Sim</label>
+
+                            <input type="radio" class="btn-check" name="teve-sala" id="btnradio78" autocomplete="off"
+                                value="nao" checked>
+                            <label class="btn btn-outline-danger" for="btnradio78">Não</label>
+                            <br>
+                        </div>
+                    </div>
+
+                    <div class="row card-body hidden" id="sala-body">
+
+                        <div class="col-1"></div>
+                        <div class="teve_sala_ate_class col-10 ">
+
+
+                            <label for="nome-assentamento">Nome do Assentamento:</label><br>
+                            <div class="input-group has-validation">
+                                <input type="text" id="nome-assentamento" name="nome-assentamento" value=""
+                                    class="form-control btn-secondary"><br>
+                                <div class=" invalid-tooltip">
+                                    Informe o nome do assentamento!
+                                </div>
+                            </div>
+
+
+                            <label for="data-inicio-sala">Data de Início:</label><br>
+                            <div class="input-group has-validation">
+                                <input type="date" id="data-inicio-sala" name="data-inicio-sala" value=""
+                                    class="form-control btn-secondary">
+                                <div class=" invalid-tooltip">
+                                    Data inicial inválida!
+                                </div>
+                            </div>
+
+                            <label for="data-fim-sala">Data Fim:</label><br>
+                            <div class="input-group has-validation">
+                                <input type="date" id="data-fim-sala" name="data-fim-sala" value=""
+                                    class="form-control btn-secondary">
+                                <div class=" invalid-tooltip">
+                                    Data Final inválida!
+                                    <span id="orgao-ou-der"></span> <button type="button"
+                                        class=" form-control btn btn-success btn-sm btn-block hidden"
+                                        id="assumir-der-sala">Assumir
+                                        DER</button>
+                                </div>
+                            </div>
+                            <br>
+                            </br>
+
+                            <div class="col-12">
+                                <button type="button" class=" form-control outro-sala btn btn-info btn-block">Gravar
+                                    Assentamento</button>
+                            </div>
+
+                        </div>
+                        <div class="col-1"></div>
+
+
+                    </div>
+
+
+                </div>
+
+                <br>
+
+                <div class="teve-rgp-class card border-secondary">
+                    <div class="card-header">
+                        <label class="h5 text-center">Tem RGP?</label>
+                        <div class=" btn-group col-12" role="group" aria-label="Basic radio toggle button group">
+
+                            <input type="radio" class="btn-check" name="teve-rgp" id="btnradio79" autocomplete="off"
+                                value="sim">
+                            <label class="btn btn-outline-success" for="btnradio79">Sim</label>
+
+                            <input type="radio" class="btn-check" name="teve-rgp" id="btnradio710" autocomplete="off"
+                                value="nao" checked>
+                            <label class="btn btn-outline-danger" for="btnradio710">Não</label>
+                            <br>
+                        </div>
+                    </div>
+
+
+                    <div class="row card-body hidden" id="rgp-body">
+
+                        <div class="col-1"></div>
+                        <div class="teve_rgp_class col-10">
+
+                            <label for="numero-rgp">Número RGP:</label><br>
+                            <div class="input-group has-validation">
+                                <input type="text" id="numero-rgp" name="numero-rgp" value=""
+                                    class="form-control btn-secondary"><br>
+                                <div class=" invalid-tooltip">
+                                    Informe o número do RGP!
+                                </div>
+                            </div>
+
+                            <label for="data-inicio-rgp">Data de Registro:</label><br>
+                            <div class="input-group has-validation">
+                                <input type="date" id="data-inicio-rgp" name="data-inicio-rgp" value=""
+                                    class="form-control btn-secondary">
+                                <div class=" invalid-tooltip">
+                                    Data inicial inválida!
+                                </div>
+                            </div>
+
+
+                            <br>
+
+                            <div class=" btn-group col-12" role="group" aria-label="Basic radio toggle button group">
+                                <input type="radio" class="btn-check" name="rgp-ativo" id="btnradio713"
+                                    autocomplete="off" checked value="sim">
+                                <label class="btn btn-outline-success col-6" for="btnradio713">RGP
+                                    Ativo</label>
+
+                                <input type="radio" class="btn-check" name="rgp-ativo" id="btnradio714"
+                                    autocomplete="off" value="nao">
+                                <label class="btn btn-outline-danger col-6" for="btnradio714">RGP
+                                    Encerrado</label>
+                            </div>
+                            <br>
+                            <br>
+
+                            <div class="row hidden" id="termino-rgp">
+                                <div class="col-1"></div>
+                                <div class="col-10">
+                                    <label for="data-fim-rgp">Data Fim:</label><br>
+                                    <div class="input-group has-validation">
+                                        <input type="date" id="data-fim-rgp" name="data-fim-rgp" value=""
+                                            class="form-control btn-secondary"><br>
+                                        <div class=" invalid-tooltip">
+                                            Data final inválida!
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-1"></div>
+                            </div>
+                            <br>
+
+
+                            <div class="col-12">
+                                <button type="button" class=" form-control outro-rgp btn btn-info btn-block">Gravar
+                                    RGP</button>
+                            </div>
+
+                        </div>
+                        <div class="col-1"></div>
+                    </div>
+
+                </div>
+
+
+                <br>
+
+
+                <br>
+
+
+                <div class="teve-seguro-desemprego-class card border-secondary">
+                    <div class="card-header">
+                        <label class="h5 text-center">Recebeu seguro desemprego
+                            (empregatício)?</label>
+
+                        <div class=" btn-group col-12" role="group" aria-label="Basic radio toggle button group">
+
+                            <input type="radio" class="btn-check" name="teve-sd" id="btnradio711" autocomplete="off"
+                                value="sim">
+                            <label class="btn btn-outline-success" for="btnradio711">Sim</label>
+
+                            <input type="radio" class="btn-check" name="teve-sd" id="btnradio712" autocomplete="off"
+                                value="nao" checked>
+                            <label class="btn btn-outline-danger" for="btnradio712">Não</label>
+                            <br>
+                        </div>
+
+                    </div>
+                    <div class="row card-body hidden" id="sd-body">
+                        <div class="col-1"></div>
+                        <div class="teve_seguro_desemprego_class col-10">
+
+                            <label for="data-inicio-sd">Data de Início:</label><br>
+                            <div class="input-group has-validation">
+                                <input type="date" id="data-inicio-sd" name="data-inicio-sd" value=""
+                                    class="form-control btn-secondary">
+                                <div class=" invalid-tooltip">
+                                    Data Inicial inválida!
+                                </div>
+                            </div>
+
+                            <label for="data-fim-sd">Data Fim:</label><br>
+                            <div class="input-group has-validation">
+                                <input type="date" id="data-fim-sd" name="data-fim-sd" value=""
+                                    class="form-control btn-secondary"><br>
+                                <div class=" invalid-tooltip">
+                                    Data final inválida!
+                                </div>
+                            </div>
+
+                            <!-- <input type="checkbox" id="atividade_ativa" name="atividade_ativa" value="sim">
+                                        <label for="atividade_ativa"> Atividade ativa?</label><br> -->
+                            </br>
+
+                            <div class="col-12">
+                                <button type="button" class=" form-control outro-sd btn btn-info btn-block">Gravar
+                                    Seguro Desemprego</button>
+                            </div>
+                        </div>
+
+
+                        <div class="col-1"></div>
+                    </div>
+                </div>
+
+
+            </div>
+
+
+
+
+            <br>
+            <br>
+
+            <div class="col-12">
+                <button type="button"
+                    class=" form-control gravar-etapa-7 btn btn-primary btn-lg btn-block">Avançar</button>
+            </div>
+            <br>
+            <br>
+
+
+
+        </div>
+
+
+        <!-- empresas no cpf -->
+        <div class="etapa-8 etapa  hidden">
+
+            <div class="teve-empresa-class">
+                <p class="h3 text-center">Teve empresa no CPF?</p><br>
+                <div class=" btn-group col-12" role="group" aria-label="Basic radio toggle button group">
+                    <input type="radio" class="btn-check" name="teve-empresa" id="btnradio81" autocomplete="off">
+                    <label class="btn btn-outline-success" for="btnradio81">Sim</label>
+
+                    <input type="radio" class="btn-check" name="teve-empresa" id="btnradio82" autocomplete="off"
+                        checked>
+                    <label class="btn btn-outline-danger" for="btnradio82">Não</label>
+                </div>
+
+                <br><br>
+            </div>
+
+            <div class="teve_empresa_ate_class hidden">
+
+                <label for="CNPJ/CEI">CNPJ/CEI:</label><br>
+                <div class="input-group has-validation">
+                    <input type="text" id="cnpj_cei" name="cnpj_cei" value="" class="form-control btn-dark""><br>
+                        <div class=" invalid-tooltip">
+                    Informe o CNPJ/CEI!
+                </div>
+
+            </div>
+
+            <label for=" nome_empresa">Nome da Empresa:</label><br>
+            <div class="input-group has-validation">
+                <input type="text" id="nome_empresa" name="nome_empresa" value="" class="form-control btn-dark""><br>
+                    <div class=" invalid-tooltip">
+                Informe o nome da empresa!
+            </div>
+        </div>
+
+
+        <label for=" cnae">CNAE:</label><br>
+        <div class="input-group has-validation">
+            <input type="text" id="cnae" name="cnae" value="" class="form-control btn-dark""><br>
+                <div class=" invalid-tooltip">
+            Informe o CNAE (atividade)!
+        </div>
+    </div>
+
+
+    <label for=" data-inicio-empresa">Data de Início:</label><br>
+    <div class="input-group has-validation">
+        <input type="date" id="data-inicio-empresa" name="data-inicio-empresa" value="" class="form-control btn-dark"">
+                <div class=" invalid-tooltip">
+        Data inicial inválida!
+    </div>
+    </div>
+
+
+    <br>
+
+    <label for=" empresa_ativa"> Status atual:</label><br>
+    <div class="row">
+        <div class="col-2"></div>
+        <div class=" btn-group col-8" role="group" aria-label="Basic radio toggle button group">
+            <input type="radio" class="btn-check" name="empresa_ativa" id="btnradio83" autocomplete="off" checked
+                value="ativa">
+            <label class="btn btn-outline-success col-6" for="btnradio83">Ativa</label>
+
+            <input type="radio" class="btn-check" name="empresa_ativa" id="btnradio84" autocomplete="off"
+                value="baixada">
+            <label class="btn btn-outline-danger col-6" for="btnradio84">Baixada </label>
+        </div>
+        <div class="col-2"></div>
+    </div>
+    <div class="row hidden" id="fim-empresa">
+        <div class="col-2"></div>
+        <div class="col-8">
+            <label for=" data-fim-empresa">Data de Término:</label><br>
+            <div class="input-group has-validation">
+                <input type="date" id="data-fim-empresa" name="data-fim-empresa" value="" class="form-control btn-dark""><br>
+                        <div class=" invalid-tooltip">
+                Data Final inválida!
+            </div>
+        </div>
+    </div>
+    <div class="col-2"></div>
+    </div>
+
+    </br>
+
+    <div class="row">
+        <label>Categoria da Empresa:</label>
+        <div class="col-2"></div>
+        <div class=" btn-group col-8" role="group" aria-label="Basic radio toggle button group">
+            <input type="radio" class="btn-check" name="is-empresa-urbana" id="btnradio85" autocomplete="off"
+                value="rural">
+            <label class="btn btn-outline-success col-6" for="btnradio85">Rural</label>
+
+            <input type="radio" class="btn-check" name="is-empresa-urbana" id="btnradio86" value="urbana"
+                autocomplete="off" checked>
+            <label class="btn btn-outline-danger col-6" for="btnradio86">Urbana</label>
+        </div>
+        <div class="col-2"></div>
+    </div>
+    <br>
+
+    <div class="col-12">
+        <button type="button" class=" form-control outra-empresa btn btn-info btn-lg btn-block">Outra
+            Empresa</button>
+    </div>
+    </div>
+
+    <br>
+    <div class="col-12">
+        <button type="button" class=" form-control gravar-etapa-8 btn btn-primary btn-lg btn-block">Gravar</button>
+    </div>
+    <br><br>
+
+    </div>
+
+
+
+    <!-- categorias e anexos -->
+    <div class="etapa-9 etapa hidden">
+        <p class="h3">Categoria: <label class="fs-6 text-muted"> para fins de possível emissão de exigências</label></p>
+        <div class="btn-group col-12" role="group" aria-label="Basic radio toggle button group">
+            <input type="radio" class="btn-check col-4" name="btn-categoria" id="btnradio91" autocomplete="off" checked
+                value="rural">
+            <label class="btn btn-outline-info col-4" for="btnradio91">Rural</label>
+
+            <input type="radio" class="btn-check col-4" name="btn-categoria" id="btnradio92" autocomplete="off"
+                value="pescador">
+            <label class="btn btn-outline-info col-4" for="btnradio92">Pescador</label>
+
+            <input type="radio" class="btn-check col-4" name="btn-categoria" id="btnradio93" autocomplete="off"
+                value="indigena">
+            <label class="btn btn-outline-info col-4" for="btnradio93">Indígena</label>
+
+        </div>
+
+        <div class="btn-group col-12" role="group" aria-label="Basic radio toggle button group">
+
+            <input type="radio" class="btn-check col-6" name="btn-categoria" id="btnradio94" autocomplete="off"
+                value="nao-indigena">
+            <label class="btn btn-outline-info col-6" for="btnradio94">Não<br> indígena</label>
+
+            <input type="radio" class="btn-check col-6" name="btn-categoria" id="btnradio95" autocomplete="off"
+                value="nao-identificado">
+            <label class="btn btn-outline-info col-6" for="btnradio95">Não<br>
+                Identificado</label>
+        </div>
+
+        <br><br><br>
+        <label>Tem anexos?</label>
+        <div class="btn-group col-12" role="group" aria-label="Basic radio toggle button group">
+            <input type="radio" class="btn-check" name="tem-anexo" id="btnradio96" autocomplete="off" value="tem-anexo">
+            <label class="btn btn-outline-success" for="btnradio96">Sim</label>
+
+            <input type="radio" class="btn-check" name="tem-anexo" id="btnradio97" autocomplete="off" checked
+                value="nao-tem-anexo">
+            <label class="btn btn-outline-danger" for="btnradio97">Não</label>
+
+
+        </div>
+
+        <br><br>
+
+        <div class="tem_autodeclaracao_class">
+            <label>Apresentou a autodeclaração?</label>
+            <div class="btn-group col-12" role="group" aria-label="Basic radio toggle button group">
+                <input type="radio" class="btn-check" name="tem-autodeclaracao" id="btnradio98" autocomplete="off"
+                    value="tem-autodeclaracao">
+                <label class="btn btn-outline-success" for="btnradio98">Sim</label>
+
+                <input type="radio" class="btn-check" name="tem-autodeclaracao" id="btnradio99" autocomplete="off"
+                    checked value="nao-tem-autodeclaracao">
+                <label class="btn btn-outline-danger" for="btnradio99">Não</label>
+
+
+            </div>
+
+        </div>
+
+
+        <br>
+
+        <div class="col-12">
+            <button type="button" class=" form-control gravar-etapa-9 btn btn-primary btn-lg btn-block">Gravar</button>
+        </div>
+
+    </div>
+
+    <!-- periodos auto declarados -->
+    <div class="etapa-10 etapa hidden ">
+        <p class="h3 text-center">Períodos Autodeclarados</p>
+        <br>
+
+        <label for="categoria">Categoria:</label>
+        <div class="input-group has-validation">
+            <select name="categoria" id="categoria" class="form-control form-select btn-dark">
+                <option value="">Selecione</option>
+                <option value="rural">Rural</option>
+                <option value="pescador">Pescador</option>
+                <option value="indigena">Indígena</option>
+                <option value="extrativista">Extrativista</option>
+            </select>
+            <div class="invalid-tooltip">
+                Selecione uma categoria para o período declarado!
+            </div>
+        </div>
+        <br>
+        <div class="tipo-de-pescador-class hidden">
+            <label for="tipo-de-pescador">Tipo de atividade <span class="text-muted">(venda/subistência - campo 3.3 do
+                    Anexo
+                    II/O.C.
+                    46/2019):</span></label>
+            <div class="input-group has-validation">
+                <select name="tipo-de-pescador" id="tipo-de-pescador" class="form-control form-select btn-dark">
+                    <option value="">Selecione</option>
+                    <option value="profissional">Profissional (vende a produção)</option>
+                    <option value="subsistencia">Subsistência (para própria alimentação)</option>
+                    <option value="ambos">Profissional e Subsistência</option>
+                    <option value="nao-informado">não especificado</option>
+                </select>
+                <div class="invalid-tooltip">
+                    Selecione o tipo de pescador!
+                </div>
+            </div>
+        </div>
+        <br>
+        <label for="condicao" class="form-label ">Condição: <span class="text-muted">(proprietário, arrendatário,
+                pescador
+                embarcado,
+                indígena)</span></label><br>
+        <div class="input-group has-validation">
+            <input type="text" id="condicao" name="condicao" value="" class="form-control btn-dark"><br>
+            <div class=" invalid-tooltip">
+                Informe a condição!
+            </div>
+        </div>
+        <br>
+        <label for="data-inicio-1" class="form-label">Data de Início:</label><br>
+        <div class="input-group has-validation">
+            <input type="date" id="data-inicio-1" name="data-inicio-1" value="" class="form-control btn-dark">
+            <div class=" invalid-tooltip">
+                Data inicial inválida!
+            </div>
+        </div>
+
+        <label for="data-fim-1" class="form-label">Data de Término:</label><br>
+        <div class="input-group has-validation">
+            <input type="date" id="data-fim-1" name="data-fim-1" value="" class="form-control btn-dark"">
+                    <div class=" invalid-tooltip">Data final inválida!
+            <div id="termino-declarado-na-der" class="hidden">Termino maior que a DER.<br>Assumir término da
+                DER?<br>
+                <button type="button" class=" form-control btn btn-success btn-sm btn-block"
+                    id="assumir-der-declarado">Assumir
+                    DER</button>
+            </div>
+        </div>
+    </div>
+    <br><br>
+    <button type=" button" class=" form-control outro-periodo-autodeclarado btn btn-info btn-lg btn-block">Outro
+        Período</button><br><br>
+
+    <button type="button" class=" form-control gravar-etapa-10 btn btn-primary btn-lg btn-block">Gravar</button>
+    </div>
+
+
+
+    <!-- etapa-11 -->
+
+
+
+
+    <div class="etapa-11 etapa hidden">
+        <div class="teve-documentos-class">
+            <p class="h3 text-center">Foram apresentadas provas documentais?</p><br>
+
+            <div class=" btn-group col-12" role="group" aria-label="Basic radio toggle button group">
+                <input type="radio" class="btn-check" name="teve-docs" id="btnradio111" autocomplete="off" value="sim">
+                <label class="btn btn-outline-success col-6" for="btnradio111">Sim</label>
+
+                <input type="radio" class="btn-check" name="teve-docs" id="btnradio112" autocomplete="off" value="nao"
+                    checked>
+                <label class="btn btn-outline-danger col-6" for="btnradio112">Não </label>
+            </div>
+
+        </div>
+        <br>
+
+        <div class="teve_docs_class hidden ">
+
+
+            <label for="descricao-documento">Descrição do documento:</label><br>
+            <div class="input-group has-validation">
+                <input type="text" id="descricao-documento" name="descricao-documento" value=""
+                    class="form-control btn-dark">
+                <div class=" invalid-tooltip">
+                    Descreva o documento!
+                </div>
+            </div>
+            <br>
+
+            <label for="data-inicio-doc">Data de Emissão da Prova:</label><br>
+            <div class="input-group has-validation">
+                <input type="date" id="data-inicio-doc" name="data-inicio-doc" value="" class="form-control btn-dark">
+                <div class=" invalid-tooltip">
+                    Data inicial inválida!
+                </div>
+            </div>
+
+            <div class="doc_contrario_data_fim_class hidden">
+                <!-- Data fim de documento não faz sentido. Se quizer informar coloque na descrição -->
+                <label for="data-fim-doc">Data Fim:</label><br>
+                <div class="input-group has-validation">
+                    <input type="date" id="data-fim-doc" name="data-fim-doc" value="" class="form-control btn-dark"><br>
+                    <div class=" invalid-tooltip">
+                        Data final inválida!
+                    </div>
+                </div>
+            </div>
+            <br>
+
+            <label for="is-doc-favoravel"> Documento favorável?</label>
+
+            <div class="row">
+                <div class="col-2"></div>
+                <div class=" btn-group col-8" role="group" aria-label="Basic radio toggle button group">
+                    <input type="radio" class="btn-check" name="is-doc-favoravel" id="btnradio113" autocomplete="off"
+                        checked value="favoravel">
+                    <label class="btn btn-outline-success col-6" for="btnradio113">Favorável</label>
+
+                    <input type="radio" class="btn-check" name="is-doc-favoravel" id="btnradio114" autocomplete="off"
+                        value="contraria">
+                    <label class="btn btn-outline-danger col-6" for="btnradio114">Contrária </label>
+                </div>
+                <div class="col-2"></div>
+            </div>
+
+            </br>
+
+            <div class="col-12">
+                <button type="button" class=" form-control outro-doc btn btn-info btn-lg btn-block">Outro
+                    documento</button>
+            </div>
+
+        </div>
+
+        <br>
+        <div class="col-12">
+            <button type="button" class=" form-control gravar-etapa-11 btn btn-primary btn-lg btn-block">Gravar</button>
+        </div>
+    </div>
+
+
+
+
+    <!-- análise  -->
+    <div class="etapa-12 etapa hidden">
+        <div class="provas-suficientes-class col-12">
+            <p class="h3 text-justify col-12">Conclusão:
+            </p>
+
+            <label>As provas são suficientes à conclusão?</label>
+            <div class=" btn-group col-12" role="group" aria-label="Basic radio toggle button group ">
+
+
+                <!--<input type="radio" class="btn-check " name="provas-suficientes" id="btnradio121" autocomplete="off"
+                    checked value="suficiente">
+                <label class="btn btn-outline-success col-6" for="
+                        btnradio121"><br>Deferir<br></label>  -->
+
+                <input type="radio" class="btn-check" name="provas-suficientes" id="btnradio121" autocomplete="off"
+                    checked value="suficiente">
+                <label class="btn btn-outline-success col-6" for="btnradio121"><br>Deferir<br></label>
+
+
+
+                <input type="radio" class="btn-check" name="provas-suficientes" id="btnradio122" autocomplete="off"
+                    value="nao-suficiente">
+                <label class="btn btn-outline-danger col-6" for="btnradio122">Inconcluso<br>ou<br>Indeferido</label>
+            </div>
+
+
+        </div>
+        <br>
+
+        <div class="div-deferimento-automarico">
+
+            <label>O Deferimento foi automático?</label>
+
+            <div class=" btn-group col-12" role="group" aria-label="Basic radio toggle button group">
+
+                <input type="radio" class="btn-check col-6" name="deferimento-automatico" id="btnradio126"
+                    autocomplete="off" value="sim">
+                <label class="btn btn-outline-success col-6" for="btnradio126">Automático</label>
+
+                <input type="radio" class="btn-check col-6" name="deferimento-automatico" id="btnradio127"
+                    autocomplete="off" checked value="nao">
+                <label class="btn btn-outline-danger col-6" for="btnradio127">Manual</label>
+
+            </div>
+
+
+        </div>
+
+        <div class="fazer-exigencias-documentais-class hidden">
+            <label>Deseja fazer exigências documentais?</label>
+
+            <div class=" btn-group col-12" role="group" aria-label="Basic radio toggle button group">
+
+                <input type="radio" class="btn-check col-6" name="fazer-exigencias-documentais" id="btnradio123"
+                    autocomplete="off" checked value="sim">
+                <label class="btn btn-outline-success col-6" for="btnradio123">Sim</label>
+
+                <input type="radio" class="btn-check col-6" name="fazer-exigencias-documentais" id="btnradio124"
+                    autocomplete="off" value="nao">
+                <label class="btn btn-outline-danger col-6" for="btnradio124">Não</label>
+
+
+            </div>
+
+            <div class="btn-group col-12" role="group" aria-label="Basic radio toggle button group">
+
+                <input type="radio" class="btn-check col-12" name="fazer-exigencias-documentais" id="btnradio125"
+                    autocomplete="off" value="fiz-antes">
+                <label class="btn btn-outline-warning col-12" for="btnradio125">Feito Anteriormente</label>
+
+            </div>
+            <br><br>
+        </div>
+
+        <div id="show-data-exigencia" class="hidden">
+            <label for="data-exigencia">Data de emissão das exigências:</label><br>
+            <div class="input-group has-validation">
+                <input type="date" id="data-exigencia" name="data-exigencia" value="" class="form-control btn-dark">
+                <div class="invalid-tooltip">
+                    Data inválida!
+                </div>
+            </div>
+        </div>
+        <br>
+
+        <div class="form-group row">
+            <label for="nb_presente" class="col-2 col-form-label">NB:</label>
+            <div class="col-10">
+                <input type="text" id="nb_presente" name="nb_presente" value="" class="form-control btn-dark">
+            </div>
+        </div>
+        <br>
+
+
+
+
+
+        <div class="motivo-do-indeferimento hidden">
+
+            <label for="tipo-beneficio">Motivo do indeferimento?</label>
+            <select name="tipo-beneficio" id="motivo-indeferimento" class="form-control form-select btn-dark">
+                <option value="">Selecione</option>
+
+                <option value="apresentar_impedientos">- Apresentar impedimentos</option>
+                <option value="falta_de_carencia">Falta de período de carência</option>
+                <option value="falta_de_carencia_periodo_declarado_insuficiente">Falta de
+                    período de
+                    carência -
+                    período autodeclarado insuficiente</option>
+                <option value="falta_de_carencia_acampado">Falta de período de carência -
+                    Acampado</option>
+                <option value="falta_de_carencia_docs_em_nome_de_nao_segurado_especial">
+                    Falta de período de
+                    carência - docs em nome de não S.E.</option>
+                <option value="falta_de_carencia_so_docs_feitos_as_vesperas">Falta de
+                    período de carência -
+                    Só
+                    docs feitos às vésperas</option>
+                <option value="falta_de_qualidade_de_segurado_na_der">Falta de qualidade de
+                    SE na DER
+                </option>
+                <option value="falta_de_idade_minima">Falta de Idade Mínima</option>
+                <option value="nao_cumprimento_de_exigencias">Não cumprimento de exigências</option>
+                <option value="nao_apresentou_anexo">Não cumprimento de exigência - não
+                    apresentou anexo
+                </option>
+                <option value="nao_apresentou_anexo_preenchido_direito">Não cumprimento de
+                    exigência - não
+                    apresentou anexo preenchido direito</option>
+                <option value="RGP_insuficiente">RGP insuficiente</option>
+                <option value="tem_loas">Tem LOAS 88 ou 87</option>
+                <option value="tem_b36">Tem Auxílio-Acidente (B36)</option>
+                <option value="analfabeto_sem_procuracao_publica">Analfabeto sem procuração
+                    pública</option>
+                <option value="falta_representacao">Falta Representação (Analfabeto)</option>
+                <option value="pensao_maior_que_o_minimo">Pensão maior que o mínimo</option>
+                <option value="empresario-rural-sem-idade">Empresário Rural - sem benefício da redução da idade</option>
+                <option value="empregado-urbano-tratorista-domestico">Empregado Urbano (Caseiro / Tratorista / ETC) -
+                    sem benefício da redução da
+                    idade</option>
+                <option value="atividades_intercaladas">Atividades Intercaladas - RURAIS - URBANAS - RURAIS</option>
+                <option value="ja-aposentado">Requerente já aposentado</option>
+
+                <option value="cedeu-mais-cinquenta-porcento">Cedeu mais de 50%</option>
+                <option value="falta_de_carencia_urbano_nunca_contribuiu">Falta de período de carência - URBANO - Nunca
+                    Contribuiu</option>
+                <option value="falta_de_carencia_urbano">Falta de período de carência - URBANO</option>
+                <option value="falta_de_idade_urbano">Falta de idade mínima - URBANO</option>
+                <option value="responsabilidade_do_empregador">B-80: Responsabilidade do Empregador</option>
+            </select>
+            <br>
+
+            <label for="motivo-2">Há um segundo motivo de indeferimento?</label>
+            <select name="motivo-2" id="motivo-indeferimento-2" class="form-control form-select btn-dark">
+                <option value="">Selecione</option>
+                <option value="falta_de_carencia">Falta de período de carência</option>
+                <option value="falta_de_carencia_periodo_declarado_insuficiente">Falta de
+                    período de
+                    carência -
+                    período autodeclarado insuficiente</option>
+                <option value="falta_de_carencia_acampado">Falta de período de carência -
+                    Acampado</option>
+                <option value="falta_de_carencia_docs_em_nome_de_nao_segurado_especial">
+                    Falta de período de
+                    carência - docs em nome de não S.E.</option>
+                <option value="falta_de_carencia_so_docs_feitos_as_vesperas">Falta de
+                    período de carência -
+                    Só
+                    docs feitos às vésperas</option>
+                <option value="falta_de_qualidade_de_segurado_na_der">Falta de qualidade de
+                    SE na DER
+                </option>
+                <option value="falta_de_idade_minima">Falta de Idade Mínima</option>
+                <option value="nao_cumprimento_de_exigencias">Não cumprimento de exigências</option>
+                <option value="nao_apresentou_anexo">Não cumprimento de exigência - não
+                    apresentou anexo
+                </option>
+                <option value="nao_apresentou_anexo_preenchido_direito">Não cumprimento de
+                    exigência - não
+                    apresentou anexo preenchido direito</option>
+                <option value="RGP_insuficiente">RGP insuficiente</option>
+                <option value="tem_loas">Tem LOAS 88 ou 87</option>
+                <option value="tem_b36">Tem Auxílio-Acidente (B36)</option>
+                <option value="analfabeto_sem_procuracao_publica">Analfabeto sem procuração
+                    pública</option>
+                <option value="falta_representacao">Falta Representação (Analfabeto)</option>
+                <option value="pensao_maior_que_o_minimo">Pensão maior que o mínimo</option>
+                <option value="empresario-rural-sem-idade">Empresário Rural - sem benefício da redução da idade</option>
+                <option value="empregado-urbano-tratorista-domestico">Empregado Urbano (Caseiro / Tratorista / ETC) -
+                    sem benefício da redução da
+                    idade</option>
+                <option value="atividades_intercaladas">Atividades Intercaladas - RURAIS - URBANAS - RURAIS</option>
+                <option value="cedeu-mais-cinquenta-porcento">Cedeu mais de 50%</option>
+                <option value="falta_de_carencia_urbano_nunca_contribuiu">Falta de período de carência - URBANO - Nunca
+                    Contribuiu</option>
+                <option value="falta_de_carencia_urbano">Falta de período de carência - URBANO</option>
+                <option value="falta_de_idade_urbano">Falta de idade mínima - URBANO</option>
+                <option value="responsabilidade_do_empregador">B-80: Responsabilidade do Empregador</option>
+            </select>
+            <br>
+
+            <label for="motivo-3">Há um terceiro motivo de indeferimento?</label>
+            <select name="motivo-3" id="motivo-indeferimento-3" class="form-control form-select btn-dark">
+                <option value="">Selecione</option>
+                <option value="falta_de_carencia">Falta de período de carência</option>
+                <option value="falta_de_carencia_periodo_declarado_insuficiente">Falta de
+                    período de
+                    carência -
+                    período autodeclarado insuficiente</option>
+                <option value="falta_de_carencia_acampado">Falta de período de carência -
+                    Acampado</option>
+                <option value="falta_de_carencia_docs_em_nome_de_nao_segurado_especial">
+                    Falta de período de
+                    carência - docs em nome de não S.E.</option>
+                <option value="falta_de_carencia_so_docs_feitos_as_vesperas">Falta de
+                    período de carência -
+                    Só
+                    docs feitos às vésperas</option>
+                <option value="falta_de_qualidade_de_segurado_na_der">Falta de qualidade de
+                    SE na DER
+                </option>
+                <option value="falta_de_idade_minima">Falta de Idade Mínima</option>
+                <option value="nao_cumprimento_de_exigencias">Não cumprimento de exigências</option>
+                <option value="nao_apresentou_anexo">Não cumprimento de exigência - não
+                    apresentou anexo
+                </option>
+                <option value="nao_apresentou_anexo_preenchido_direito">Não cumprimento de
+                    exigência - não
+                    apresentou anexo preenchido direito</option>
+                <option value="RGP_insuficiente">RGP insuficiente</option>
+                <option value="tem_loas">Tem LOAS 88 ou 87</option>
+                <option value="tem_b36">Tem Auxílio-Acidente (B36)</option>
+                <option value="analfabeto_sem_procuracao_publica">Analfabeto sem procuração
+                    pública</option>
+                <option value="falta_representacao">Falta Representação (Analfabeto)</option>
+                <option value="pensao_maior_que_o_minimo">Pensão maior que o mínimo</option>
+                <option value="empresario-rural-sem-idade">Empresário Rural - sem benefício da redução da idade</option>
+                <option value="empregado-urbano-tratorista-domestico">Empregado Urbano (Caseiro / Tratorista / ETC) -
+                    sem benefício da redução da
+                    idade</option>
+                <option value="atividades_intercaladas">Atividades Intercaladas - RURAIS - URBANAS - RURAIS</option>
+                <option value="cedeu-mais-cinquenta-porcento">Cedeu mais de 50%</option>
+                <option value="falta_de_carencia_urbano_nunca_contribuiu">Falta de período de carência - URBANO - Nunca
+                    Contribuiu</option>
+                <option value="falta_de_carencia_urbano">Falta de período de carência - URBANO</option>
+                <option value="falta_de_idade_urbano">Falta de idade mínima - URBANO</option>
+                <option value="responsabilidade_do_empregador">B-80: Responsabilidade do Empregador</option>
+            </select>
+            <br>
+
+        </div>
+
+        <div class="col-12">
+            <button type="button" class=" form-control gravar-etapa-12 btn btn-primary btn-lg btn-block">Gravar</button>
+        </div>
+
+    </div>
+
+
+
+    <div class="etapa-13 etapa hidden">
+        <div class="form-group row ">
+
+            <label for="tipo-exigencia">Caso queira, selecione um modelo de exigência.</label>
+            <div class="input-group col-12">
+                <select name="tipo-exigencia" id="tipo-exigencia" class="form-control form-select btn-dark">
+                    <option value="">Selecione...</option>
+                    <option value="docs-pessoais">Docs. Pessoais</option>
+                    <option value="anexo-1">Anexo I (Rural) - OC 46</option>
+                    <option value="anexo-2">Anexo II (Pescador) - OC 46</option>
+                    <option value="anexo-3">Anexo III (Extrativista) - OC 46</option>
+                    <option value="provas-rurais">Provas - Trabalhador Rural</option>
+                    <option value="provas-rurais-intercalados-urbanos">Provas - Trabalhador Rural em Atividades
+                        Intercaladas com Urbano</option>
+                    <option value="provas-pescador">Provas - Pescador</option>
+                    <option value="declaracao-funai"> Anexo I (Indígena) - IN 77/2015</option>
+                    <option value="procuracao">Procuração</option>
+                    <option value="procuracao-publica">Procuração Pública (analfabeto)</option>
+                    <option value="falta_representacao">Falta Representação (analfabeto)</option>
+                    <option value="conjuge-nao-segurado-especial">Provas em nome do requerente - familiar não S.E.
+                    </option>
+                    <option value="filho-casado">Provas em nome do requerente - filho(a) casado(a)</option>
+                    <option value="uniao-estavel">Comprovação de União Estável - provas em nome do(a) companheiro(a)
+                    </option>
+                    <option value="autoriza-cessacao">Opção - Cessação de Benefício Anterior</option>
+                    <option value="autoriza-cessacao-LOAS">Opção - Cessação de BPC Anterior a aposentadoria</option>
+                    <option value="declaracao-beneficio-rpps">Declaração de Recebimento de Benefício em RPPS</option>
+                    <option value="contribuicoes-extemporaneas">Recolhimentos Extemporâneos</option>
+                    <option value="apresentacao-de-ctc">Apresentação de CTC</option>
+                    <option value="diz-receber-beneficio-rpps">Declarou receber Benefício RPPS</option>
+                    <!-- <option value="88">B88</option> -->
+                </select>
+            </div>
+
+
+            <div class="col-12">
+                <br>
+                <textarea id="txtexigencia" class="form-control  form-control btn-dark" rows="15"></textarea>
+                <br>
+
+                <button type="button"
+                    class=" form-control gravar-etapa-13 btn btn-primary btn-lg btn-block">Gravar</button>
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- <div class="etapa-16 etapa hidden">
+        <p>ETAPA 16</p>
+    </div> -->
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+    <div class="col-12">
+        <div id="show-time-line-table"></div>
+        <br>
+
+        <div class="etapa-14 etapa hidden">
+            <p class="h4 text-center">Despacho Sugerido</p>
+            <!-- Create the editor container -->
+            <div id="editor" class="table-active print ql_margins"></div>
+            <br>
+        </div>
+        <br>
+
+    </div>
+    </div>
+
+
+    </div>
+
+    <div class="col-4">
+
+
+        <table class="table table-hover table-sm " id="dados-table">
+            <thead>
+                <tr>
+
+                    <th scope="row" class="h3" colspan="2">Dados</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <!-- <th scope="col" colspan="2" class="col-3">Requerimento PAT</th> -->
+
+                </tr>
+                <tr class="table-secondary">
+                    <th scope="col" class="col-5">Protocolo PAT:</th>
+                    <td><span id="protocoloPat_span"></span></td>
+                </tr>
+                <tr class="table-dark servico-class">
+                    <th scope="row">Serviço:</th>
+                    <td><span id="servicoPat_span"></span><br>
+                        <div class="edicao-servico hidden" id="edicao-servico">
+                            <br>
+                            <label for="tipo-beneficio">Selecione o serviço</label>
+                            <div class="input-group has-validation">
+                                <select name="tipo-servico" id="tipo-servico" class="form-control form-select btn-dark">
+                                    <option value="">Selecione</option>
+                                    <option value="Aposentadoria por Idade Rural">Aposentadoria por Idade Rural</option>
+                                    <option value="Aposentadoria por Idade Urbana">Aposentadoria por Idade Urbana
+                                    </option>
+                                    <option value="Aposentadoria por Idade Híbrida">Aposentadoria por Idade Híbrida
+                                    </option>
+
+                                </select>
+                                <div class="invalid-tooltip">
+                                    Selecione o Tipo do Benefício!
+                                </div>
+
+                            </div>
+                            <br><br>
+
+                            <button type="button"
+                                class=" form-control gravar-servico btn btn-primary btn-sm btn-block">Gravar</button>
+
+
+
+                        </div>
+                    </td>
+
+                </tr>
+                <tr class="table-secondary">
+                    <th scope="col">Nº Proc. Judicial:</th>
+                    <td><span id="numeroProcessoJudicialPat_span"></span></td>
+                </tr>
+                <tr class="table-secondary">
+                    <th scope="col">Orgão Julgador:</th>
+                    <td><span id="orgaoJugadorPJE1_span"></span></td>
+                </tr>
+                <tr>
+
+                    <th scope="col" colspan="2"><br>Segurado</th>
+                </tr>
+                <tr class="table-dark">
+                    <th scope="row">Nome:</th>
+                    <td><span id="nomePartePJE1_span"></span></td>
+                </tr>
+                <tr class="table-secondary">
+                    <th scope="col">CPF: <button class="btn btn-sm btn-outline-light cleanCPF">clean</button>
+                    </th>
+                    <td><input type="text" id="cpf" name="cpf" value="" class="form-control btn-dark"></td>
+                </tr>
+                <tr class="table-dark">
+                    <th scope="row">NIT: <button class="btn btn-sm btn-outline-light cleanNIT">clean</button></th>
+                    <td><input type="text" id="nitjud" name="nitjud" value="" class="form-control btn-dark"></td>
+                </tr>
+
+                <th scope="col" colspan="2"><br>Benefício</th>
+                </tr>
+                <tr class="table-dark">
+                    <th scope="row">DIB: <button class="btn btn-sm btn-outline-light cleanDIB">clean</button></th>
+                    <td><input type="text" id="dib" name="dib" value="" class="form-control btn-dark"></td>
+                </tr>
+                <tr class="table-secondary">
+                    <th scope="col">DIP: <button class="btn btn-sm btn-outline-light cleanDIP">clean</button></th>
+                    <td><input type="text" id="dip" name="dip" value="" class="form-control btn-dark"></td>
+                </tr>
+                <tr class="table-dark">
+                    <th scope="row">DCB: <button class="btn btn-sm btn-outline-light cleanDCB">clean</button></th>
+                    <td><input type="text" id="dcb" name="dcb" value="" class="form-control btn-dark"></td>
+                </tr>
+
+
+
+                <th scope="col" colspan="2"><br>SABI:</th>
+                </tr>
+                <tr class="table-dark">
+                    <th scope="row"><button class="btn btn-sm btn-outline-light gerarSabi">Gerar:</button></th>
+                    <td><textarea id="txtareasabi" class="form-control col-sm-8 form-control btn-dark"
+                            rows="2"></textarea></td>
+                </tr>
+
+
+
+
+
+
+
+
+
+            </tbody>
+        </table>
+
+        <br><br>
+
+        <span id="show-categorias"></span>
+
+        <br><br>
+
+        <span id="show-autodeclarados"></span>
+
+        <br><br>
+
+        <span id="show-impedimentos"></span>
+
+        <br><br>
+
+        <span id="show-provas"></span>
+
+        <br><br>
+
+        <span id="show-periodos-previamente-confirmados"></span>
+
+        <br><br>
+
+        <span id="show-periodos-homologados"></span>
+
+        <br><br>
+
+        <span id="show-periodos-previamente-confirmados-mais-sugestao-de-homologacao"></span>
+
+        <br><br>
+
+        <span id="show-exigencias"></span>
+
+
+
+    </div>
+    </div>
+    </div>
+
+    <div class="container">
+        <div class="row" style="background-color: blue;">
+            <div class="col-8">
+
+
+
+
+            </div>
+
+
+
+
+
+
+
+
+
+        </div><!-- //fecha row -->
+
+
+
+
+    </div><!-- fecha conteiner -->
+
+
+
+
+    <br><br>
+
+    <!--     <div class="row">
+        <div class="col-1"></div>
+        <div class="etapa-13 etapa col-10">
+            
+            <div id="editor" class="table-active print ql_margins"></div>
+            <br>
+        </div>
+        <div class="col-1"></div>
+    </div> -->
+
+    <br>
+
+
+
+
+
+
+
+
+
+
+
+    <script src="newvariaveisglobais.js"></script>
+    <script src="newscript.js"></script>
+    <script src="newclasses.js"></script>
+    <script src="newtowedoff.js"></script>
+    <script src="newhomologacao.js"></script>
+    <script src="newdespacho.js"></script>
+    <script src="getGet.js"></script>
+    <script src="getPat.js"></script>
+    <script src="getPJEtela1.js"></script>
+    <script src="cnis.js"></script>
+
+    <script src="testeRetiraConcomitancias.js"></script>
+
+
+    <script src="funcoesFerramentais.js"></script>
+
+    <script src="validaEntradas.js"></script>
+    <!-- <script src="homologacao2.js"></script> -->
+
+    <script src="moment.js"></script>
+    <script src="moment-precise-range.js"></script>
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous">
+        </script>
+
+    <!-- <script src="https://cdn.quilljs.com/1.0.0/quill.js"></script> -->
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+
+    <!-- Initialize Quill editor -->
+    <script>
+        let toolbarOptions = [
+            ['bold', 'italic', 'underline', 'strike'], // toggled buttons
+            ['blockquote', 'code-block'],
+
+            [{
+                'header': 1
+            }, {
+                'header': 2
+            }], // custom button values
+            [{
+                'list': 'ordered'
+            }, {
+                'list': 'bullet'
+            }],
+            [{
+                'script': 'sub'
+            }, {
+                'script': 'super'
+            }], // superscript/subscript
+            [{
+                'indent': '-1'
+            }, {
+                'indent': '+1'
+            }], // outdent/indent
+            [{
+                'direction': 'rtl'
+            }], // text direction
+
+            [{
+                'size': ['small', false, 'large', 'huge']
+            }], // custom dropdown
+            [{
+                'header': [1, 2, 3, 4, 5, 6, false]
+            }],
+
+            [{
+                'color': []
+            }, {
+                'background': []
+            }], // dropdown with defaults from theme
+            [{
+                'font': []
+            }],
+            [{
+                'align': []
+            }],
+
+            ['clean'] // remove formatting button
+        ]
+
+            ;
+        let editor = new Quill('#editor', {
+            modules: {
+                toolbar: toolbarOptions,
+                keyboard: {
+                    bindings: {
+                        tab: {
+                            key: 9,
+                            handler: function () {
+
+                                return true;
+                            }
+                        }
+                    }
+                },
+
+
+            },
+            theme: 'snow'
+        });
+
+
+
+
+
+        /* function imageHandler() {
+            var range = this.editor.getSelection();
+            //var range = 0;
+            //var value = prompt('What is the image URL');
+            var value = "https://avatars.githubusercontent.com/u/192974?s=52&v=4";
+            this.editor.insertEmbed(range.index, 'image', value, Quill.sources.USER);
+        } */
+    </script>
+
+    <!-- 
+    excelente codepen para pegar o conteudo do quill
+    https://codepen.io/k3no/pen/amwpqk -->
+
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function (event) {
+
+            //para testes
+            //testeConcomitancia();
+            //testeDuracaoPeriodo();
+            //testeConcomitancia2();
+            //testeLimpaExigencias();
+        });
+
+        //desabilitando o botao direito do mouse na página para não ocorrer mais retornos indesejados
+        //document.addEventListener('contextmenu', event => event.preventDefault());
+
+
+    </script>
+
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                logo: '<img :src="logo" alt="logo da Previdência Social" width="200px;" height="120px;">'
+            }
+        })
+    </script>
+
+</body>
+
+</html>

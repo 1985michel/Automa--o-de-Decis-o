@@ -67,5 +67,17 @@ let oQueEstaErradoDocsFeitosAsVesperas = "";
 let dataCessao = "";
 
 
-//recebendo o CNIS
+//Variaveis judiciais
+let entradaPat = "";
+let protocoloPat = "";
+let servicoPat = "";
+let numeroProcessoJudicial = "";
+
+let entradaPJE1 = "";
+let numeroProcessoPJE1 = "";
+let orgaoJugadorPJE1 = "";
+let nomePartePJE1 = "";
+
+
+
 
