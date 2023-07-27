@@ -15,6 +15,8 @@ document.querySelector(".cleanNIT").addEventListener("click", cleanNIT);
 document.querySelector(".cleanDIB").addEventListener("click", cleanDIB);
 document.querySelector(".cleanDIP").addEventListener("click", cleanDIP);
 document.querySelector(".cleanDCB").addEventListener("click", cleanDCB);
+document.querySelector(".cleanDUT").addEventListener("click", cleanDUT);
+document.querySelector(".cleanRMI").addEventListener("click", cleanRMI);
 document.querySelector(".gerarSabi").addEventListener("click", gerarSabi);
 
 
@@ -48,6 +50,14 @@ function cleanDCB() {
     const entradasuja = document.querySelector("#dcb").value;
     document.querySelector("#dcb").value = removePontosVirgulasHifenEspacoVazio2(entradasuja);
 }
+function cleanRMI() {
+    const entradasuja = document.querySelector("#rmi").value;
+    document.querySelector("#rmi").value = removePontosVirgulasHifenEspacoVazio2(entradasuja);
+}
+function cleanDUT() {
+    const entradasuja = document.querySelector("#dut").value;
+    document.querySelector("#dut").value = removePontosVirgulasHifenEspacoVazio2(entradasuja);
+}
 
 
 function gerarSabi() {
@@ -55,8 +65,9 @@ function gerarSabi() {
     const dib = removePontosVirgulasHifenEspacoVazio2(document.querySelector("#dib").value);
     const dip = removePontosVirgulasHifenEspacoVazio2(document.querySelector("#dip").value);
     const dcb = removePontosVirgulasHifenEspacoVazio2(document.querySelector("#dcb").value);
+    const rmi = removePontosVirgulasHifenEspacoVazio2(document.querySelector("#rmi").value);
 
-    document.querySelector("#txtareasabi").value = `Proc jud ${numeroProcessoJudicial} DIB ${dib} DIP ${dip} DCB ${dcb}`;
+    document.querySelector("#txtareasabi").value = `Proc jud ${numeroProcessoJudicial} DIB ${dib} DIP ${dip} DCB ${dcb} RMI ${rmi}`;
 }
 
 
@@ -103,9 +114,11 @@ function getNomeDaPartePJE1() {
 
     nomePartePJE1 = nomePartePJE1.substring(ultimaTabulacaoIndex + 1).trim();
 
+    nomePartePJE1 = nomePartePJE1.split(" registrado(a)")[0];
+
     console.log(`nome da parte 02 : '${nomePartePJE1}'`);
     // nomePartePJE1 = removePontosVirgulasHifenEspacoVazio(numero);
-    alert(`nomePartePJE1: ` + nomePartePJE1);
+    //alert(`nomePartePJE1: ` + nomePartePJE1);
 }
 
 function getOrgaoJulgadorPJE1() {
@@ -131,8 +144,10 @@ function mostrarDadosPJE1() {
     if (numeroProcessoJudicial != numeroProcessoPJE1) {
         alert("NÚMERO DO PROCESSO NÃO CONFERE! PAT: " + numeroProcessoJudicial + " PJE: " + numeroProcessoPJE1);
     } else {
-        document.getElementById(`orgaoJugadorPJE1_span`).innerHTML = orgaoJugadorPJE1;
-        document.getElementById(`nomePartePJE1_span`).innerHTML = nomePartePJE1;
+        // document.getElementById(`orgaoJugadorPJE1_span`).innerHTML = orgaoJugadorPJE1;
+        document.getElementById(`orgaoJugadorPJE1_span`).value = orgaoJugadorPJE1;
+        // document.getElementById(`nomePartePJE1_span`).innerHTML = nomePartePJE1;
+        document.getElementById(`nomePartePJE1_span`).value = nomePartePJE1;
     }
 
 

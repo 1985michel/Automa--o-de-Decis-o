@@ -72,6 +72,9 @@ let entradaPat = "";
 let protocoloPat = "";
 let servicoPat = "";
 let numeroProcessoJudicial = "";
+let cpfDoTitular = "";
+let nomeDoTitular = "";
+let orgaoJulgadorPat = "";
 
 let entradaPJE1 = "";
 let numeroProcessoPJE1 = "";

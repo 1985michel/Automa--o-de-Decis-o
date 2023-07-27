@@ -57,6 +57,12 @@ function recebePat() {
 
     getNumeroProcessoJudicial();
 
+    getCPFDoTitular();
+
+    getNomeDoTitular();
+
+    getOrgaoJulgadorPat();
+
     mostrarDadosPat();
 
 
@@ -75,7 +81,12 @@ function recebePat() {
 function mostrarDadosPat() {
     document.getElementById(`protocoloPat_span`).innerHTML = protocoloPat;
     document.getElementById(`servicoPat_span`).innerHTML = servicoPat;
-    document.getElementById(`numeroProcessoJudicialPat_span`).innerHTML = numeroProcessoJudicial;
+    // document.getElementById(`numeroProcessoJudicialPat_span`).innerHTML = numeroProcessoJudicial;
+    document.getElementById(`numeroProcessoJudicialPat_span`).value = numeroProcessoJudicial;
+    document.getElementById(`nomePartePJE1_span`).value = nomeDoTitular;
+    document.getElementById(`cpf`).value = removePontosVirgulasHifenEspacoVazio2(cpfDoTitular);
+
+    document.getElementById(`orgaoJugadorPJE1_span`).value = orgaoJulgadorPat;
 
     limpartxtareaPat();
 }
@@ -121,6 +132,26 @@ function getServico() {
 function getNumeroProcessoJudicial() {
     numeroProcessoJudicial = (getParteQueInteressa().split("Número Processo Judicial")[1].slice(1)).trim().split("Campos Adicionais")[0].trim();
     //alert(`numeroProcessoJudicial: ` + numeroProcessoJudicial)
+}
+
+function getCPFDoTitular() {
+    cpfDoTitular = getParteQueInteressa().split("CPF do Titular")[1].split("Nome do Titular")[0].trim();
+    //alert(`Protocolo: ` + protocolo)
+}
+
+function getNomeDoTitular() {
+    nomeDoTitular = getParteQueInteressa().split("Nome do Titular")[1].split("Endereço Titular")[0].trim();
+    //alert(`Protocolo: ` + protocolo)
+}
+
+function getNomeDoTitular() {
+    nomeDoTitular = getParteQueInteressa().split("Nome do Titular")[1].split("Endereço Titular")[0].trim();
+    //alert(`Protocolo: ` + protocolo)
+}
+
+function getOrgaoJulgadorPat() {
+    orgaoJulgadorPat = getParteQueInteressa().split("Órgão Julgador")[1].split("CPF do Titular")[0].trim();
+    //alert(`Protocolo: ` + protocolo)
 }
 
 // function getDer() {

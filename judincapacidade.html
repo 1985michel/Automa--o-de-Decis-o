@@ -1821,7 +1821,7 @@ https://stackoverflow.com/questions/468881/print-div-id-printarea-div-only
 
                 </tr>
                 <tr class="table-secondary">
-                    <th scope="col" class="col-5">Protocolo PAT:</th>
+                    <th scope="col" class="col-4">Protocolo PAT:</th>
                     <td><span id="protocoloPat_span"></span></td>
                 </tr>
                 <tr class="table-dark servico-class">
@@ -1858,11 +1858,17 @@ https://stackoverflow.com/questions/468881/print-div-id-printarea-div-only
                 </tr>
                 <tr class="table-secondary">
                     <th scope="col">Nº Proc. Judicial:</th>
-                    <td><span id="numeroProcessoJudicialPat_span"></span></td>
+                    <!-- <td><span id="numeroProcessoJudicialPat_span"></span></td> -->
+                    <td><input type="text" id="numeroProcessoJudicialPat_span" name="numeroProcessoJudicialPat_span"
+                            value="" class="form-control btn-dark"></td>
                 </tr>
                 <tr class="table-secondary">
                     <th scope="col">Orgão Julgador:</th>
-                    <td><span id="orgaoJugadorPJE1_span"></span></td>
+                    <!-- <td><span id="orgaoJugadorPJE1_span"></span></td> -->
+                    <!-- <td><input type="text" id="orgaoJugadorPJE1_span" name="orgaoJugadorPJE1_span" value=""
+                            class="form-control btn-dark" ></td> -->
+                    <td><textarea id="orgaoJugadorPJE1_span" name="orgaoJugadorPJE1_span"
+                            class="col-sm-8 form-control btn-dark" rows="3"></textarea></td>
                 </tr>
                 <tr>
 
@@ -1870,7 +1876,11 @@ https://stackoverflow.com/questions/468881/print-div-id-printarea-div-only
                 </tr>
                 <tr class="table-dark">
                     <th scope="row">Nome:</th>
-                    <td><span id="nomePartePJE1_span"></span></td>
+                    <!-- <td><span id="nomePartePJE1_span"></span></td> -->
+                    <!-- <td><input type="text" id="nomePartePJE1_span" name="nomePartePJE1_span" value=""
+                            class="form-control btn-dark"></td> -->
+                    <td><textarea id="nomePartePJE1_span" name="nomePartePJE1_span"
+                            class="col-sm-8 form-control btn-dark" rows="3"></textarea></td>
                 </tr>
                 <tr class="table-secondary">
                     <th scope="col">CPF: <button class="btn btn-sm btn-outline-light cleanCPF">clean</button>
@@ -1893,8 +1903,27 @@ https://stackoverflow.com/questions/468881/print-div-id-printarea-div-only
                     <td><input type="text" id="dip" name="dip" value="" class="form-control btn-dark"></td>
                 </tr>
                 <tr class="table-dark">
-                    <th scope="row">DCB: <button class="btn btn-sm btn-outline-light cleanDCB">clean</button></th>
+                    <th scope="row">DCB:
+                        <!-- <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                            <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off"
+                                checked="">
+                            <label class="btn btn-outline-primary" for="btnradio1">PC 2</label>
+                            <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off"
+                                checked="">
+                            <label class="btn btn-outline-primary" for="btnradio2">normal</label>
+                        </div> -->
+
+                        <button class="btn btn-sm btn-outline-light cleanDCB">clean</button>
+                    </th>
                     <td><input type="text" id="dcb" name="dcb" value="" class="form-control btn-dark"></td>
+                </tr>
+                <tr class="table-secondary">
+                    <th scope="col">RMI: <button class="btn btn-sm btn-outline-light cleanRMI">clean</button></th>
+                    <td><input type="text" id="rmi" name="rmi" value="" class="form-control btn-dark"></td>
+                </tr>
+                <tr class="table-secondary">
+                    <th scope="col">DUT: <button class="btn btn-sm btn-outline-light cleanDUT">clean</button></th>
+                    <td><input type="text" id="dut" name="dut" value="" class="form-control btn-dark"></td>
                 </tr>
 
 
@@ -1904,7 +1933,7 @@ https://stackoverflow.com/questions/468881/print-div-id-printarea-div-only
                 <tr class="table-dark">
                     <th scope="row"><button class="btn btn-sm btn-outline-light gerarSabi">Gerar:</button></th>
                     <td><textarea id="txtareasabi" class="form-control col-sm-8 form-control btn-dark"
-                            rows="2"></textarea></td>
+                            rows="5"></textarea></td>
                 </tr>
 
 
