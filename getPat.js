@@ -57,11 +57,21 @@ function recebePat() {
 
     getNumeroProcessoJudicial();
 
-    getCPFDoTitular();
+    try {
+        getCPFDoTitular();
 
-    getNomeDoTitular();
+        getNomeDoTitular();
 
-    getOrgaoJulgadorPat();
+        getOrgaoJulgadorPat();
+    } catch (error) {
+
+    }
+
+    // getCPFDoTitular();
+
+    // getNomeDoTitular();
+
+    // getOrgaoJulgadorPat();
 
     mostrarDadosPat();
 
@@ -83,10 +93,11 @@ function mostrarDadosPat() {
     document.getElementById(`servicoPat_span`).innerHTML = servicoPat;
     // document.getElementById(`numeroProcessoJudicialPat_span`).innerHTML = numeroProcessoJudicial;
     document.getElementById(`numeroProcessoJudicialPat_span`).value = numeroProcessoJudicial;
-    document.getElementById(`nomePartePJE1_span`).value = nomeDoTitular;
-    document.getElementById(`cpf`).value = removePontosVirgulasHifenEspacoVazio2(cpfDoTitular);
 
-    document.getElementById(`orgaoJugadorPJE1_span`).value = orgaoJulgadorPat;
+
+    if (nomeDoTitular) document.getElementById(`nomePartePJE1_span`).value = nomeDoTitular;
+    if (cpfDoTitular) document.getElementById(`cpf`).value = removePontosVirgulasHifenEspacoVazio2(cpfDoTitular);
+    if (orgaoJulgadorPat) document.getElementById(`orgaoJugadorPJE1_span`).value = orgaoJulgadorPat;
 
     limpartxtareaPat();
 }
@@ -140,14 +151,15 @@ function getCPFDoTitular() {
 }
 
 function getNomeDoTitular() {
-    nomeDoTitular = getParteQueInteressa().split("Nome do Titular")[1].split("Endereço Titular")[0].trim();
+    // nomeDoTitular = getParteQueInteressa().split("Nome do Titular")[1].split("Endereço Titular")[0].trim();
+    nomeDoTitular = getParteQueInteressa().split("Nome do Titular")[1].split("Endereço Titular")[0].split("Data Inicio")[0].trim();
     //alert(`Protocolo: ` + protocolo)
 }
 
-function getNomeDoTitular() {
-    nomeDoTitular = getParteQueInteressa().split("Nome do Titular")[1].split("Endereço Titular")[0].trim();
-    //alert(`Protocolo: ` + protocolo)
-}
+// function getNomeDoTitular() {
+//     nomeDoTitular = getParteQueInteressa().split("Nome do Titular")[1].split("Endereço Titular")[0].trim();
+//     //alert(`Protocolo: ` + protocolo)
+// }
 
 function getOrgaoJulgadorPat() {
     orgaoJulgadorPat = getParteQueInteressa().split("Órgão Julgador")[1].split("CPF do Titular")[0].trim();
