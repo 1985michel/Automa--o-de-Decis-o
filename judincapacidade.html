@@ -2179,6 +2179,123 @@ https://stackoverflow.com/questions/468881/print-div-id-printarea-div-only
                 logo: '<img :src="logo" alt="logo da Previdência Social" width="200px;" height="120px;">'
             }
         })
+
+        // Função para obter parâmetros da URL
+        function obterParametroUrl(nomeParametro) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(nomeParametro);
+        }
+
+        function atribuindoVariaveisViaURL() {
+            atribuirValorDaUrlParaVariavelNumeroProcessoJudicial();
+            atribuirValorDaUrlParaVariavelOrgaoJulgador();
+            atribuirValorDaUrlParaVariavelProtocoloPat();
+            atribuirValorDaUrlParaVariavelNome();
+            atribuirValorDaUrlParaVariavelCpf();
+            atribuirValorDaUrlParaVariavelNit();
+
+
+        }
+
+        function atribuirValorDaUrlParaVariavelNit() {
+            // Obtém o valor do parâmetro "numeroProcessoJudicialPat_span" da URL
+            const paraNit = obterParametroUrl("paraNit");
+
+            // Verifica se o valor do parâmetro foi encontrado na URL
+            if (paraNit !== null) {
+                // Atribui o valor do parâmetro à variável
+                //numeroProcessoJudicialPat_span = valorParametro;
+                //cpfDoTitular = paraNome;
+                document.querySelector("#nitjud").value = removePontosVirgulasHifenEspacoVazio2(paraNit);
+                console.log("Valor atribuído à variável: " + paraNit);
+            } else {
+                console.error("Parâmetro não encontrado na URL.");
+            }
+        }
+
+        function atribuirValorDaUrlParaVariavelCpf() {
+            // Obtém o valor do parâmetro "numeroProcessoJudicialPat_span" da URL
+            const paraCpf = obterParametroUrl("paraCpf");
+
+            // Verifica se o valor do parâmetro foi encontrado na URL
+            if (paraCpf !== null) {
+                // Atribui o valor do parâmetro à variável
+                //numeroProcessoJudicialPat_span = valorParametro;
+                cpfDoTitular = paraCpf;
+                console.log("Valor atribuído à variável: " + paraCpf);
+            } else {
+                console.error("Parâmetro não encontrado na URL.");
+            }
+        }
+
+        function atribuirValorDaUrlParaVariavelNome() {
+            // Obtém o valor do parâmetro "numeroProcessoJudicialPat_span" da URL
+            const paraNome = obterParametroUrl("paraNome");
+
+            // Verifica se o valor do parâmetro foi encontrado na URL
+            if (paraNome !== null) {
+                // Atribui o valor do parâmetro à variável
+                //numeroProcessoJudicialPat_span = valorParametro;
+                nomeDoTitular = paraNome;
+                console.log("Valor atribuído à variável: " + paraNome);
+            } else {
+                console.error("Parâmetro não encontrado na URL.");
+            }
+        }
+
+        function atribuirValorDaUrlParaVariavelProtocoloPat() {
+            // Obtém o valor do parâmetro "numeroProcessoJudicialPat_span" da URL
+            const paraProtocoloPat = obterParametroUrl("paraProtocoloPat");
+
+            // Verifica se o valor do parâmetro foi encontrado na URL
+            if (paraProtocoloPat !== null) {
+                // Atribui o valor do parâmetro à variável
+                //numeroProcessoJudicialPat_span = valorParametro;
+                protocoloPat = paraProtocoloPat.split("Protocolo: ")[1].split(" ")[0];
+                console.log("Valor atribuído à variável: " + paraProtocoloPat);
+            } else {
+                console.error("Parâmetro não encontrado na URL.");
+            }
+        }
+
+        function atribuirValorDaUrlParaVariavelOrgaoJulgador() {
+            // Obtém o valor do parâmetro "numeroProcessoJudicialPat_span" da URL
+            const paraOrgaoJulgador = obterParametroUrl("paraOrgaoJulgador");
+
+            // Verifica se o valor do parâmetro foi encontrado na URL
+            if (paraOrgaoJulgador !== null) {
+                // Atribui o valor do parâmetro à variável
+                //numeroProcessoJudicialPat_span = valorParametro;
+                orgaoJulgadorPat = paraOrgaoJulgador;
+                console.log("Valor atribuído à variável: " + paraOrgaoJulgador);
+            } else {
+                console.error("Parâmetro não encontrado na URL.");
+            }
+        }
+
+        // Função para atribuir valor da URL à variável
+        function atribuirValorDaUrlParaVariavelNumeroProcessoJudicial() {
+            // Obtém o valor do parâmetro "numeroProcessoJudicialPat_span" da URL
+            const paraProcJud = obterParametroUrl("paraProcJud");
+
+            // Verifica se o valor do parâmetro foi encontrado na URL
+            if (paraProcJud !== null) {
+                // Atribui o valor do parâmetro à variável
+                //numeroProcessoJudicialPat_span = valorParametro;
+                numeroProcessoJudicial = paraProcJud;
+                console.log("Valor atribuído à variável: " + paraProcJud);
+            } else {
+                console.error("Parâmetro não encontrado na URL.");
+            }
+        }
+
+        // Chama a função para atribuir o valor da URL à variável
+        atribuindoVariaveisViaURL();
+        mostrarDadosPat();
+
+
+
+
     </script>
 
 </body>
