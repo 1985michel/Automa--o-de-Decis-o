@@ -81,6 +81,7 @@ let numeroProcessoPJE1 = "";
 let orgaoJugadorPJE1 = "";
 let nomePartePJE1 = "";
 
+let todoPat = "";
 
 
 

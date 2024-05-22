@@ -2193,8 +2193,28 @@ https://stackoverflow.com/questions/468881/print-div-id-printarea-div-only
             atribuirValorDaUrlParaVariavelNome();
             atribuirValorDaUrlParaVariavelCpf();
             atribuirValorDaUrlParaVariavelNit();
+            atribuirValorDaUrlParaVariavelTodoPat();
 
 
+        }
+
+        function atribuirValorDaUrlParaVariavelTodoPat() {
+            // Obtém o valor do parâmetro "numeroProcessoJudicialPat_span" da URL
+            const todoPat = obterParametroUrl("paraTodoPat");
+
+            // Verifica se o valor do parâmetro foi encontrado na URL
+            if (todoPat !== null) {
+                // Atribui o valor do parâmetro à variável
+                //numeroProcessoJudicialPat_span = valorParametro;
+                //cpfDoTitular = paraNome;
+                //let comPref = "Detalhar Tarefa";
+                document.querySelector("#txtareaPat").value = "Detalhar Tarefa" + todoPat;
+                console.log("Valor atribuído à variável: " + todoPat);
+                capituraTxtAreaPat();
+
+            } else {
+                console.error("Parâmetro não encontrado na URL.");
+            }
         }
 
         function atribuirValorDaUrlParaVariavelNit() {
