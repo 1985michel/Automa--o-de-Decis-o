@@ -62,12 +62,14 @@ function cleanDUT() {
 
 function gerarSabi() {
 
+
+    const dii = removePontosVirgulasHifenEspacoVazio2(document.querySelector("#dii").value);
     const dib = removePontosVirgulasHifenEspacoVazio2(document.querySelector("#dib").value);
     const dip = removePontosVirgulasHifenEspacoVazio2(document.querySelector("#dip").value);
     const dcb = removePontosVirgulasHifenEspacoVazio2(document.querySelector("#dcb").value);
     const rmi = removePontosVirgulasHifenEspacoVazio2(document.querySelector("#rmi").value);
 
-    document.querySelector("#txtareasabi").value = `Proc jud ${numeroProcessoJudicial} DIB ${dib} DIP ${dip} DCB ${dcb} RMI ${rmi}`;
+    document.querySelector("#txtareasabi").value = `Proc jud ${numeroProcessoJudicial}  DII ${dii} DIB ${dib} DIP ${dip} DCB ${dcb} RMI ${rmi}`;
 }
 
 

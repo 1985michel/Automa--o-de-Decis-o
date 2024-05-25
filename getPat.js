@@ -58,11 +58,14 @@ function recebePat() {
     getNumeroProcessoJudicial();
 
     try {
+
         getCPFDoTitular();
 
         getNomeDoTitular();
 
         getOrgaoJulgadorPat();
+
+        getNup();
     } catch (error) {
 
     }
@@ -93,6 +96,8 @@ function mostrarDadosPat() {
     document.getElementById(`servicoPat_span`).innerHTML = servicoPat;
     // document.getElementById(`numeroProcessoJudicialPat_span`).innerHTML = numeroProcessoJudicial;
     document.getElementById(`numeroProcessoJudicialPat_span`).value = numeroProcessoJudicial;
+    //console.log(">>>>>>> NUP: " + nup);
+    document.getElementById(`nup_span`).value = nup;
 
 
     if (nomeDoTitular) document.getElementById(`nomePartePJE1_span`).value = nomeDoTitular;
@@ -142,6 +147,11 @@ function getServico() {
 
 function getNumeroProcessoJudicial() {
     numeroProcessoJudicial = (getParteQueInteressa().split("Número Processo Judicial")[1].slice(1)).trim().split("Campos Adicionais")[0].trim();
+    //alert(`numeroProcessoJudicial: ` + numeroProcessoJudicial)
+}
+
+function getNup() {
+    nup = (getParteQueInteressa().split("NUP Sapiens")[1].slice(1)).trim().split("Chave de Acesso")[0].trim();
     //alert(`numeroProcessoJudicial: ` + numeroProcessoJudicial)
 }
 
