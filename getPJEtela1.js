@@ -16,8 +16,14 @@ document.querySelector(".cleanDIB").addEventListener("click", cleanDIB);
 document.querySelector(".cleanDIP").addEventListener("click", cleanDIP);
 document.querySelector(".cleanDCB").addEventListener("click", cleanDCB);
 document.querySelector(".cleanDUT").addEventListener("click", cleanDUT);
+//document.querySelector(".cleanCEP").addEventListener("click", cleanCEP);
 document.querySelector(".cleanRMI").addEventListener("click", cleanRMI);
 document.querySelector(".gerarSabi").addEventListener("click", gerarSabi);
+
+document.querySelector(".verAPS").addEventListener("click", abrirLocalizadorAps);
+
+
+
 
 
 
@@ -57,6 +63,18 @@ function cleanRMI() {
 function cleanDUT() {
     const entradasuja = document.querySelector("#dut").value;
     document.querySelector("#dut").value = removePontosVirgulasHifenEspacoVazio2(entradasuja);
+}
+
+/* function cleanCEP() {
+    const entradasuja = document.querySelector("#cep").value;
+    //console.log("Chegou o CEP:" + entradasuja);
+    document.querySelector("#cep").value = removePontosVirgulasHifenEspacoVazio2(entradasuja);
+} */
+
+function abrirLocalizadorAps() {
+    const limpo = removePontosVirgulasHifenEspacoVazio2(document.querySelector("#cep").value);
+    const url = `https://meu.inss.gov.br/#/aberto/localizador-aps/cep/${limpo}`;
+    window.open(url, '_blank'); // Abre a URL em uma nova guia
 }
 
 
