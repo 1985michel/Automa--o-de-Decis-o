@@ -172,7 +172,8 @@ function getNomeDoTitular() {
 // }
 
 function getOrgaoJulgadorPat() {
-    orgaoJulgadorPat = getParteQueInteressa().split("Órgão Julgador")[1].split("CPF do Titular")[0].trim();
+    //orgaoJulgadorPat = getParteQueInteressa().split("Órgão Julgador")[1].split("CPF do Titular")[0].trim();
+    orgaoJulgadorPat = getParteQueInteressa().split("Órgão Julgador")[1].split("CPF do Titular")[0].split("Data Inicio")[0].trim();
     //alert(`Protocolo: ` + protocolo)
 }
 
