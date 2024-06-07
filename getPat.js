@@ -129,6 +129,7 @@ function desabilitarGetPat() {
 
 function getParteQueInteressa() {
 
+    //console.log("Chegou em PARTE QUE INTERESSA");
     let e2 = entradaPat.slice();//clona a string
     //
     //return e2.split("Tarefa de ")[1];
@@ -136,31 +137,39 @@ function getParteQueInteressa() {
 }
 
 function getProtocolo() {
-    protocoloPat = getParteQueInteressa().split("Protocolo: ")[1].split(" ")[0];
+    console.log("CHEGOU EM GET PROTOCOLO");
+    //protocoloPat = getParteQueInteressa().split("Protocolo: ")[1].split(" ")[0];
+    protocoloPat = getParteQueInteressa().split("Protocolo:")[1].split(" ")[0];
+    console.log("O protocolo PAT: " + protocoloPat);
     //alert(`Protocolo: ` + protocolo)
 }
 
 function getServico() {
+    console.log("CHEGOU EM GET SERVIÇO");
     servicoPat = (getParteQueInteressa().split("Detalhar Tarefa")[1]).trim().split("Protocolo")[0].trim();
     //alert(`Serviço: ` + servico)
 }
 
 function getNumeroProcessoJudicial() {
+    console.log("chegou em get número do processo judicial");
     numeroProcessoJudicial = (getParteQueInteressa().split("Número Processo Judicial")[1].slice(1)).trim().split("Campos Adicionais")[0].trim();
     //alert(`numeroProcessoJudicial: ` + numeroProcessoJudicial)
 }
 
 function getNup() {
+    console.log("chegou em get nup");
     nup = (getParteQueInteressa().split("NUP Sapiens")[1].slice(1)).trim().split("Chave de Acesso")[0].trim();
     //alert(`numeroProcessoJudicial: ` + numeroProcessoJudicial)
 }
 
 function getCPFDoTitular() {
+    console.log("chegou em get CPF");
     cpfDoTitular = getParteQueInteressa().split("CPF do Titular")[1].split("Nome do Titular")[0].trim();
     //alert(`Protocolo: ` + protocolo)
 }
 
 function getNomeDoTitular() {
+    console.log("chegou em get nome");
     // nomeDoTitular = getParteQueInteressa().split("Nome do Titular")[1].split("Endereço Titular")[0].trim();
     nomeDoTitular = getParteQueInteressa().split("Nome do Titular")[1].split("Endereço Titular")[0].split("Data Inicio")[0].trim();
     //alert(`Protocolo: ` + protocolo)
@@ -172,6 +181,7 @@ function getNomeDoTitular() {
 // }
 
 function getOrgaoJulgadorPat() {
+    console.log("chegou em get orgao julgador");
     //orgaoJulgadorPat = getParteQueInteressa().split("Órgão Julgador")[1].split("CPF do Titular")[0].trim();
     orgaoJulgadorPat = getParteQueInteressa().split("Órgão Julgador")[1].split("CPF do Titular")[0].split("Data Inicio")[0].trim();
     //alert(`Protocolo: ` + protocolo)
