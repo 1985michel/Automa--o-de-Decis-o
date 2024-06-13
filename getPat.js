@@ -158,7 +158,7 @@ function getNumeroProcessoJudicial() {
 
 function getNup() {
     console.log("chegou em get nup");
-    nup = (getParteQueInteressa().split("NUP Sapiens")[1].slice(1)).trim().split("Chave de Acesso")[0].trim();
+    nup = (getParteQueInteressa().split("NUP Sapiens")[1].slice(1)).trim().split("Chave de Acesso")[0].trim().split("Etiqueta")[0].trim();
     //alert(`numeroProcessoJudicial: ` + numeroProcessoJudicial)
 }
 
