@@ -103,6 +103,7 @@ function mostrarDadosPat() {
     if (nomeDoTitular) document.getElementById(`nomePartePJE1_span`).value = nomeDoTitular;
     if (cpfDoTitular) document.getElementById(`cpf`).value = removePontosVirgulasHifenEspacoVazio2(cpfDoTitular);
     if (orgaoJulgadorPat) document.getElementById(`orgaoJugadorPJE1_span`).value = orgaoJulgadorPat;
+    if (vara) document.getElementById(`vara_span`).value = vara;
 
     limpartxtareaPat();
 }
@@ -185,6 +186,21 @@ function getOrgaoJulgadorPat() {
     //orgaoJulgadorPat = getParteQueInteressa().split("Órgão Julgador")[1].split("CPF do Titular")[0].trim();
     orgaoJulgadorPat = getParteQueInteressa().split("Órgão Julgador")[1].split("CPF do Titular")[0].split("Data Inicio")[0].trim();
     //alert(`Protocolo: ` + protocolo)
+    vara = extrairNumero(orgaoJulgadorPat)
+
+}
+
+function extrairNumero(texto) {
+    // Usa uma expressão regular para encontrar o primeiro dígito na string
+    const resultado = texto.match(/\d+/);
+
+    // Se encontrou algum número, retorna o primeiro encontrado
+    if (resultado) {
+        return resultado[0];
+    }
+
+    // Se não encontrou nenhum número, retorna '1'
+    return '1';
 }
 
 // function getDer() {

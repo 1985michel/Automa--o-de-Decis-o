@@ -76,6 +76,9 @@ let nup = "";
 let cpfDoTitular = "";
 let nomeDoTitular = "";
 let orgaoJulgadorPat = "";
+let vara = ""
+let varaCidade = ""
+let varaEstado = ""
 
 let entradaPJE1 = "";
 let numeroProcessoPJE1 = "";
