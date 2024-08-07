@@ -104,6 +104,8 @@ function mostrarDadosPat() {
     if (cpfDoTitular) document.getElementById(`cpf`).value = removePontosVirgulasHifenEspacoVazio2(cpfDoTitular);
     if (orgaoJulgadorPat) document.getElementById(`orgaoJugadorPJE1_span`).value = orgaoJulgadorPat;
     if (vara) document.getElementById(`vara_span`).value = vara;
+    if (varaCidade) document.getElementById(`varaCidade_span`).value = varaCidade;
+    if (varaEstado) document.getElementById(`varaEstado_span`).value = varaEstado;
 
     limpartxtareaPat();
 }
@@ -187,7 +189,156 @@ function getOrgaoJulgadorPat() {
     orgaoJulgadorPat = getParteQueInteressa().split("Órgão Julgador")[1].split("CPF do Titular")[0].split("Data Inicio")[0].trim();
     //alert(`Protocolo: ` + protocolo)
     vara = extrairNumero(orgaoJulgadorPat)
+    varaCidade = extractCity(orgaoJulgadorPat)
+    varaEstado = getCodigoEstadoFromCidade(varaCidade)
 
+}
+
+function getCodigoEstadoFromCidade(cidade) {
+    const cidadeClean = limpaString(cidade).toLowerCase();
+
+    if (cidadeClean == 'brasilia') {
+        return '23';
+    } if (cidadesGoias.includes(cidadeClean)) {
+        return '8';
+    } else if (cidadesAcre.includes(cidadeClean)) {
+        return '24';
+    } else if (cidadesAmazonas.includes(cidadeClean)) {
+        return '3';
+    } else if (cidadesTocantins.includes(cidadeClean)) {
+        return '28';
+    } else if (cidadesMatoGrosso.includes(cidadeClean)) {
+        return '10';
+    } else if (cidadesRoraima.includes(cidadeClean)) {
+        return '27';
+    } else if (cidadesRondonia.includes(cidadeClean)) {
+        return '20';
+    } else if (cidadesMatoGrossoDoSul.includes(cidadeClean)) {
+        return '6';
+    } else if (cidadesPara.includes(cidadeClean)) {
+        return '12';
+    } else if (cidadesAmapa.includes(cidadeClean)) {
+        return '25';
+    }
+
+    // Retorno padrão se não encontrar a cidade
+    return null; // ou outra lógica conforme necessário
+}
+
+
+// Função para remover caracteres especiais
+function limpaString(txt) {
+    return txt.normalize("NFD").replace(/[\u0300-\u036f]/g, ""); // Remove acentos
+}
+
+function extractCity(varaDescription) {
+    // Define uma lista de capitais conhecidas para casos especiais
+    const capitals = {
+        'AC': 'Rio Branco',
+        'AP': 'Macapá',
+        'DF': 'Brasília',
+        'GO': 'Goiânia',
+        'MT': 'Cuiabá',
+        'PA': 'Belém',
+        'AM': 'Manaus',
+        'RO': 'Porto Velho',
+        'RR': 'Boa Vista',
+        'MS': 'Campo Grande',
+        'PR': 'Curitiba',
+        'RS': 'Porto Alegre',
+        'TO': 'Palmas',
+        'BA': 'Salvador',
+        'SP': 'São Paulo',
+        'RJ': 'Rio de Janeiro'
+    };
+
+    // Verifica casos especiais primeiro
+    for (const uf in capitals) {
+        if (varaDescription.includes(`SJ${uf}`)) {
+            return capitals[uf];
+        }
+    }
+
+    if (limpaString(varaDescription).toLowerCase().includes("caceres")) {
+        return 'Cáceres';
+    }
+
+    if (limpaString(varaDescription).toLowerCase().includes("buritis")) {
+        return 'Buritis';
+    }
+
+    // Verifica se há uma cidade mencionada explicitamente na descrição
+    const words = varaDescription.split(" ");
+
+    // Procura por "DE" ou "DA" para identificar a cidade
+    for (let i = 0; i < words.length; i++) {
+        if (words[i] === 'DE' || words[i] === 'DA') {
+            if (i + 1 < words.length) {
+                // Verifica se a cidade é composta por mais de uma palavra
+                const cityName = [];
+                for (let j = i + 1; j < words.length; j++) {
+                    if (words[j] === 'VARA' || words[j] === 'UNIDADE') {
+                        break;
+                    }
+                    cityName.push(words[j]);
+                }
+                const extractedCity = cityName.join(" ").trim();
+                return checkFinalConditions(extractedCity);
+            }
+        }
+    }
+
+    // Em caso de frases especiais conhecidas
+    const specialCases = {
+        "MANAUS E IRANDUBA": "Manaus",
+        "SÃO MIGUEL DO GUAPORÉ": "São Miguel do Guaporé",
+        "Cáceres": "Cáceres",
+        "Buritis": "Buritis"
+    };
+
+    for (const caseKey in specialCases) {
+        if (varaDescription.includes(caseKey)) {
+            return specialCases[caseKey];
+        }
+    }
+
+    // Fallback para descrições que não correspondem às regras
+    return 'Desconhecida';
+}
+
+function checkFinalConditions(city) {
+    // Lista de palavras a serem filtradas
+    const filterWords = [
+        'vara', 'infância', 'infancia', 'juventude', 'cível', 'civel',
+        'pública', 'publica', 'públicas', 'publicas', 'público', 'públicos',
+        'ambiental', 'justiça', 'acidente', 'registro', 'registros',
+        'ação', 'ações', 'previdenciária', 'previdenciárias', 'genérica', 'fazenda pública', 'fazendas públicas'
+    ];
+
+    // Se a cidade contiver 'DF', retorna Brasília
+    if (city.includes('DF')) {
+        return 'Brasília';
+    }
+
+    // Verifica se a cidade contém alguma das palavras filtradas
+    for (const word of filterWords) {
+        if (city.toLowerCase().includes(word)) {
+            // Submete novamente à função de extração
+            return extractCity(city);
+        }
+    }
+
+    // Verifica se contém números ou '.'
+    if (/\d/.test(city) || city.includes('.')) {
+        return 'Desconhecida';
+    }
+
+    // Se o resultado contiver 'Manaus'
+    if (city.toLowerCase().includes('manaus')) {
+        return 'Manaus';
+    }
+
+    return city.trim();
 }
 
 function extrairNumero(texto) {
