@@ -147,6 +147,9 @@ function getOrgaoJulgadorPJE1() {
 
     orgaoJugadorPJE1 = obterTextoAntesDaData(pedaco).split("	")[2];
     //alert(`orgaoJugadorPJE1: ` + orgaoJugadorPJE1);
+    vara = extrairNumero(orgaoJugadorPJE1)
+    varaCidade = extractCity(orgaoJugadorPJE1)
+    varaEstado = getCodigoEstadoFromCidade(varaCidade)
 
 }
 
@@ -166,8 +169,12 @@ function mostrarDadosPJE1() {
     } else {
         // document.getElementById(`orgaoJugadorPJE1_span`).innerHTML = orgaoJugadorPJE1;
         document.getElementById(`orgaoJugadorPJE1_span`).value = orgaoJugadorPJE1;
+        if (vara) document.getElementById(`vara_span`).value = vara;
+        if (varaCidade) document.getElementById(`varaCidade_span`).value = varaCidade;
+        if (varaEstado) document.getElementById(`varaEstado_span`).value = varaEstado;
         // document.getElementById(`nomePartePJE1_span`).innerHTML = nomePartePJE1;
         document.getElementById(`nomePartePJE1_span`).value = nomePartePJE1;
+
     }
 
 
