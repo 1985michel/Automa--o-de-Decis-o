@@ -259,13 +259,27 @@ function extractCity(varaDescription) {
         }
     }
 
-    if (limpaString(varaDescription).toLowerCase().includes("caceres")) {
-        return 'Cáceres';
-    }
+    let cidadesEspeciais = {
+        caceres: 'Cáceres',
+        buritis: 'Buritis',
+        pimentabueno: "PIMENTA BUENO"
+    };
 
-    if (limpaString(varaDescription).toLowerCase().includes("buritis")) {
-        return 'Buritis';
+    for (let chave in cidadesEspeciais) {
+        if (limpaString(varaDescription).toLowerCase().includes(chave)) {
+            return cidadesEspeciais[chave];
+        }
     }
+    /** 
+        if (limpaString(varaDescription).toLowerCase().includes("caceres")) {
+            return 'Cáceres';
+        }
+    
+        if (limpaString(varaDescription).toLowerCase().includes("buritis")) {
+            return 'Buritis';
+        }
+            */
+
 
     // Verifica se há uma cidade mencionada explicitamente na descrição
     const words = varaDescription.split(" ");
@@ -293,11 +307,12 @@ function extractCity(varaDescription) {
         "MANAUS E IRANDUBA": "Manaus",
         "SÃO MIGUEL DO GUAPORÉ": "São Miguel do Guaporé",
         "Cáceres": "Cáceres",
-        "Buritis": "Buritis"
+        "Buritis": "Buritis",
+        "Pimenta Bueno": 'Pimenta Bueno'
     };
 
     for (const caseKey in specialCases) {
-        if (varaDescription.includes(caseKey)) {
+        if (varaDescription.toLowerCase().includes(caseKey.toLowerCase())) {
             return specialCases[caseKey];
         }
     }
