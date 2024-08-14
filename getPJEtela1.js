@@ -39,7 +39,7 @@ function capituraTxtAreaPJETela1() {
 
 function gerarRelatorioAutomatiza() {
     let dados = {
-        protocoloPat: document.getElementById(`protocoloPat_span`).innerHTML,
+        protocoloPat: document.getElementById(`protocoloPat_span`).innerHTML.trim(),
         servico: document.getElementById(`servicoPat_span`).innerHTML,
         numeroProcessoJudicial: document.getElementById(`numeroProcessoJudicialPat_span`).value,
         nup: document.getElementById(`nup_span`).value,
