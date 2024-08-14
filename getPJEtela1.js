@@ -10,6 +10,8 @@ Nessa primeira tela do PJE vamos:
 
 document.querySelector(".pastBtnPJE1").addEventListener("click", capituraTxtAreaPJETela1);
 
+document.querySelector(".geraRelatorioAutomatiza").addEventListener("click", gerarRelatorioAutomatiza);
+
 document.querySelector(".cleanCPF").addEventListener("click", cleanCPF);
 document.querySelector(".cleanNIT").addEventListener("click", cleanNIT);
 document.querySelector(".cleanDIB").addEventListener("click", cleanDIB);
@@ -33,6 +35,36 @@ function capituraTxtAreaPJETela1() {
     entradaPJE1 = texto;
     recebePJE1();
 
+}
+
+function gerarRelatorioAutomatiza() {
+    let dados = {
+        protocoloPat: document.getElementById(`protocoloPat_span`).innerHTML,
+        servico: document.getElementById(`servicoPat_span`).innerHTML,
+        numeroProcessoJudicial: document.getElementById(`numeroProcessoJudicialPat_span`).value,
+        nup: document.getElementById(`nup_span`).value,
+        orgaoJulgador: document.getElementById(`orgaoJugadorPJE1_span`).value,
+        numeroVaraJulgadora: document.getElementById(`vara_span`).value,
+        cidadeVaraJulgadora: document.getElementById(`varaCidade_span`).value,
+        estadoVaraJulgadora: document.getElementById(`varaEstado_span`).value,
+        nome: document.getElementById(`nomePartePJE1_span`).value,
+        cpf: document.getElementById(`cpf`).value,
+        nit: document.querySelector("#nitjud").value,
+        especie: document.getElementById(`especie`).value,
+        acordo: document.getElementById(`acordo`).value,
+        dii: document.getElementById(`dii`).value,
+        did: document.getElementById(`did`).value,
+        dib: document.querySelector("#dib").value,
+        dip: document.querySelector("#dip").value,
+        dcb: document.querySelector("#dcb").value,
+        rmi: document.querySelector("#rmi").value,
+        dut: document.querySelector("#dut").value,
+        olMantenedor: document.querySelector("#cep").value,
+        descricaoSabiBox: document.querySelector("#txtareasabi").value
+    };
+    let relato = JSON.stringify(dados)
+    console.log(`GERANDO RELATÓRIO AUTOMATIZA ${JSON.stringify(dados)}`)
+    document.getElementById(`txtareaAutomatiza`).value = relato;
 }
 
 function cleanCPF() {

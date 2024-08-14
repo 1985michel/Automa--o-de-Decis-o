@@ -84,9 +84,9 @@ https://stackoverflow.com/questions/468881/print-div-id-printarea-div-only
 
     <div class="container">
         <div class="row">
-            <div class="col-8">
+            <div class="col-6">
                 <div class="row">
-                    <div class="col-4">
+                    <div class="col-0 hidden">
 
                         <div class=" btn-group-vertical " role=" group" aria-label="First group">
                             <button type="button" class="btn btn-primary left_buttom active" id="btn_etapa_1">01 -
@@ -141,7 +141,7 @@ https://stackoverflow.com/questions/468881/print-div-id-printarea-div-only
 
 
                     </div>
-                    <div class="col-8">
+                    <div class="col-10">
                         <!-- dados básicos -->
                         <div class="etapa-1 etapa">
                             <br>
@@ -177,50 +177,69 @@ https://stackoverflow.com/questions/468881/print-div-id-printarea-div-only
 
                             </div>
 
-                            <br><br>
+                            <hr>
 
-                            <label for="nome" class="form-label">Nome:</label><br>
-                            <input type="text" id="nome" name="nome" value="" class="form-control btn-dark"><br>
+                            <div class="form-group row ">
 
-                            <label for="data-de-nascimento" class="form-label">Data de Nascimento: </label><br>
-                            <div class="input-group has-validation">
-                                <input type="date" id="data-de-nascimento" placeholder="dd-mm-yyyy"
-                                    name="data-de-nascicmento" value="" class="form-control btn-dark " required>
-                                <div class="invalid-tooltip">
-                                    Data de nascimento inválida!
+                                <label for="nome" class="form-label">Relatório para o Automatiza:</label><br>
+                                <div class="col-8">
+                                    <textarea id="txtareaAutomatiza" class="form-control col-sm-8 form-control btn-dark"
+                                        rows="5"></textarea>
                                 </div>
+                                <div class="col-4">
+                                    <button class="btn geraRelatorioAutomatiza btn-success form-control">Gerar</button>
+                                </div>
+
+
                             </div>
+
+
 
                             <br><br>
+                            <span class="hidden">
+                                <label for="nome" class="form-label">Nome:</label><br>
+                                <input type="text" id="nome" name="nome" value="" class="form-control btn-dark"><br>
 
-                            <div class="btn-group col-12" role="group" aria-label="Basic radio toggle button group">
-                                <input type="radio" class="btn-check" name="btnradio-sexo" id="btnradio1"
-                                    autocomplete="off" value="homem" checked>
-                                <label class="btn btn-outline-info " for="btnradio1">Homem</label>
-
-                                <input type="radio" class="btn-check" name="btnradio-sexo" id="btnradio2"
-                                    autocomplete="off" value="mulher">
-                                <label class="btn btn-outline-danger " for="btnradio2">Mulher</label>
-                            </div>
-
-                            <br>
-                            <br>
-                            <label for="der" class="form-label">DER:</label><br>
-                            <div class="input-group has-validation">
-                                <input type="date" id="der" name="der" placeholder="dd-mm-yyyy" value=""
-                                    class="form-control btn-dark" required>
-                                <div class="invalid-tooltip">
-                                    DER inválida!
+                                <label for="data-de-nascimento" class="form-label">Data de Nascimento: </label><br>
+                                <div class="input-group has-validation">
+                                    <input type="date" id="data-de-nascimento" placeholder="dd-mm-yyyy"
+                                        name="data-de-nascicmento" value="" class="form-control btn-dark " required>
+                                    <div class="invalid-tooltip">
+                                        Data de nascimento inválida!
+                                    </div>
                                 </div>
-                            </div>
 
-                            <br>
+                                <br><br>
 
-                            <div class="col-12">
-                                <button type="button"
-                                    class=" form-control gravar-etapa-1 btn btn-primary btn-lg btn-block">Gravar</button>
-                            </div>
+                                <div class="btn-group col-12" role="group" aria-label="Basic radio toggle button group">
+                                    <input type="radio" class="btn-check" name="btnradio-sexo" id="btnradio1"
+                                        autocomplete="off" value="homem" checked>
+                                    <label class="btn btn-outline-info " for="btnradio1">Homem</label>
+
+                                    <input type="radio" class="btn-check" name="btnradio-sexo" id="btnradio2"
+                                        autocomplete="off" value="mulher">
+                                    <label class="btn btn-outline-danger " for="btnradio2">Mulher</label>
+                                </div>
+
+                                <br>
+                                <br>
+                                <label for="der" class="form-label">DER:</label><br>
+                                <div class="input-group has-validation">
+                                    <input type="date" id="der" name="der" placeholder="dd-mm-yyyy" value=""
+                                        class="form-control btn-dark" required>
+                                    <div class="invalid-tooltip">
+                                        DER inválida!
+                                    </div>
+                                </div>
+
+                                <br>
+
+                                <div class="col-12">
+                                    <button type="button"
+                                        class=" form-control gravar-etapa-1 btn btn-primary btn-lg btn-block">Gravar</button>
+                                </div>
                         </div>
+                        </span>
 
 
                         <!-- CAPITURANDO CNIS -->
@@ -1805,7 +1824,7 @@ https://stackoverflow.com/questions/468881/print-div-id-printarea-div-only
 
     </div>
 
-    <div class="col-4">
+    <div class="col-6">
 
 
         <table class="table table-hover table-sm " id="dados-table">
