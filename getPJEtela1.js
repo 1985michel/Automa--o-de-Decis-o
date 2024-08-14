@@ -37,9 +37,17 @@ function capituraTxtAreaPJETela1() {
 
 }
 
+function removerNbsp(texto) {
+    return texto.replace(/&nbsp;/g, '');
+}
+
 function gerarRelatorioAutomatiza() {
+    let protPatDirty = document.getElementById(`protocoloPat_span`).innerHTML.trim()
+
+
     let dados = {
-        protocoloPat: document.getElementById(`protocoloPat_span`).innerHTML.trim(),
+
+        protocoloPat: removerNbsp(protPatDirty),
         servico: document.getElementById(`servicoPat_span`).innerHTML.trim(),
         numeroProcessoJudicial: document.getElementById(`numeroProcessoJudicialPat_span`).value,
         nup: document.getElementById(`nup_span`).value,
