@@ -179,7 +179,7 @@ const cidadesMatoGrossoDoSul = ["agua clara", "alcinopolis", "amambai", "anastac
     "mundo novo", "navirai", "novo horizonte do sul", "paranaiba", "paraguay", "pedro gimenez", "porto murtinho", "ribas do rio pardo",
     "rio verde de mato grosso", "roxim", "selviria", "sonora", "terenos", "tres lagoas", "vicentina"];
 const cidadesPara = ["abaetetuba", "abel figueiredo", "acailandia", "aflitos", "agua azul do norte", "alenquer", "algodoal", "almeirim",
-    "alta floresta do para", "altamira", "anajas", "anapu", "augusto correa", "aurora do para", "bagre", "baiao", "bannach", "barcarena", "belem", "belterra",
+    "alta floresta do para", "altamira", "anajas", "anapu", "ananindeua", "augusto correa", "aurora do para", "bagre", "baiao", "bannach", "barcarena", "belem", "belterra",
     "brazilia", "breves", "bucaina", "canaa dos carajas", "capanema", "capitao poco", "castanhal", "chapada", "colares", "conceicao do araguaia", "curionopolis",
     "curuca", "dom elizeu", "eldorado dos carajas", "estoril", "faro", "floresta do araguaia", "garrafa do norte", "goianesia do para", "iguacara", "inhangapi",
     "itaituba", "itaiteua", "jacareacanga", "japara", "jaru", "jatuarana", "joana", "junior", "juruti", "maraba", "marapanim", "marituba", "mediana", "melgaco", "moju",
