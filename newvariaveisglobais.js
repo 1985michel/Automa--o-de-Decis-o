@@ -109,7 +109,7 @@ const estados = [
     { "codigo": 14, "sigla": "PR", "nome": "parana" },
     { "codigo": 17, "sigla": "RJ", "nome": "rio de janeiro" },
     { "codigo": 18, "sigla": "RN", "nome": "rio grande do norte" },
-    { "codigo": 20, "sigla": "RO", "nome": "rondonia" },
+    { "codigo": 26, "sigla": "RO", "nome": "rondonia" },
     { "codigo": 27, "sigla": "RR", "nome": "roraima" },
     { "codigo": 19, "sigla": "RS", "nome": "rio grande do sul" },
     { "codigo": 21, "sigla": "SC", "nome": "santa catarina" },
