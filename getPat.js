@@ -212,7 +212,7 @@ function getCodigoEstadoFromCidade(cidade) {
     } else if (cidadesRoraima.includes(cidadeClean)) {
         return '27';
     } else if (cidadesRondonia.includes(cidadeClean)) {
-        return '20';
+        return '26';
     } else if (cidadesMatoGrossoDoSul.includes(cidadeClean)) {
         return '6';
     } else if (cidadesPara.includes(cidadeClean)) {
