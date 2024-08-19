@@ -24,6 +24,8 @@ document.querySelector(".gerarSabi").addEventListener("click", gerarSabi);
 
 document.querySelector(".verAPS").addEventListener("click", abrirLocalizadorAps);
 
+document.querySelector(".getEstadoManualmente").addEventListener("click", getEstadoManuallyCity);
+
 
 
 
@@ -190,6 +192,16 @@ function getOrgaoJulgadorPJE1() {
     vara = extrairNumero(orgaoJugadorPJE1)
     varaCidade = extractCity(orgaoJugadorPJE1)
     varaEstado = getCodigoEstadoFromCidade(varaCidade)
+
+}
+
+function getEstadoManuallyCity() {
+    console.log('getEstadoManuallyCity')
+    varaCidade = document.getElementById(`varaCidade_span`).value
+    console.log('varaCidade' + varaCidade)
+    varaEstado = getCodigoEstadoFromCidade(varaCidade)
+    console.log('varaEstado ' + varaEstado)
+    if (varaEstado) document.getElementById(`varaEstado_span`).value = varaEstado;
 
 }
 

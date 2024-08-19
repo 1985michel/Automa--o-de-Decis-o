@@ -163,7 +163,7 @@ const cidadesMatoGrosso = [
     "nova maringa", "nova monte verde", "nova mutum", "nova nazare", "nova olimpiade", "nova santa helena", "nova ubirata", "nova xavantina", "novo horizonte do norte",
     "novo mundo", "novo santo antonio", "novo sao joaquim", "paranaíta", "paranatinga", "pedra preta", "peixoto de azevedo", "planalto da serra",
     "pocone", "ponte branca", "pontes e lacerda", "porto alegre do norte", "porto dos gauchos", "porto esperidião", "porto estante", "porto velasco",
-    "pouso alegre", "primavera do leste", "querencia", "reserva do cabacal", "ribeirao cascalheira", "ribeiraozinho", "rio branco", "rosario oeste",
+    "pouso alegre", "primavera do leste", "querencia", "reserva do cabacal", "ribeirao cascalheira", "ribeiraozinho", "rio branco", "rosario oeste", "rondonopolis",
     "salto do ceu", "santa carmen", "santa cruz do xingu", "santa rita do trivelato", "santa terezinha", "santo afonso", "santo antonio do leverger", "sao felix do araguaia",
     "sapezal", "serra nova dourada", "sinop", "sorriso", "tabapora", "tangara da serra", "tapurah", "terra nova do norte", "tesouro", "torixoreu", "uniao do sul",
     "vale de sao domingos", "varzea grande", "vera", "vila bela da santissima trindade", "vila rica"];
