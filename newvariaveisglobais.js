@@ -170,7 +170,7 @@ const cidadesMatoGrosso = [
 const cidadesRoraima = ["boa vista", "bonfim", "caracarai", "caroebe", "iracema", "mucajai", "normandia", "roraima", "sao joao da baliza",
     "sao joao da lingua", "sao luiz", "sao severo", "santa rita", "santa teresa"];
 
-const cidadesRondonia = ["ariquemes", "buritis", "cacoal", "candeias do jamari", "canoas", "cidade negra", "cujubim", "diamantina", "extrema", "jirau",
+const cidadesRondonia = ["ariquemes", "buritis", "cacoal", "candeias do jamari", "canoas", "cidade negra", "cujubim", "diamantina", "espigao do oeste", "espigao d'oeste", "extrema", "jirau",
     "machadinho doeste", "nacional", "nova brasilandia", "nova mamore", "nova monte verde", "porto velho", "presidente medici", "rio preto doeste",
     "rolim de moura", "santa luzia", "santo antonio", "sao francisco do guapore", "vila bela da santissima trindade"];
 
