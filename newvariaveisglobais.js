@@ -161,7 +161,7 @@ const cidadesMatoGrosso = [
     "juina", "juruena", "juventude", "lucas do rio verde", "luciara", "marcelândia", "matupa", "mirassol d'oeste", "nobres", "nortelandia",
     "nossa senhora do livramento", "nova bandeirantes", "nova brasilandia", "nova canaa do norte", "nova guarita", "nova lacerda", "nova marilandia",
     "nova maringa", "nova monte verde", "nova mutum", "nova nazare", "nova olimpiade", "nova santa helena", "nova ubirata", "nova xavantina", "novo horizonte do norte",
-    "novo mundo", "novo santo antonio", "novo sao joaquim", "paranaíta", "paranatinga", "pedra preta", "peixoto de azevedo", "planalto da serra",
+    "novo mundo", "novo santo antonio", "novo sao joaquim", "paranaita", "paranatinga", "pedra preta", "peixoto de azevedo", "planalto da serra",
     "pocone", "ponte branca", "pontes e lacerda", "porto alegre do norte", "porto dos gauchos", "porto esperidião", "porto estante", "porto velasco",
     "pouso alegre", "primavera do leste", "querencia", "reserva do cabacal", "ribeirao cascalheira", "ribeiraozinho", "rio branco", "rosario oeste", "rondonopolis",
     "salto do ceu", "santa carmen", "santa cruz do xingu", "santa rita do trivelato", "santa terezinha", "santo afonso", "santo antonio do leverger", "sao felix do araguaia",
