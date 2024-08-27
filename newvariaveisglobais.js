@@ -183,7 +183,7 @@ const cidadesPara = ["abaetetuba", "abel figueiredo", "acailandia", "aflitos", "
     "brazilia", "breves", "bucaina", "canaa dos carajas", "capanema", "capitao poco", "castanhal", "chapada", "colares", "conceicao do araguaia", "curionopolis",
     "curuca", "dom elizeu", "eldorado dos carajas", "estoril", "faro", "floresta do araguaia", "garrafa do norte", "goianesia do para", "iguacara", "inhangapi",
     "itaituba", "itaiteua", "jacareacanga", "japara", "jaru", "jatuarana", "joana", "junior", "juruti", "maraba", "marapanim", "marituba", "mediana", "melgaco", "moju",
-    "mojui dos campos", "murinin", "nova esperanca do piranha", "nova iorque", "nova sobradinho", "novo repartimento", "obriga", "ocara", "oriximina", "ourex", "pacaja",
+    "mojui dos campos", "murinin", "nova esperanca do piranha", "nova iorque", "nova sobradinho", "novo repartimento", "obidos", "obriga", "ocara", "oriximina", "ourex", "pacaja",
     "paragominas", "parauapebas", "para", "pau d'arco", "peixe boi", "pedro do campo", "prainha", "prainha do sul", "remansao", "rioclaro", "ruropolis", "salinopolis",
     "santa cruz do arari", "santa izabel do para", "santa luzia do para", "santa maria", "santa maria das barcas", "santa teresa", "santarem", "santarem novo",
     "santo antonio do taua", "sao caetano de odivelas", "sao felix do xingu", "sao francisco do para", "sao joao do araguaia", "sao joao do pacifico", "sao luiz do tapajos",
