@@ -169,7 +169,7 @@ const cidadesMatoGrosso = [
 const cidadesRoraima = ["boa vista", "bonfim", "caracarai", "caroebe", "iracema", "mucajai", "normandia", "roraima", "sao joao da baliza",
     "sao joao da lingua", "sao luiz", "sao severo", "santa rita", "santa teresa"];
 
-const cidadesRondonia = ["ariquemes", "buritis", "cacoal", "candeias do jamari", "canoas", "cidade negra", "cujubim", "diamantina", "espigao do oeste", "espigao d'oeste", "extrema", "jirau",
+const cidadesRondonia = ["ariquemes", "buritis", "cacoal", "candeias do jamari", "canoas", "cidade negra", "cujubim", "diamantina", "espigao do oeste", "espigao d'oeste", "extrema", "jaru", "jirau",
     "machadinho doeste", "nacional", "nova brasilandia", "nova mamore", "nova monte verde", "porto velho", "presidente medici", "rio preto doeste",
     "rolim de moura", "santa luzia", "santo antonio", "sao francisco do guapore", "vila bela da santissima trindade"];
 
@@ -181,7 +181,7 @@ const cidadesPara = ["abaetetuba", "abel figueiredo", "acailandia", "aflitos", "
     "alta floresta do para", "altamira", "anajas", "anapu", "ananindeua", "augusto correa", "aurora do para", "bagre", "baiao", "bannach", "barcarena", "belem", "belterra",
     "brazilia", "breves", "bucaina", "canaa dos carajas", "capanema", "capitao poco", "castanhal", "chapada", "colares", "conceicao do araguaia", "curionopolis",
     "curuca", "dom elizeu", "eldorado dos carajas", "estoril", "faro", "floresta do araguaia", "garrafa do norte", "goianesia do para", "iguacara", "inhangapi",
-    "itaituba", "itaiteua", "jacareacanga", "japara", "jaru", "jatuarana", "joana", "junior", "juruti", "maraba", "marapanim", "marituba", "mediana", "melgaco", "moju",
+    "itaituba", "itaiteua", "jacareacanga", "japara", "jatuarana", "joana", "junior", "juruti", "maraba", "marapanim", "marituba", "mediana", "melgaco", "moju",
     "mojui dos campos", "murinin", "nova esperanca do piranha", "nova iorque", "nova sobradinho", "novo repartimento", "obidos", "obriga", "ocara", "oriximina", "ourex", "pacaja",
     "paragominas", "parauapebas", "para", "pau d'arco", "peixe boi", "pedro do campo", "prainha", "prainha do sul", "remansao", "rioclaro", "ruropolis", "salinopolis",
     "santa cruz do arari", "santa izabel do para", "santa luzia do para", "santa maria", "santa maria das barcas", "santa teresa", "santarem", "santarem novo",
