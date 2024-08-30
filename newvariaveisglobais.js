@@ -171,7 +171,7 @@ const cidadesRoraima = ["boa vista", "bonfim", "caracarai", "caroebe", "iracema"
 
 const cidadesRondonia = ["ariquemes", "buritis", "cacoal", "candeias do jamari", "canoas", "cidade negra", "cujubim", "diamantina", "espigao do oeste", "espigao d'oeste", "extrema", "jaru", "jirau",
     "machadinho doeste", "nacional", "nova brasilandia", "nova mamore", "nova monte verde", "porto velho", "presidente medici", "rio preto doeste",
-    "rolim de moura", "santa luzia", "santo antonio", "sao francisco do guapore", "vila bela da santissima trindade"];
+    "rolim de moura", "santa luzia", "santo antonio", "sao francisco do guapore", "vila bela da santissima trindade", "vilhena"];
 
 const cidadesMatoGrossoDoSul = ["agua clara", "alcinopolis", "amambai", "anastacio", "anhembi", "antonio joao", "aparecida do taboado", "bandeirantes", "bataguassu", "bataypora", "bela vista", "bodoquena", "bonito", "campo grande", "caracol", "cassilandia", "chapadao do sul", "corumba",
     "dourados", "gloria de dourados", "iguatemi", "inocencia", "itapora", "itapora", "jardim", "juti", "ladario", "laguna carapa", "maracaju", "mara rosa",
